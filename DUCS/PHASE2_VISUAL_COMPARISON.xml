@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites><testsuite name="component-matrix.spec.ts / shard 1" timestamp="2026-11-01T12:25:42.773Z" hostname="chromium" tests="1" failures="0" skipped="0" time="152.278" errors="0">
+<testcase name="every registered composition: responsive, RTL, dark mode, keyboard and accessibility matrix" classname="component-matrix.spec.ts" time="152.278">
+<system-out>
+Completed category heroes: 24 responsive renders
+Completed category navigation: 48 responsive renders
+Completed category bento: 72 responsive renders
+Completed category editorial: 96 responsive renders
+Completed category galleries: 120 responsive renders
+Completed category testimonials: 144 responsive renders
+Completed category statistics: 168 responsive renders
+Completed category process: 192 responsive renders
+Completed category storytelling: 216 responsive renders
+Completed category calls-to-action: 240 responsive renders
+Completed category forms: 264 responsive renders
+Completed category faq: 288 responsive renders
+Completed category people: 312 responsive renders
+Completed category projects: 336 responsive renders
+Completed category education: 360 responsive renders
+Matrix complete: 384 renders, 0 failures
+
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="component-matrix.spec.ts / shard 2" timestamp="2026-11-01T12:25:42.764Z" hostname="chromium" tests="1" failures="0" skipped="0" time="136.755" errors="0">
+<testcase name="every registered composition: responsive, RTL, dark mode, keyboard and accessibility matrix" classname="component-matrix.spec.ts" time="136.755">
+<system-out>
+Completed category heroes: 24 responsive renders
+Completed category navigation: 48 responsive renders
+Completed category features: 72 responsive renders
+Completed category editorial: 96 responsive renders
+Completed category galleries: 120 responsive renders
+Completed category logos: 144 responsive renders
+Completed category statistics: 168 responsive renders
+Completed category process: 192 responsive renders
+Completed category pricing: 216 responsive renders
+Completed category calls-to-action: 240 responsive renders
+Completed category forms: 264 responsive renders
+Completed category tabs: 288 responsive renders
+Completed category people: 312 responsive renders
+Completed category projects: 336 responsive renders
+Matrix complete: 360 renders, 0 failures
+
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="component-matrix.spec.ts / shard 3" timestamp="2026-11-01T12:25:42.793Z" hostname="chromium" tests="1" failures="0" skipped="0" time="138.352" errors="0">
+<testcase name="every registered composition: responsive, RTL, dark mode, keyboard and accessibility matrix" classname="component-matrix.spec.ts" time="138.352">
+<system-out>
+Completed category heroes: 24 responsive renders
+Completed category bento: 48 responsive renders
+Completed category features: 72 responsive renders
+Completed category editorial: 96 responsive renders
+Completed category testimonials: 120 responsive renders
+Completed category logos: 144 responsive renders
+Completed category statistics: 168 responsive renders
+Completed category storytelling: 192 responsive renders
+Completed category pricing: 216 responsive renders
+Completed category calls-to-action: 240 responsive renders
+Completed category faq: 264 responsive renders
+Completed category tabs: 288 responsive renders
+Completed category people: 312 responsive renders
+Completed category education: 336 responsive renders
+Matrix complete: 360 renders, 0 failures
+
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="component-matrix.spec.ts / shard 4" timestamp="2026-11-01T12:25:42.800Z" hostname="chromium" tests="1" failures="0" skipped="0" time="138.92" errors="0">
+<testcase name="every registered composition: responsive, RTL, dark mode, keyboard and accessibility matrix" classname="component-matrix.spec.ts" time="138.92">
+<system-out>
+Completed category navigation: 24 responsive renders
+Completed category bento: 48 responsive renders
+Completed category features: 72 responsive renders
+Completed category galleries: 96 responsive renders
+Completed category testimonials: 120 responsive renders
+Completed category logos: 144 responsive renders
+Completed category process: 168 responsive renders
+Completed category storytelling: 192 responsive renders
+Completed category pricing: 216 responsive renders
+Completed category forms: 240 responsive renders
+Completed category faq: 264 responsive renders
+Completed category tabs: 288 responsive renders
+Completed category projects: 312 responsive renders
+Completed category education: 336 responsive renders
+Matrix complete: 360 renders, 0 failures
+
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

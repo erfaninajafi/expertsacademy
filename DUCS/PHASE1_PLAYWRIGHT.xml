@@ -1,0 +1,26 @@
+<testsuites id="" name="" tests="9" failures="0" skipped="0" errors="0" time="5.832893">
+<testsuite name="foundation.spec.ts" timestamp="2026-11-01T06:17:51.877Z" hostname="chromium" tests="3" failures="0" skipped="0" time="1.596" errors="0">
+<testcase name="authentication, CSRF, roles, validation and optimistic conflicts" classname="foundation.spec.ts" time="0.26">
+</testcase>
+<testcase name="integrated React editor creates, edits, saves, reorders and renders through PHP" classname="foundation.spec.ts" time="1.044">
+</testcase>
+<testcase name="published existing route and preview have identical PHP component output" classname="foundation.spec.ts" time="0.292">
+</testcase>
+</testsuite>
+<testsuite name="foundation.spec.ts" timestamp="2026-11-01T06:17:51.877Z" hostname="chromium" tests="3" failures="0" skipped="0" time="1.521" errors="0">
+<testcase name="authentication, CSRF, roles, validation and optimistic conflicts" classname="foundation.spec.ts" time="0.251">
+</testcase>
+<testcase name="integrated React editor creates, edits, saves, reorders and renders through PHP" classname="foundation.spec.ts" time="1.007">
+</testcase>
+<testcase name="published existing route and preview have identical PHP component output" classname="foundation.spec.ts" time="0.263">
+</testcase>
+</testsuite>
+<testsuite name="foundation.spec.ts" timestamp="2026-11-01T06:17:51.877Z" hostname="chromium" tests="3" failures="0" skipped="0" time="1.541" errors="0">
+<testcase name="authentication, CSRF, roles, validation and optimistic conflicts" classname="foundation.spec.ts" time="0.252">
+</testcase>
+<testcase name="integrated React editor creates, edits, saves, reorders and renders through PHP" classname="foundation.spec.ts" time="1.007">
+</testcase>
+<testcase name="published existing route and preview have identical PHP component output" classname="foundation.spec.ts" time="0.282">
+</testcase>
+</testsuite>
+</testsuites>

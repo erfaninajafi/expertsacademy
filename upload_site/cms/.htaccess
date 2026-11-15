@@ -1,0 +1,6 @@
+# Media library directory: serve images, never execute code.
+Options -Indexes
+<FilesMatch "\.(php|phtml|phar|cgi|pl|py|sh|htaccess)$">
+    Require all denied
+</FilesMatch>
+AddType image/avif .avif

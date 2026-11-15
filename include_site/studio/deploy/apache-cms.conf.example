@@ -1,0 +1,33 @@
+# Apache vhost excerpt for Experts Academy (PHP-FPM).
+<VirtualHost *:443>
+    ServerName cms.example.com
+    DocumentRoot /var/www/expertsacademy
+    <Directory /var/www/expertsacademy>
+        AllowOverride All
+        Require all granted
+        Options -Indexes
+    </Directory>
+    <Directory /var/www/expertsacademy/site_admin>
+        # Studio requires a CMS session; never cache its HTML.
+        <IfModule mod_headers.c>
+            Header always set Cache-Control "private, no-store"
+        </IfModule>
+    </Directory>
+    <Directory /var/www/expertsacademy/upload_site>
+        Options -ExecCGI -Indexes
+        <FilesMatch "\.(php|phtml|phar|cgi|pl)$">
+            Require all denied
+        </FilesMatch>
+    </Directory>
+    <FilesMatch "\.(css|js|woff2|webp|avif|png|jpe?g|svg)$">
+        <IfModule mod_headers.c>
+            Header set Cache-Control "public, max-age=31536000, immutable"
+        </IfModule>
+    </FilesMatch>
+    SSLEngine on
+    SSLCertificateFile /etc/letsencrypt/live/cms.example.com/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/cms.example.com/privkey.pem
+    <FilesMatch \.php$>
+        SetHandler "proxy:unix:/run/php/php8.2-fpm.sock|fcgi://localhost"
+    </FilesMatch>
+</VirtualHost>

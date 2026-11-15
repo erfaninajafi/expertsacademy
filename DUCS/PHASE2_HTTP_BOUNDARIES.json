@@ -1,0 +1,150 @@
+{
+  "checks": 24,
+  "failures": [],
+  "results": [
+    {
+      "path": "site_admin/page_studio.php",
+      "expected": 302,
+      "observed": 302,
+      "passed": true
+    },
+    {
+      "path": "site_admin/component_studio.php",
+      "expected": 302,
+      "observed": 302,
+      "passed": true
+    },
+    {
+      "path": "site_admin/design_system.php",
+      "expected": 302,
+      "observed": 302,
+      "passed": true
+    },
+    {
+      "path": "site_admin/studio_leads.php",
+      "expected": 302,
+      "observed": 302,
+      "passed": true
+    },
+    {
+      "path": "site_admin/studio_api.php?resource=design-catalog",
+      "expected": 401,
+      "observed": 401,
+      "passed": true
+    },
+    {
+      "path": "site_admin/studio_api.php?resource=leads",
+      "expected": 401,
+      "observed": 401,
+      "passed": true
+    },
+    {
+      "path": "site_admin/studio_component_preview.php?demo=curated",
+      "expected": 401,
+      "observed": 401,
+      "passed": true
+    },
+    {
+      "path": "site_admin/studio_preview.php",
+      "expected": 401,
+      "observed": 401,
+      "passed": true
+    },
+    {
+      "path": "include_site/studio/contracts/page.v2.json",
+      "expected": 403,
+      "observed": 403,
+      "passed": true
+    },
+    {
+      "path": "include_site/studio/database/002_design_studio.up.sql",
+      "expected": 403,
+      "observed": 403,
+      "passed": true
+    },
+    {
+      "path": "site_admin/studio/package.json",
+      "expected": 403,
+      "observed": 403,
+      "passed": true
+    },
+    {
+      "path": "DUCS/PHASE2_DESIGN_TOKENS.json",
+      "expected": 403,
+      "observed": 403,
+      "passed": true
+    },
+    {
+      "path": ".git/HEAD",
+      "expected": 403,
+      "observed": 403,
+      "passed": true
+    },
+    {
+      "path": "site.sql",
+      "expected": 403,
+      "observed": 403,
+      "passed": true
+    },
+    {
+      "path": "studio_lead.php",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    },
+    {
+      "path": "studio_lead.php?token=1",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    },
+    {
+      "path": "asset_site/studio/design-system.css",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    },
+    {
+      "path": "asset_site/studio/previews/hero-editorial-split.webp",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    },
+    {
+      "path": "asset_site/studio/media/academy-preview.mp4",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    },
+    {
+      "path": "site_admin/asset/page-studio/assets/fraunces-CpgM_E_X.woff2",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    },
+    {
+      "path": "site_admin/asset/page-studio/assets/manrope-Cjl_bgWk.woff2",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    },
+    {
+      "path": "site_admin/asset/page-studio/assets/iransans-Bx9IZLGi.woff",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    },
+    {
+      "path": "site_admin/asset/page-studio/assets/runtime-DrRYuUid.js",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    },
+    {
+      "path": "site_admin/asset/page-studio/assets/main-BmmeuXLd.js",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    }
+  ]
+}

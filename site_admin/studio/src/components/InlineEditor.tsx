@@ -1,0 +1,198 @@
+import { useRef, useState } from 'react';
+import type { ComponentDefinition, رسانهآیتم, صفحهComponent } from '../نوع';
+import { inlineFields, isHeadingField, propError, readProp, writeProp, type InlineField } from '../inline';
+import { useEditor } from '../store';
+import { رسانهPicker } from './رسانهPicker';
+
+interface Props {
+  component: صفحهComponent;
+  definition: ComponentDefinition;
+  canEdit: boolean;
+  media?: رسانهآیتم[];
+  onUpload?: (file: File, alt: string) => Promise<void>;
+  busy?: boolean;
+}
+
+const controlClass =
+  'w-کامل rounded-md border border-transparent bg-transparent px-2 py-1 text-slate-900 outline-هیچ transition hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-100 disabled:opacity-70';
+
+function رسانهControl({
+  field,
+  value,
+  canEdit,
+  onتغییر,
+  items,
+  onUpload,
+  busy,
+}: {
+  field: InlineField;
+  value: unknown;
+  canEdit: boolean;
+  onتغییر: (value: unknown) => void;
+  items?: رسانهآیتم[];
+  onUpload?: (file: File, alt: string) => Promise<void>;
+  busy?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const media = (value ?? {}) as { id?: string; alt?: string };
+  const selected = items?.find((item) => item.id === media.id);
+
+  return (
+    <div>
+      <span className="mb-0.5 block text-[10px] font-semibold به بالاpercase tracking-wide text-slate-700">{field.label}</span>
+      <div className="grid gap-1 sm:grid-cols-[auto_1fr_1fr_auto]">
+        <span aria-hidden="true" className="flex h-8 w-8 shrink-0 items-وسط justify-وسط overflow-hidden rounded bg-slate-200 text-xs text-slate-700">
+          {selected ? <img src={selected.url} alt="" className="h-کامل w-کامل object-cover" /> : '▧'}
+        </span>
+        <input
+          aria-label={`${field.label} media ID`}
+          className={`${controlClass} text-xs`}
+          value={media.id ?? ''}
+          placeholder="رسانه ID"
+          disabled={!canEdit}
+          onتغییر={(event) => onتغییر({ ...media, id: event.target.value })}
+        />
+        <input
+          aria-label={`${field.label} alternative text`}
+          className={`${controlClass} text-xs`}
+          value={media.alt ?? ''}
+          maxLength={300}
+          placeholder="متن جایگزین"
+          disabled={!canEdit}
+          onتغییر={(event) => onتغییر({ ...media, alt: event.target.value })}
+        />
+        <button
+          type="button"
+          aria-label="انتخاب تصویر"
+          disabled={!canEdit}
+          onClick={() => setOpen(true)}
+          className="rounded-md border border-slate-300 bg-white px-2 py-1 text-xs font-semibold text-slate-700 hover:border-indigo-400 disabled:opacity-40"
+        >
+          انتخاب
+        </button>
+      </div>
+      {selected && (
+        <p className="mt-0.5 truncate text-[11px] text-slate-600">
+          {selected.original_name}
+          {selected.width && selected.height ? ` · ${selected.width}×${selected.height}` : ''}
+        </p>
+      )}
+      <رسانهPicker
+        open={open}
+        onOpenتغییر={setOpen}
+        items={items ?? []}
+        onUpload={onUpload}
+        busy={busy}
+        onSelect={(item) => onتغییر({ id: item.id, alt: item.alt_text || media.alt || '' })}
+      />
+    </div>
+  );
+}
+
+function TextControl({
+  field,
+  value,
+  canEdit,
+  onتغییر,
+}: {
+  field: InlineField;
+  value: unknown;
+  canEdit: boolean;
+  onتغییر: (value: unknown) => void;
+}) {
+  const [error, setError] = useState<string | null>(null);
+  const شروعValue = useRef('');
+  const text = typeof value === 'string' ? value : '';
+  const طرح‌واره = field.طرح‌واره;
+  const required = طرح‌واره.required === true;
+  const style = `${controlClass} ${isHeadingField(field.path) ? 'text-base font-semibold leading-tight' : 'text-sm leading-5'}`;
+  const maxLength = طرح‌واره.type === 'string' ? طرح‌واره.max : undefined;
+
+  const validate = (next: string): void => {
+    const problem = propError(طرح‌واره, next);
+    setError(problem);
+    if (problem && required && next.trim() === '') onتغییر(شروعValue.current);
+  };
+
+  return (
+    <div>
+      <span className="mb-0.5 block text-[10px] font-semibold به بالاpercase tracking-wide text-slate-700">{field.label}</span>
+      {طرح‌واره.type === 'text' ? (
+        <textarea
+          aria-label={field.label}
+          aria-invalid={error !== null}
+          className={style}
+          rows={2}
+          value={text}
+          maxLength={'max' in طرح‌واره ? طرح‌واره.max : undefined}
+          disabled={!canEdit}
+          onFocus={() => { شروعValue.current = text; }}
+          onتغییر={(event) => { setError(null); onتغییر(event.target.value); }}
+          onBlur={(event) => validate(event.target.value)}
+        />
+      ) : (
+        <input
+          aria-label={field.label}
+          aria-invalid={error !== null}
+          className={style}
+          value={text}
+          maxLength={maxLength}
+          disabled={!canEdit}
+          inputحالت={طرح‌واره.type === 'url' ? 'url' : undefined}
+          onFocus={() => { شروعValue.current = text; }}
+          onتغییر={(event) => { setError(null); onتغییر(event.target.value); }}
+          onBlur={(event) => validate(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              event.currentTarget.blur();
+            }
+          }}
+        />
+      )}
+      {error && (
+        <p role="alert" className="mt-0.5 text-[11px] font-medium text-red-700">
+          {field.label}: {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/** Direct content editing rپایانered inside the selected block on the بوم. */
+export function InlineEditor({ component, definition, canEdit, media, onUpload, busy }: Props) {
+  const به بالاdateProps = useEditor((state) => state.به بالاdateProps);
+  const fields = inlineFields(definition.طرح‌واره);
+
+  if (fields.length === 0) return null;
+
+  return (
+    <div data-testid="inline-editor" className="mt-2 border-t border-indigo-100 bg-indigo-50/50 px-3 py-2">
+      <p className="mb-1.5 text-[10px] font-semibold به بالاpercase tracking-wide text-indigo-700">
+        ویرایش مستقیم محتوا
+      </p>
+      <div className="grid gap-2">
+        {fields.map((field) => {
+          const value = readProp(component.props, field.path);
+          const change = (next: unknown): void =>
+            به بالاdateProps(component.id, writeProp(component.props, field.path, next));
+          if (field.طرح‌واره.type === 'media') {
+            return (
+              <رسانهControl
+                key={field.path}
+                field={field}
+                value={value}
+                canEdit={canEdit}
+                onتغییر={change}
+                items={media}
+                onUpload={onUpload}
+                busy={busy}
+              />
+            );
+          }
+          return <TextControl key={field.path} field={field} value={value} canEdit={canEdit} onتغییر={change} />;
+        })}
+      </div>
+    </div>
+  );
+}

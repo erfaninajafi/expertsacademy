@@ -1,0 +1,17 @@
+{
+  "routes_before": 48,
+  "routes_after": 48,
+  "differences": [],
+  "legacy_tables_checked": 27,
+  "changed_legacy_tables": [],
+  "studio_table_rows": {
+    "tbl_studio_component_versions": 3,
+    "tbl_studio_design_tokens": 1,
+    "tbl_studio_events": 1,
+    "tbl_studio_media": 0,
+    "tbl_studio_migrations": 1,
+    "tbl_studio_pages": 1,
+    "tbl_studio_revisions": 1,
+    "tbl_studio_templates": 1
+  }
+}

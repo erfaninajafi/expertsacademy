@@ -1,0 +1,429 @@
+<?php
+// include
+include './includer.php';
+$show_per_page = '20';
+$pagetitle = $lang[822];
+$img_item = '4';
+$Tabpage = '6';
+$thisaccess = '6';
+include './header.inc.php';
+// end include 
+?>
+<div class="col-md-12 mb-12">
+    <div class="card">
+        <h5 class="card-header"><?= $pagetitle ?></h5>
+        <div class="card-body">
+            <div class="divider">
+                <div class="text-nowrap">
+                    <?php
+                    // list content
+                    if (!empty($_GET['user'])) {
+
+                        $result_member = Query("SELECT * From tbl_member where tbl_member_id='$_GET[user]'");
+                        $read_member = mysqli_fetch_array($result_member);
+                        echo '<div class="col-md-12"><div class="box-info">
+                        <div class="item"><img src="asset/img/icons/item-icon/person.svg" class="img-fluid"><span>نام و نام خانوادگی فراگیر : ' . $read_member['tbl_member_fname'] . ' ' . $read_member['tbl_member_lname'] . '</span></div>
+                        <div class="item"><img src="asset/img/icons/item-icon/number.svg" class="img-fluid"><span>کدملی :' . toPersianNum($read_member['tbl_member_nationalcode']) . '</span></div>
+                        <div class="item"><img src="asset/img/icons/item-icon/mobile.svg" class="img-fluid"><span>شماره موبایل :' . toPersianNum($read_member['tbl_member_mobile']) . '</span></div>
+                    </div></div>';
+                    }
+
+                    if (!isset($do)) {
+                        // search and add button
+                        echo  '<div class="form-group">
+                       ' . (!empty($error) ? '<div class="error" ><span>' . $error . '</span></div>' : '') . '
+                       </div>
+                       <table><tr><td class="col-sm-9">
+                       <a class="btn btn-primary margin-left big_button" href="?do=add&skill=' . $_GET['skill'] . '&plan=' . $_GET['plan'] . '&user=' . $_GET['user'] . '&contract=' . $_GET['contract'] . '">' . $lang[852] . '</a>
+                       </td>
+                       <td class="col-sm-6" style="padding-left: 0px;"> 
+                       <form action="coachmessage.php?do=search" method="POST">
+                       <input type="hidden" name="skill" value="' . (!empty($_GET['skill']) ? $_GET['skill'] : '') . '" >
+                        <input type="hidden" name="plan" value="' . (!empty($_GET['plan']) ? $_GET['plan'] : '') . '" >
+                        <input type="hidden" name="contract" value="' . (!empty($_GET['contract']) ? $_GET['contract'] : '') . '" >
+                        <input type="hidden" name="user" value="' . $_GET['user'] . '" >
+                       <input type="text" class="form-control" id="message_code" name="keyword"></td>
+                       <td class="col-sm-2" style="padding-left: 0px;">
+                       <button type="submit" name="go" class="btn btn-primary" >' . $lang[77] . '</button>
+                       </form></td></tr></table>';
+
+                        // start count db result for pagination               
+                        $result_for_count = Query("SELECT * From tbl_coachmessage where tbl_coachmessage_reply='0' and tbl_coachmessage_plan='$_GET[plan]' and tbl_coachmessage_contract='$_GET[contract]' and tbl_coachmessage_skill='$_GET[skill]' and tbl_coachmessage_user='$_GET[user]' and tbl_coachmessage_delete ='0' and tbl_coachmessage_title LIKE '%$keyword%' ");
+                        $count_result = mysqli_num_rows($result_for_count);
+                        $start_contnet =  ($page - 1) * $show_per_page;
+                        $page_number = ceil($count_result / $show_per_page);
+                        // end count db result for pagination               
+                        $result = Query("SELECT * From tbl_coachmessage Where tbl_coachmessage_reply='0' and tbl_coachmessage_plan='$_GET[plan]' and tbl_coachmessage_contract='$_GET[contract]' and tbl_coachmessage_skill='$_GET[skill]' and tbl_coachmessage_user='$_GET[user]' and tbl_coachmessage_title LIKE '%$keyword%' and tbl_coachmessage_delete ='0'  ORDER BY tbl_coachmessage_id DESC LIMIT $start_contnet,$show_per_page ");
+                        // error : if not find record show no item for view
+                        $row = mysqli_num_rows($result);
+                        if (!isset($do) && $row == '0') {
+                            echo '<div class="margin-top">' . $lang[57] . '</div>';
+                            exit();
+                        }
+                        // start show list
+                        echo '<table class="table table-bordered table-hover table-striped margin-top" style="text-align:right;">
+                            <thead class="table-dark">
+                                <tr><th>' . $lang[60] . '</th>'
+                            . '<th>ارسال کننده</th>'
+                            . '<th>' . $lang[61] . '</th>'
+                            . '<th>' . $lang[600] . '</th>'
+                            . '<th>نوع</th>'
+                            . '<th>' . $lang[479] . '</th>
+                            </tr>
+                            </thead><tbody>';
+                        $i = 1;
+                        while ($read = mysqli_fetch_array($result)) {
+                            $mentor = $read['tbl_coachmessage_mentor'];
+                            $resultMentor = Query("SELECT * From tbl_user Where tbl_user_id = '$mentor' ");
+                            $readMentor = mysqli_fetch_array($resultMentor);
+
+                            if ($read['tbl_coachmessage_status'] == 0) {
+                                $style_check = "style='color:gray; font-style: italic;'";
+                            } else {
+                                $style_check = "";
+                            }
+                            $thisuser = $read['tbl_coachmessage_user'];
+                            $result_userid = Query("SELECT * from tbl_member  Where tbl_member_code = '$thisuser' ");
+                            $read_userid = mysqli_fetch_array($result_userid);
+                            echo '<tr><td>' . $i . '</td>'
+                                . '<td>' . ($read['tbl_coachmessage_sender'] == '1' ? 'فراگیر' : @$readMentor['tbl_user_name']) . '</td>'
+                                . '<td>' . $read['tbl_coachmessage_title'] . '</td>'
+                                . '<td>' . $read['tbl_coachmessage_dataadd'] . '</td>'
+                                . '<td>' . ($read['tbl_coachmessage_note'] == '0' ? 'پیام' : 'اطلاعیه') . '</td>'
+                                . '<td>' . ($read['tbl_coachmessage_status'] == '0' ? 'منتظر پاسخ' : ' پاسخ داده شده') . '</td></tr>'
+                                . '<tr><td class="btn-class" colspan="6"><a href="?do=view&code=' . $read['tbl_coachmessage_code'] . '&skill=' . $_GET['skill'] . '&plan=' . $_GET['plan'] . '&user=' . $_GET['user'] . '&contract=' . $_GET['contract'] . '" class="btn btn-xs btn-warning">' . $lang[87] . '</a>'
+                                . '<a href="?do=delete&code=' . $read['tbl_coachmessage_code'] . '&skill=' . $_GET['skill'] . '&plan=' . $_GET['plan'] . '&user=' . $_GET['user'] . '&contract=' . $_GET['contract'] . '"  class="btn btn-xs btn-danger">' . $lang[24] . '</a></td>'
+                                . '</tr>';
+                            $i++;
+                        }
+
+                        echo '</tbody></table>';
+                        // start pagination                
+                        if ($page > $page_number) {
+                            echo '<div class="margin-top">' . $lang[57] . '</div>';
+                            exit();
+                        }
+                        if ($count_result > $show_per_page) {
+                            if ($page == 1) {
+                                $back_page_number = 2;
+                            } else {
+                                $back_page_number = $page;
+                            }
+
+                            // $other_page_keyword = '';
+                            if (isset($keyword) && $keyword == TRUE) {
+                                $other_page_keyword = "&keyword=";
+                            } else {
+                                $other_page_keyword = '';
+                            }
+                    ?>
+                    <table class="table">
+                        <tr>
+                            <td class="col-lg-6">
+                                <ul class="pagination">
+                                    <li><a class="page-link" href="<?= '?page=' . ($page + 1) . '' . $other_page_keyword . $keyword . (isset($_GET['status']) ? '&status=' . $_GET['status'] : '') . (isset($_GET['member']) ? '&member=' . $_GET['member'] : '')  ?>"><?= $lang[75] ?></a>
+                                    </li>
+                                    <li><a class="page-link"><?= $lang[72] . '&nbsp;' . $page . '&nbsp;' . $lang[73] . '&nbsp;' . $page_number ?></a>
+                                    </li>
+                                    <li><a class="page-link" href="<?= '?page=' . ($back_page_number - 1) . '' . $other_page_keyword . $keyword(isset($_GET['status']) ? '&status=' . $_GET['status'] : '') . (isset($_GET['member']) ? '&member=' . $_GET['member'] : '') ?>"><?= $lang[74] ?></a>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td class="col-lg-6">
+                                <form action="coachmessage.php?do=gotopage" class="navbar-form navbar-left" role="search" method="POST">
+                                    <div class="form-group">
+                                        <button type="submit" name="gotopage" class="btn btn-success" style="float: left;"><?= $lang[76] ?></button>
+                                        <input type="text" class="form-control go-fld" name="page_number">
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                    <?php
+
+                        }
+                    }
+                    if (isset($do) && $do == 'add') {
+                        echo '<div class="col-lg-8">
+                          <form action="?do=additem" method="POST" enctype="multipart/form-data" >
+                           <input type="hidden" name="code" value="' . Code("", "no", 7) . '" >
+                           <input type="hidden" name="skill" value="' . (!empty($_GET['skill']) ? $_GET['skill'] : '') . '" >
+                           <input type="hidden" name="plan" value="' . (!empty($_GET['plan']) ? $_GET['plan'] : '') . '" >
+                           <input type="hidden" name="contract" value="' . (!empty($_GET['contract']) ? $_GET['contract'] : '') . '" >
+                           <input type="hidden" name="user" value="' . $_GET['user'] . '" >';
+
+                        echo '<div class="form-group">
+                              <label>' . $lang[50] . '</label>
+                              <input type="text" name="title" class="form-control">
+                              </div>';
+
+                        echo '<div class="form-group">
+                                  <label>' . $lang[51] . '</label>
+                                  <textarea name="content" class="editor editor_fa"></textarea>
+                                  </div>';
+
+                        for ($i = 1; $i <= $img_item; $i++) {
+                            echo '<div class="form-group"><table><tr>
+                                  <td><label class="col-sm-12 control-label">' . $lang[851] . '&nbsp; ' . $i . '</label></td>
+                                  <td><input type="file" name="attach_' . $i . '"></td>
+                                  </tr></table></div>';
+                        }
+                        echo '<hr><div class="form-group">
+                              <label>اطلاعیه 
+                              <input type="checkbox" name="note" value="1"></label>
+                              </div>';
+                        echo '<div class="form-group">
+                             <input type="submit" name="additem" value="' . $lang[31] . '" class="btn btn-primary">
+                             </div>
+                        </form></div>';
+                    }
+                    if (isset($do) && $do == 'additem') {
+                        if (isset($_POST['additem'])) {
+                            $skill = $_POST['skill'];
+                            $plan = $_POST['plan'];
+                            $user = $_POST['user'];
+                            $contract = $_POST['contract'];
+                            $code = $_POST['code'];
+                            $note = (!empty($_POST['note']) ? $_POST['note'] : '0');
+                            $title = addslashes($_POST['title']);
+                            $content = addslashes($_POST['content']);
+                            $date = jdate("Y/m/d : a:h:s");
+                            $images_name = '';
+                            if (!$images_name) {
+                                for ($i_image = 1; $i_image <= $img_item; $i_image++) {
+                                    $img_[$i_image] = $_FILES['attach_' . $i_image]['name'];
+                                    $read_file_name = explode(".", $img_[$i_image]);
+                                    $extn = end($read_file_name);
+                                    $img_[$i_image] = 'attach_' . time() . '_' . $i_image . '.' . $extn;
+
+                                    if ($extn == 'jpg' || $extn == 'JPG' || $extn == 'jpeg' || $extn == 'JPEG' || $extn == 'gif' || $extn == 'GIF' || $extn == 'png' || $extn == 'PNG'  || $extn == 'XLSX' || $extn == 'xlsx' || $extn == 'zip' || $extn == 'zip' || $extn == 'docx' || $extn == 'DOCX' || $extn == 'DOC' || $extn == 'doc' || $extn == 'PDF' || $extn == 'pdf') {
+                                        $images_name .= $img_[$i_image] . ',';
+                                        move_uploaded_file($_FILES['attach_' . $i_image]["tmp_name"], "../upload/msgattach/" . $img_[$i_image]);
+                                    } elseif (!empty($exp[$i_image])) {
+                                        $images_name .= $exp[$i_image] . ',';
+                                    } else {
+                                        $images_name .= ',';
+                                    }
+                                }
+                            }
+                            Query("INSERT INTO tbl_coachmessage (
+                                tbl_coachmessage_user,
+                                tbl_coachmessage_skill,
+                                tbl_coachmessage_plan,
+                                tbl_coachmessage_contract,
+                                tbl_coachmessage_text,
+                                tbl_coachmessage_attach,
+                                tbl_coachmessage_code,
+                                tbl_coachmessage_note,
+                                tbl_coachmessage_mentor,
+                                tbl_coachmessage_title,
+                                tbl_coachmessage_dataadd,
+                                tbl_coachmessage_delete,
+                                tbl_coachmessage_reply,
+                                tbl_coachmessage_sender,
+                                tbl_coachmessage_status,
+                                tbl_coachmessage_view) 
+                                values('$user',
+                                '$skill',
+                                '$plan',
+                                '$contract',
+                                '$content',
+                                '$images_name',
+                                '$code',
+                                '$note',
+                                '$this_user_id',
+                                '$title',
+                                '$date',
+                                '0',
+                                '0',
+                                '0',
+                                '0',
+                                '0')");
+
+                            $_SESSION['error'] = $lang[32];
+                            header("Location: coachmessage.php?skill=$skill&plan=$plan&user=$user&contract=$contract");
+                        }
+                    }
+                    // end = pagination
+                    // start = search result               
+                    if (isset($do) && $do == 'search') {
+                        if (isset($_POST['go'])) {
+                            $keyword_search = $_POST['keyword'];
+                            $skill = $_POST['skill'];
+                            $plan = $_POST['plan'];
+                            $user = $_POST['user'];
+                            $contract = $_POST['contract'];
+                            header("Location: coachmessage.php?keyword=$keyword_search&skill=$skill&plan=$plan&user=$user&contract=$contract");
+                        }
+                    }
+                    // end = search result  
+                    if (isset($do) && $do == 'view') {
+                        $result = Query("SELECT * FROM tbl_coachmessage Where tbl_coachmessage_code = '$code' order by tbl_coachmessage_id DESC");
+                        while ($read = mysqli_fetch_array($result)) {
+
+                            if ($read['tbl_coachmessage_sender'] == 0) {
+                                $sender = '<span class="usersender">ارسال منتور</span>';
+                            } else {
+                                $sender = '<span class="adminsender">ارسال کاربر</span>';
+                            }
+                        ?>
+                    <div class="col-lg-12 ticketview"><?= $sender ?>
+                        <?= (!empty($read['tbl_coachmessage_dataadd']) ? '<div class="col-lg-12"><label>' . $lang[600] . ' : </label>' . $read['tbl_coachmessage_dataadd'] . '</div>' : '<div class="col-lg-12"><label>تاریخ جواب : </label>' . $read['tbl_coachmessage_datereplay'] . '</div>') ?>
+                        <?= (!empty($read['tbl_coachmessage_title']) ? '<div class="col-lg-12"><label>' . $lang[61] . ' : </label>' . $read['tbl_coachmessage_title'] . '</div>' : '') ?>
+                        <div class="col-lg-12"><label><?= $lang[94] ?> : </label><?= $read['tbl_coachmessage_text'] ?></div>
+                        <?php if (!empty($read['tbl_coachmessage_attach'])) {
+                                    $i = 1;
+                                    $file = explode(",", $read['tbl_coachmessage_attach']);
+                                    foreach ($file as $key => $value) {
+                                        if (!empty($value)) {
+                                            echo '<div class="col-lg-12"><label>فایل  ' . $i . ' : </label><a href="../upload/msgattach/' . $value . '"> دریافت فایل</a></div>';
+                                            $i++;
+                                        }
+                                    }
+                                } ?>
+                        <div class="col-lg-12">
+                            <hr>
+                        </div>
+                    </div>
+                    <?php
+                        }
+                        ?>
+                    <form action="?do=sendreplayticket" data-parsley-validate="" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="skill" value="<?= (!empty($_GET['skill']) ? $_GET['skill'] : '') ?>">
+                        <input type="hidden" name="plan" value="<?= (!empty($_GET['plan']) ? $_GET['plan'] : '') ?>">
+                        <input type="hidden" name="contract" value="<?= (!empty($_GET['contract']) ? $_GET['contract'] : '') ?>">
+                        <input type="hidden" name="user" value="<?= $_GET['user'] ?>">
+
+                        <input type="hidden" name="tcode" value="<?= $code ?>">
+                        <div class="col-lg-12 col-xs-12">
+                            <h1><?= $lang[606] ?></h1>
+                            <div class="form-group">
+                                <label><?= $lang[94] ?></label>
+                                <textarea rows="8" name="content" data-parsley-length="[10, 1000]" class="form-control"></textarea>
+                            </div>
+                            <?php
+                                for ($i = 1; $i <= $img_item; $i++) {
+                                    echo '<div class="form-group"><table><tr>
+                                          <td><label class="col-sm-12 control-label">' . $lang[851] . '&nbsp; ' . $i . '</label></td>
+                                          <td><input type="file" name="attach_' . $i . '"></td>
+                                          </tr></table></div>';
+                                }
+                                ?>
+                            <hr>
+                            <div class="form-group">
+                                <input type="submit" name="submit" class="btn btn-success" value="<?= $lang[606] ?>">
+                            </div>
+                        </div>
+                    </form>
+                    <?php
+                    }
+                    if (isset($do) && $do == 'sendreplayticket') {
+                        if (isset($_POST['submit'])) {
+                            $code = strip_tags($_POST['tcode']);
+                            $skill = $_POST['skill'];
+                            $plan = $_POST['plan'];
+                            $user = $_POST['user'];
+                            $contract = $_POST['contract'];
+                            $content = $_POST['content'];
+                            $date = jdate("Y/m/d : a:h:s");
+                            if (!$images_name) {
+                                for ($i_image = 1; $i_image <= $img_item; $i_image++) {
+                                    $img_[$i_image] = $_FILES['attach_' . $i_image]['name'];
+                                    $read_file_name = explode(".", $img_[$i_image]);
+                                    $extn = end($read_file_name);
+                                    $img_[$i_image] = 'attach_' . time() . '_' . $i_image . '.' . $extn;
+
+                                    if ($extn == 'jpg' || $extn == 'JPG' || $extn == 'jpeg' || $extn == 'JPEG' || $extn == 'gif' || $extn == 'GIF' || $extn == 'png' || $extn == 'PNG'  || $extn == 'XLSX' || $extn == 'xlsx' || $extn == 'zip' || $extn == 'zip' || $extn == 'docx' || $extn == 'DOCX' || $extn == 'DOC' || $extn == 'doc' || $extn == 'PDF' || $extn == 'pdf') {
+                                        $images_name .= $img_[$i_image] . ',';
+                                        move_uploaded_file($_FILES['attach_' . $i_image]["tmp_name"], "../upload/msgattach/" . $img_[$i_image]);
+                                    } elseif (!empty($exp[$i_image])) {
+                                        $images_name .= $exp[$i_image] . ',';
+                                    } else {
+                                        $images_name .= ',';
+                                    }
+                                }
+                            }
+
+
+                            Query("update tbl_coachmessage set tbl_coachmessage_status='1',tbl_coachmessage_view='0',tbl_coachmessage_datereplay = '$date' where tbl_coachmessage_code ='$code' ");
+                            Query("INSERT INTO tbl_coachmessage (
+                                tbl_coachmessage_user,
+                                tbl_coachmessage_skill,
+                                tbl_coachmessage_plan,
+                                tbl_coachmessage_contract,
+                                tbl_coachmessage_text,
+                                tbl_coachmessage_attach,
+                                tbl_coachmessage_code,
+                                tbl_coachmessage_mentor,
+                                tbl_coachmessage_title,
+                                tbl_coachmessage_dataadd,
+                                tbl_coachmessage_delete,
+                                tbl_coachmessage_reply,
+                                tbl_coachmessage_sender) 
+                                values('$user',
+                                '$skill',
+                                '$plan',
+                                '$contract',
+                                '$content',
+                                '$images_name',
+                                '$code',
+                                '$this_user_id',
+                                '$title',
+                                '$date',
+                                '0',
+                                '1',
+                                '0')");
+
+                            $_SESSION['error'] = $lang[21];
+                            header("Location: coachmessage.php?skill=$skill&plan=$plan&user=$user&contract=$contract");
+                            exit();
+                        }
+                    }
+                    if (isset($do) && $do == 'delete') {
+                        $result = Query("SELECT * from tbl_coachmessage Where tbl_coachmessage_code = '$code' ");
+                        $read = mysqli_fetch_array($result);
+                    ?>
+                    <?= $lang[25] . '<br /><br />' . $read['tbl_coachmessage_title'] ?>
+                    <div class="col-lg-6 col-lg-offset-6">
+                        <form action="#" method="POST">
+                            <input type="hidden" name="code" value="<?= $code ?>">
+                            <input type="hidden" name="skill" value="<?= (!empty($_GET['skill']) ? $_GET['skill'] : '') ?>">
+                            <input type="hidden" name="plan" value="<?= (!empty($_GET['plan']) ? $_GET['plan'] : '') ?>">
+                            <input type="hidden" name="contract" value="<?= (!empty($_GET['contract']) ? $_GET['contract'] : '') ?>">
+                            <input type="hidden" name="user" value="<?= $_GET['user'] ?>">
+                            <div class="form-group margin-top">
+                                <input type="submit" name="submit" value="<?= $lang[26] ?>" class="btn btn-xs btn-success">
+                                <input type="submit" name="nodelete" value="<?= $lang[27] ?>" class="btn btn-xs btn-danger">
+                            </div>
+                        </form>
+                    </div>
+                    <?php
+                        if (isset($_POST['submit'])) {
+                            $code = $_POST['code'];
+                            $skill = $_POST['skill'];
+                            $plan = $_POST['plan'];
+                            $user = $_POST['user'];
+                            $contract = $_POST['contract'];
+                            Query("update tbl_coachmessage set  tbl_coachmessage_delete='1' Where tbl_coachmessage_code = '$code' ");
+                            $_SESSION['error'] = $lang[28];
+                            header("Location: coachmessage.php?skill=$skill&plan=$plan&user=$user&contract=$contract");
+                            exit();
+                        }
+                        if (isset($_POST['nodelete'])) {
+                            $skill = $_POST['skill'];
+                            $plan = $_POST['plan'];
+                            $user = $_POST['user'];
+                            $contract = $_POST['contract'];
+                            header("Location: coachmessage.php?&skill=$skill&plan=$plan&user=$user&contract=$contract");
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+include './footer.inc.php';
+
+?>

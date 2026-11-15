@@ -1,0 +1,6 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="1.7360030000000002">
+<testsuite name="design-typography.spec.ts" timestamp="2026-11-01T12:18:29.457Z" hostname="chromium" tests="1" failures="0" skipped="0" time="1.244" errors="0">
+<testcase name="RTL composition is pixel-identical before and after Latin viewport navigation" classname="design-typography.spec.ts" time="1.244">
+</testcase>
+</testsuite>
+</testsuites>

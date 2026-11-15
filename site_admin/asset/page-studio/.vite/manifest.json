@@ -1,0 +1,11 @@
+{
+  "src/main.tsx": {
+    "file": "assets/main-4kQ0-kNJ.js",
+    "name": "main",
+    "src": "src/main.tsx",
+    "isEntry": true,
+    "css": [
+      "assets/main-so_965Nz.css"
+    ]
+  }
+}

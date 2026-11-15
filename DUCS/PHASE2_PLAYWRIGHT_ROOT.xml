@@ -1,0 +1,6 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="1.6887210000000001">
+<testsuite name="deployment-path.spec.ts" timestamp="2026-11-01T12:25:47.102Z" hostname="chromium" tests="1" failures="0" skipped="0" time="1.161" errors="0">
+<testcase name="root installation serves the integrated CMS, local fonts, registry links and PHP previews" classname="deployment-path.spec.ts" time="1.161">
+</testcase>
+</testsuite>
+</testsuites>

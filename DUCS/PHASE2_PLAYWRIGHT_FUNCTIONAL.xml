@@ -1,0 +1,30 @@
+<testsuites id="" name="" tests="11" failures="0" skipped="0" errors="0" time="13.890153">
+<testsuite name="design-interactions.spec.ts" timestamp="2026-11-01T12:20:46.737Z" hostname="chromium" tests="5" failures="0" skipped="0" time="7.632" errors="0">
+<testcase name="all tab families support keyboard activation, boundaries and RTL" classname="design-interactions.spec.ts" time="2.824">
+</testcase>
+<testcase name="native disclosures, navigation, carousel, estimator and comparison work by keyboard" classname="design-interactions.spec.ts" time="0.525">
+</testcase>
+<testcase name="form previews never submit; public forms validate, rate limit and reach the CMS inbox" classname="design-interactions.spec.ts" time="3.359">
+</testcase>
+<testcase name="proposal registration, lifecycle and theme writes enforce existing CMS roles" classname="design-interactions.spec.ts" time="0.573">
+</testcase>
+<testcase name="reviewed Motion and GSAP enhancement respects a changed reduced-motion preference" classname="design-interactions.spec.ts" time="0.351">
+</testcase>
+</testsuite>
+<testsuite name="design-studio.spec.ts" timestamp="2026-11-01T12:20:46.737Z" hostname="chromium" tests="3" failures="0" skipped="0" time="3.712" errors="0">
+<testcase name="Component Studio: catalog, categories, variants, properties and responsive preview" classname="design-studio.spec.ts" time="1.149">
+</testcase>
+<testcase name="Design System: tokens, validated preview and immutable versions" classname="design-studio.spec.ts" time="0.946">
+</testcase>
+<testcase name="PHP demonstration: local assets, escaped markup and accessibility" classname="design-studio.spec.ts" time="1.617">
+</testcase>
+</testsuite>
+<testsuite name="foundation.spec.ts" timestamp="2026-11-01T12:20:46.737Z" hostname="chromium" tests="3" failures="0" skipped="0" time="1.989" errors="0">
+<testcase name="authentication, CSRF, roles, validation and optimistic conflicts" classname="foundation.spec.ts" time="0.213">
+</testcase>
+<testcase name="integrated React editor creates, edits, saves, reorders and renders through PHP" classname="foundation.spec.ts" time="1.493">
+</testcase>
+<testcase name="published existing route and preview have identical PHP component output" classname="foundation.spec.ts" time="0.283">
+</testcase>
+</testsuite>
+</testsuites>

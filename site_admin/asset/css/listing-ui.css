@@ -1,0 +1,223 @@
+.admin-list-page .text-nowrap {
+    white-space: normal !important;
+}
+
+.admin-list-page .card-header {
+    padding: 1.25rem 1.5rem;
+    font-weight: 700;
+}
+
+.admin-list-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 0.75rem;
+    margin: 0 0 1rem;
+}
+
+.admin-list-toolbar__field {
+    flex: 1 1 230px;
+    min-width: 0;
+}
+
+.admin-list-toolbar__field--status {
+    flex: 0 1 175px;
+}
+
+.admin-list-search-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.admin-list-search-controls .form-control {
+    min-width: 0;
+}
+
+.admin-list-toolbar label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.admin-list-toolbar__note,
+.admin-list-count {
+    color: #697a8d;
+    font-size: 0.82rem;
+}
+
+.admin-list-count {
+    align-self: center;
+    margin: 0 0 0 auto;
+}
+
+.admin-list-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #e7e7ec;
+    border-radius: 0.6rem;
+}
+
+.admin-list-table {
+    min-width: 620px;
+    margin: 0 !important;
+    text-align: right;
+    white-space: normal;
+}
+
+.admin-list-table thead th {
+    padding: 0.85rem 0.9rem;
+    background: #f4f6fa !important;
+    border-bottom: 1px solid #dce2e9;
+    color: #4b5675 !important;
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.admin-list-table tbody td {
+    padding: 0.75rem 0.9rem;
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+}
+
+.admin-list-table tbody tr[hidden] {
+    display: none !important;
+}
+
+.admin-list-table tbody tr:hover {
+    background: #f5f7ff;
+}
+
+.admin-list-table .admin-list-actions {
+    white-space: nowrap;
+}
+
+.admin-list-table .btn {
+    margin: 0.125rem;
+    font-size: 0.78rem !important;
+    font-weight: 600;
+}
+
+.admin-list-badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.admin-list-badge--pending {
+    color: #8b5d05;
+    background: #fff2d6;
+}
+
+.admin-list-badge--reviewed {
+    color: #14654d;
+    background: #dbf5e9;
+}
+
+.admin-list-empty {
+    margin: 0.75rem 0;
+    padding: 0.9rem 1rem;
+    border-radius: 0.5rem;
+    background: #f7f8fa;
+    color: #56657b;
+}
+
+.admin-list-page .error {
+    display: block;
+    margin-bottom: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    color: #14654d;
+    background: #dbf5e9;
+}
+
+.admin-list-page .pagination {
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.admin-menu-indent {
+    display: inline-block;
+    border-right: 2px solid #d3d9e3;
+    margin-right: 0.45rem;
+    vertical-align: middle;
+}
+
+.admin-menu-indent--one {
+    width: 1.25rem;
+}
+
+.admin-menu-indent--two {
+    width: 2.5rem;
+}
+
+.admin-menu-indent--three {
+    width: 3.75rem;
+}
+
+.admin-list-page .cms-page-row__title {
+    display: inline-block;
+    margin: 0 .35rem .4rem .25rem;
+    color: #26334b;
+    font-size: .9rem;
+}
+
+.admin-list-page .cms-legacy-components {
+    margin: .65rem 0 .2rem;
+    border: 1px solid #e1e5ec;
+    border-radius: .5rem;
+    background: #fbfcff;
+}
+
+.admin-list-page .cms-legacy-components > summary {
+    cursor: pointer;
+    padding: .55rem .7rem;
+    color: #516079;
+    font-size: .78rem;
+    font-weight: 600;
+}
+
+.admin-list-page .cms-legacy-components .group-btn {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .3rem;
+    padding: .25rem .7rem .7rem;
+}
+
+.admin-list-page .cms-legacy-components .group-btn .btn {
+    font-size: .7rem !important;
+    margin: 0;
+}
+
+.admin-list-table input[name^="o"] {
+    width: 3.25rem !important;
+    height: 2rem !important;
+    margin: 0.2rem 0.3rem 0.2rem 0.5rem !important;
+    padding: 0.2rem !important;
+    border: 1px solid #cbd2dc;
+    border-radius: 0.35rem;
+}
+
+.admin-list-page .update-btn {
+    margin-top: 1rem;
+}
+
+@media (max-width: 576px) {
+    .admin-list-page .card-body {
+        padding: 1rem;
+    }
+
+    .admin-list-toolbar__field,
+    .admin-list-toolbar__field--status {
+        flex-basis: 100%;
+    }
+
+    .admin-list-table {
+        min-width: 580px;
+    }
+}

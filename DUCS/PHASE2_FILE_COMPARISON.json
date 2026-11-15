@@ -1,0 +1,6 @@
+{
+  "created": 355,
+  "modified": 33,
+  "removed": [],
+  "exclusions": "Git internals, installed node_modules/vendor dependencies, generated cache/tsbuildinfo and these two self-referential manifest files. Lockfiles, Vite deployment manifest and deployed bundles are included."
+}

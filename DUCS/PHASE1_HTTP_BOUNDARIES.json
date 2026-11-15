@@ -1,0 +1,52 @@
+[
+  {
+    "path": "site_admin/page_studio.php",
+    "status": 302,
+    "expected": 302
+  },
+  {
+    "path": "site_admin/studio_api.php?resource=pages",
+    "status": 401,
+    "expected": 401
+  },
+  {
+    "path": "site_admin/studio_preview.php",
+    "status": 401,
+    "expected": 401
+  },
+  {
+    "path": "include_site/studio/composer.json",
+    "status": 403,
+    "expected": 403
+  },
+  {
+    "path": "include_site/studio/vendor/autoload.php",
+    "status": 403,
+    "expected": 403
+  },
+  {
+    "path": "site_admin/studio/package.json",
+    "status": 403,
+    "expected": 403
+  },
+  {
+    "path": "asset_site/css/page-studio.css",
+    "status": 200,
+    "expected": 200
+  },
+  {
+    "path": "site_admin/asset/page-studio/assets/main-BXW6nVsu.js",
+    "status": 200,
+    "expected": 200
+  },
+  {
+    "path": ".git/config",
+    "status": 403,
+    "expected": 403
+  },
+  {
+    "path": "site.sql",
+    "status": 403,
+    "expected": 403
+  }
+]

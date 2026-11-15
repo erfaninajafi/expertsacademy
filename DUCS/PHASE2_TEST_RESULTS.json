@@ -1,0 +1,140 @@
+{
+  "status": "passed",
+  "generatedAt": "2026-11-01T12:30:03.944666+00:00",
+  "catalogFingerprint": "6cc568a72d86c7710aaade2700c4ce9f067c65cabac2e8bec3078e83c459ac2a",
+  "library": {
+    "coreTypes": 60,
+    "coreVariants": 240,
+    "categories": 20,
+    "versionedModernDefinitions": 61,
+    "versionedRenderCases": 244
+  },
+  "phpunit": {
+    "mariadb": {
+      "tests": 269,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "assertions": 3695
+    },
+    "mysql8": {
+      "tests": 269,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "assertions": 3695
+    }
+  },
+  "vitest": {
+    "tests": 11,
+    "passed": 11
+  },
+  "playwright": {
+    "functional": {
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "assertions": 0
+    },
+    "delivery": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "assertions": 0
+    },
+    "rootDeployment": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "assertions": 0
+    },
+    "typographyRegression": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "assertions": 0
+    },
+    "baseline": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "assertions": 0
+    },
+    "reviewedRtlBaselineUpdate": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "assertions": 0
+    },
+    "comparison": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "assertions": 0
+    }
+  },
+  "matrix": {
+    "responsiveRenders": 1464,
+    "axeAudits": 488,
+    "visualSnapshots": 1464,
+    "scenarios": [
+      {
+        "id": "desktop-en-light",
+        "width": 1280,
+        "locale": "en",
+        "mode": "light"
+      },
+      {
+        "id": "tablet-en-light",
+        "width": 820,
+        "locale": "en",
+        "mode": "light"
+      },
+      {
+        "id": "mobile-en-light",
+        "width": 390,
+        "locale": "en",
+        "mode": "light"
+      },
+      {
+        "id": "desktop-fa-light",
+        "width": 1280,
+        "locale": "fa",
+        "mode": "light"
+      },
+      {
+        "id": "mobile-fa-dark",
+        "width": 390,
+        "locale": "fa",
+        "mode": "dark"
+      },
+      {
+        "id": "desktop-en-dark",
+        "width": 1280,
+        "locale": "en",
+        "mode": "dark"
+      }
+    ],
+    "failures": []
+  },
+  "lint": {
+    "phpFiles": 42,
+    "failures": 0
+  },
+  "audits": {
+    "npmVulnerabilities": 0,
+    "composerAdvisories": 0
+  },
+  "evidence": {
+    "visualRoot": "/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual",
+    "screenshotManifestSha256": "294516e66fd3d55c7c56c6660b9136b75a29c7fefd83078fcbe085a4ac46bfb0"
+  },
+  "scope": "Installed Chrome; default compositions plus interaction tests. Automated audits and keyboard checks are not a full WCAG certification or all possible authored content."
+}

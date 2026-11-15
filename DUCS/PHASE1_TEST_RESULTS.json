@@ -1,0 +1,91 @@
+{
+  "verified_at": "2026-11-01T06:18:48.082157+00:00",
+  "environment": {
+    "php": "8.2.12",
+    "apache": "2.4.58",
+    "configured_database_engine": "MariaDB 10.4.32",
+    "isolated_mysql": "8.4.11",
+    "node": "24.22.1",
+    "npm": "11.19.1",
+    "composer": "2.11.1",
+    "browser": "Chrome 155.0.8059.79",
+    "git_tracked_project_files": 0
+  },
+  "phpunit_mysql8": {
+    "tests": 20,
+    "assertions": 86,
+    "failures": 0,
+    "errors": 0
+  },
+  "phpunit_mariadb_isolated": {
+    "tests": 20,
+    "assertions": 86,
+    "failures": 0,
+    "errors": 0
+  },
+  "vitest": {
+    "tests": 6,
+    "failures": 0
+  },
+  "playwright": {
+    "tests": 3,
+    "failures": 0,
+    "publication_target": "isolated test database only",
+    "repeat_each": 3,
+    "executions": 9
+  },
+  "php_lint": {
+    "php_files": 27,
+    "failed": []
+  },
+  "production_editor_build": {
+    "typescript": "passed",
+    "vite": "passed"
+  },
+  "dependency_audits": {
+    "npm_known_advisories": 0,
+    "composer_known_advisories": 0,
+    "scope": "new installed/locked dependencies only"
+  },
+  "backup": {
+    "files_restored_and_verified": 11484,
+    "database_tables_restored_and_verified": 27
+  },
+  "preservation": {
+    "routes_before": 48,
+    "routes_after": 48,
+    "differences": [],
+    "legacy_tables_checked": 27,
+    "changed_legacy_tables": [],
+    "studio_table_rows": {
+      "tbl_studio_component_versions": 3,
+      "tbl_studio_design_tokens": 1,
+      "tbl_studio_events": 1,
+      "tbl_studio_media": 0,
+      "tbl_studio_migrations": 1,
+      "tbl_studio_pages": 1,
+      "tbl_studio_revisions": 1,
+      "tbl_studio_templates": 1
+    }
+  },
+  "apache_boundary_checks": {
+    "checked": 10,
+    "mismatches": 0
+  },
+  "limitations": [
+    "No full legacy business-flow test",
+    "No external email/SMS/payment/LMS/chat/SQL Server calls",
+    "Playwright browser download blocked by HTTP403; installed Chrome used",
+    "Configured application remains MariaDB, not converted to MySQL8",
+    "No existing page published through Studio",
+    "Historical XAMPP system-table metadata mismatch left unchanged"
+  ],
+  "final_browser_server_php_diagnostics": 0,
+  "source_preservation": {
+    "original_application_files_modified": 4,
+    "existing_documentation_files_updated": 6,
+    "original_files_deleted": 0
+  },
+  "temporary_test_processes_stopped": true,
+  "xampp_public_http_after_test_shutdown": 200
+}

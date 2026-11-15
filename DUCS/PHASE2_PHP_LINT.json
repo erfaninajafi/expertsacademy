@@ -1,0 +1,174 @@
+{
+  "files": 42,
+  "failures": [],
+  "results": [
+    {
+      "file": "DUCS/tools/export_phase2_library.php",
+      "passed": true
+    },
+    {
+      "file": "DUCS/tools/verify_phase2_preservation.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/bin/studio.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/bootstrap.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/Auth.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/ComponentCatalog.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/ComponentMigrations.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/Connection.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/DesignRepository.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/DesignSamples.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/DesignTokens.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/DocumentValidator.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/Http.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/Json.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/Migrator.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/PageRepository.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/PremiumRenderer.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/Problem.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/PublicGateway.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/PublicLead.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/QualityReport.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/Registry.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/Renderer.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/Samples.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/StudioAssets.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/src/Uuid.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/tests/ContractsTest.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/tests/DesignIntegrationTest.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/tests/DesignLibraryTest.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/tests/Fixtures.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/tests/IntegrationTest.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/tests/create-sessions.php",
+      "passed": true
+    },
+    {
+      "file": "include_site/studio/tests/http-router.php",
+      "passed": true
+    },
+    {
+      "file": "site_admin/component_studio.php",
+      "passed": true
+    },
+    {
+      "file": "site_admin/design_system.php",
+      "passed": true
+    },
+    {
+      "file": "site_admin/header.inc.php",
+      "passed": true
+    },
+    {
+      "file": "site_admin/page_studio.php",
+      "passed": true
+    },
+    {
+      "file": "site_admin/studio_api.php",
+      "passed": true
+    },
+    {
+      "file": "site_admin/studio_component_preview.php",
+      "passed": true
+    },
+    {
+      "file": "site_admin/studio_leads.php",
+      "passed": true
+    },
+    {
+      "file": "site_admin/studio_preview.php",
+      "passed": true
+    },
+    {
+      "file": "studio_lead.php",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "review_date": "2026-11-01",
+  "scope": "documentation and read-only project review",
+  "application_logic_changed": false,
+  "database_writes_performed": false,
+  "php_lint": {
+    "checked": 453,
+    "passed": 453,
+    "evidence": "PHP_LINT_2026-11-01.tsv",
+    "excludes": [
+      "DUCS/",
+      ".git/"
+    ]
+  },
+  "javascript_syntax": [
+    {
+      "path": "asset_site/js/script_fa.js",
+      "status": "PASS",
+      "error": ""
+    },
+    {
+      "path": "asset_site/js/script_fa.min.js",
+      "status": "PASS",
+      "error": ""
+    },
+    {
+      "path": "site_admin/asset/js/cms-editor-ui.js",
+      "status": "PASS",
+      "error": ""
+    },
+    {
+      "path": "site_admin/asset/js/listing-ui.js",
+      "status": "PASS",
+      "error": ""
+    },
+    {
+      "path": "site_admin/asset/js/page-builder.js",
+      "status": "PASS",
+      "error": ""
+    },
+    {
+      "path": "sys_panel2/assets/js/custom_fa.js",
+      "status": "PASS",
+      "error": ""
+    }
+  ],
+  "builder_unit": {
+    "checked": 9,
+    "passed": 9
+  },
+  "http": {
+    "checked": 48,
+    "page_routes": 41,
+    "status_mismatches": 0,
+    "php_error_markers": 0,
+    "evidence": "PUBLIC_HTTP_2026-11-01.tsv"
+  },
+  "database": {
+    "name": "expertsacademy_dev",
+    "tables": 27,
+    "page_locales": 52,
+    "builder_locales": 28,
+    "read_only_transaction": true,
+    "evidence": "DEVELOPMENT_SCHEMA_2026-11-01.json"
+  },
+  "not_rerun": [
+    "database-mutating integration tests",
+    "authenticated browser flows",
+    "valid form submissions",
+    "real image upload",
+    "payments",
+    "SMS/email/chat",
+    "SQL Server",
+    "full visual regression"
+  ],
+  "historical_results": {
+    "isolated_integration_passed": 38,
+    "isolated_no_schema_passed": 2,
+    "date": "2026-10-27"
+  },
+  "documentation_tools": {
+    "php_syntax_passed": 2,
+    "python_syntax_passed": 2,
+    "index_regeneration_idempotent": true,
+    "local_links_checked": 90,
+    "broken_local_links": 0
+  }
+}

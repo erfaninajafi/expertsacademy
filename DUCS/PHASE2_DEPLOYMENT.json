@@ -1,0 +1,41 @@
+{
+    "database": "expertsacademy_dev",
+    "serverVersion": "10.4.32-MariaDB",
+    "tableCount": 38,
+    "migrations": [
+        {
+            "version": "001_foundation",
+            "checksum": "ae00f8f1708d01811b7201397fb9dc4df7460131ca420dc63dde588bdabeb893"
+        },
+        {
+            "version": "002_design_studio",
+            "checksum": "b7f4077b45fd25d65cdfcbe6f4e7a0b2330876bde5b16ca780973402e36d868f"
+        }
+    ],
+    "sample": {
+        "id": "f58d1e69-0ae0-46e9-a67a-5a9caf2b0223",
+        "legacy_code": null,
+        "locale": "en",
+        "lock_version": 1,
+        "published_revision_id": null
+    },
+    "studioTableRows": {
+        "tbl_studio_component_lifecycle": 0,
+        "tbl_studio_component_proposals": 0,
+        "tbl_studio_component_versions": 64,
+        "tbl_studio_design_tokens": 2,
+        "tbl_studio_events": 2,
+        "tbl_studio_leads": 0,
+        "tbl_studio_media": 0,
+        "tbl_studio_migrations": 2,
+        "tbl_studio_pages": 2,
+        "tbl_studio_revisions": 2,
+        "tbl_studio_templates": 2
+    },
+    "migrationIdempotent": true,
+    "newTables": [
+        "tbl_studio_component_proposals",
+        "tbl_studio_component_lifecycle",
+        "tbl_studio_leads"
+    ]
+}

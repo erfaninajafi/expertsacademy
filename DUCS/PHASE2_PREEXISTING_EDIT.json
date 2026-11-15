@@ -1,0 +1,21 @@
+{
+  "observed": "2026-11-01",
+  "baseline_backup_time": "13:48:11 +03:30",
+  "page": "D5392E3/fa",
+  "before_revision": 9,
+  "observed_revision": 10,
+  "new_component_type": "middle_box",
+  "new_component_id": "39b8ec9a-48d6-490a-96ed-c832ef517f84",
+  "event_time": "2026-11-01 14:19:47 +03:30",
+  "request": {
+    "server": "expertsacademy.local Apache",
+    "method": "POST",
+    "path": "/site_admin/page_builder_api.php",
+    "status": 200,
+    "remote": "127.0.0.1",
+    "user_agent": "Firefox/155.0 on Ubuntu",
+    "referrer": "/site_admin/page_builder.php?code=D5392E3"
+  },
+  "attribution": "Request matches database timestamp. Actor identity unavailable in access log. Owner did not recognize the edit. Studio automated tests use Chrome and isolated port 8097/test schema; no legacy mutator calls found in their source.",
+  "action": "Preserved. No legacy record reverted or deleted. New restore-verified pre-migration checkpoint retains this edit. Migration comparison uses that explicit checkpoint; original backup comparison is retained separately."
+}

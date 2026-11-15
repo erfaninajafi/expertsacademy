@@ -1,0 +1,115 @@
+<?php
+include './includer_site.php';
+if (isset($_GET['section'])) {
+    $section = sqi($_GET['section']);
+    $result = Query("select * from tbl_categories where tbl_categories_type='4' and tbl_categories_url='$section' and tbl_categories_lng='$lng' ");
+} else {
+    $result = Query("select * from tbl_categories where tbl_categories_type='4' and tbl_categories_index='1' and tbl_categories_lng='$lng' ");
+}
+$read = mysqli_fetch_array($result);
+$keywords = $read['tbl_categories_keyword'];
+$discription = $read['tbl_categories_discription'];
+
+include 'header_site.inc.php';
+
+if (isset($_GET['section'])) {
+    $section = sqi($_GET['section']);
+    $result = Query("select * from tbl_categories where tbl_categories_type='4' and tbl_categories_url='$section' and tbl_categories_lng='$lng' ");
+} else {
+    $result = Query("select * from tbl_categories where tbl_categories_type='4' and tbl_categories_index='1' and tbl_categories_lng='$lng' ");
+}
+
+if (mysqli_num_rows($result) > 0) {
+    $read = mysqli_fetch_array($result);
+    $section = $read['tbl_categories_design'];
+    $section = explode(PHP_EOL, $section);
+    $thisCode = $read['tbl_categories_code'];
+    foreach ($section as $key => $value) {
+        if (!empty($value)) {
+            if ($key == '0') {
+                echo '<div class="col-12 section-margin-top-custom"></div>';
+            }
+            $thisValue = trim(str_replace(array('[', ']'), "", $value));
+            if ($thisValue == 'صفحه خام' || $thisValue == 'مدل کاستومایز یک عنوان' || $thisValue == 'مدل کاستومایز دوم عنوان' || $thisValue == 'تصویر بالای صفحه' || $thisValue == 'شعار بالای فوتر' || $thisValue == 'مدل نقشه' || $thisValue == 'تایتل مدل یک' || $thisValue == 'تایتل مدل دو' || $thisValue == 'تایتل مدل سه' || $thisValue == 'تایتل مدل چهار') {
+                $resultContent = Query("select * from tbl_textsection where tbl_textsection_type='58' and tbl_textsection_lng='$lng' and tbl_textsection_section='$thisValue' and tbl_textsection_parent='$thisCode'  ");
+                if ($thisValue == 'تایتل مدل یک') {
+                    include 'components_site/title-model-one.php';
+                } else if ($thisValue == 'مدل نقشه') {
+                    include 'components_site/map.php';
+                } else if ($thisValue == 'تایتل مدل دو') {
+                    include 'components_site/title-model-two.php';
+                } else if ($thisValue == 'تایتل مدل سه') {
+                    include 'components_site/title-model-three.php';
+                } else if ($thisValue == 'تایتل مدل چهار') {
+                    include 'components_site/title-model-four.php';
+                } else if ($thisValue == 'شعار بالای فوتر') {
+                    include 'components_site/footer-title.php';
+                } else if ($thisValue == 'تصویر بالای صفحه') {
+                    include 'components_site/top-image.php';
+                } else if ($thisValue == 'صفحه خام') {
+                    include 'components_site/page.php';
+                }
+            } else {
+                $resultContent = Query("select * from tbl_content where tbl_content_type='58' and tbl_content_fld1='$lng' and tbl_content_section='$thisValue' and tbl_content_parent='$thisCode' order by tbl_content_order ASC ");
+                if ($thisValue == 'اسلایدر') {
+                    include 'components_site/slider.php';
+                } else if ($thisValue == 'لوگو تولتیپ') {
+                    include 'components_site/logo-tooltip.php';
+                } else if ($thisValue == 'لیست زیر هم') {
+                    include 'components_site/list-zire-ham.php';
+                } else if ($thisValue == 'لیست کنار هم') {
+                    include 'components_site/list-kenar-ham.php';
+                } else if ($thisValue == 'مدل کاستومایز یک لیست') {
+                    include 'components_site/custom-one.php';
+                } else if ($thisValue == 'مدل کاستومایز سوم لیست') {
+                    include 'components_site/custom-three.php';
+                } else if ($thisValue == 'اسلایدر تصویر') {
+                    include 'components_site/image-slider.php';
+                } else if ($thisValue == 'اسلایدر محتوی') {
+                    include 'components_site/slider-content.php';
+                } else if ($thisValue == 'لیست کنار هم دوم') {
+                    include 'components_site/section-side.php';
+                } else if ($thisValue == 'محتوی تکی') {
+                    include 'components_site/single-content.php';
+                } else if ($thisValue == 'محتوی چپ و راست') {
+                    include 'components_site/left-right-content.php';
+                } else if ($thisValue == 'محتوی تب') {
+                    include 'components_site/tab-content.php';
+                } else if ($thisValue == 'محتوی چپ و راست دوم') {
+                    include 'components_site/left-right-content2.php';
+                } else if ($thisValue == 'اسلایدر دایره') {
+                    include 'components_site/circle-slider.php';
+                } else if ($thisValue == 'مدل کاستومایز دوم لیست') {
+                    include 'components_site/custom-two.php';
+                } else if ($thisValue == 'مدل کاستومایز چهارم لیست') {
+                    include 'components_site/custom-four.php';
+                } else if ($thisValue == 'باکس میانی') {
+                    include 'components_site/middle-box.php';
+                } else if ($thisValue == 'باکس میانی دو') {
+                    include 'components_site/middle-box2.php';
+                } else if ($thisValue == 'باکس میانی سه') {
+                    include 'components_site/middle-box3.php';
+                } else if ($thisValue == 'اسلایدر باکس') {
+                    include 'components_site/slider-box.php';
+                } else if ($thisValue == 'اسلایدر باکس لینکی') {
+                    include 'components_site/slider-box-link.php';
+                } else if ($thisValue == 'لوگو بدون تولتیپ') {
+                    include 'components_site/logo.php';
+                } else if ($thisValue == 'سوالات متداول') {
+                    include 'components_site/faq.php';
+                } else if ($thisValue == 'پیوستن به ما') {
+                    include 'components_site/job.php';
+                } else if ($thisValue == 'سوالات متداول دوم') {
+                    include 'components_site/aca.php';
+                } else if ($thisValue == 'فرم تماس با ما') {
+                    include 'components_site/contact.php';
+                }
+            }
+        }
+    }
+}
+?>
+
+<?php
+include 'footer_site.inc.php';
+?>

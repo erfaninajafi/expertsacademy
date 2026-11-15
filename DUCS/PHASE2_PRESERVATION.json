@@ -1,0 +1,323 @@
+{
+    "checked_at": "2026-11-01T12:30:07+00:00",
+    "baseline_tables": 35,
+    "legacy_tables": 27,
+    "failures": [],
+    "tables": {
+        "tbl_ads": {
+            "before_rows": 8,
+            "after_rows": 8,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "ebd9b23c1044a056c1aff8e888f9b17ce9c96ed5a07b6ed571f6e81989d1f3d2",
+            "after_sha256": "ebd9b23c1044a056c1aff8e888f9b17ce9c96ed5a07b6ed571f6e81989d1f3d2"
+        },
+        "tbl_categories": {
+            "before_rows": 62,
+            "after_rows": 62,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "5f3abea0072b7e5d1269ca5a7e5d8aefd06c5fcd4d16e39429d4477a0392602c",
+            "after_sha256": "5f3abea0072b7e5d1269ca5a7e5d8aefd06c5fcd4d16e39429d4477a0392602c"
+        },
+        "tbl_certificate": {
+            "before_rows": 8,
+            "after_rows": 8,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "99b93a41c23713d666fbdbf4039770734146aeb043a0a8f206604e3923587df5",
+            "after_sha256": "99b93a41c23713d666fbdbf4039770734146aeb043a0a8f206604e3923587df5"
+        },
+        "tbl_class": {
+            "before_rows": 47,
+            "after_rows": 47,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "02b1b25e924fc20d6ff570dd071a33b758863d01473ec5b3e86a5315a6ce87c0",
+            "after_sha256": "02b1b25e924fc20d6ff570dd071a33b758863d01473ec5b3e86a5315a6ce87c0"
+        },
+        "tbl_comment": {
+            "before_rows": 1,
+            "after_rows": 1,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "0c32c6966ccd4021b0f5d59c23d8363bf196aafb90ec2711d5f37b2fe83a14da",
+            "after_sha256": "0c32c6966ccd4021b0f5d59c23d8363bf196aafb90ec2711d5f37b2fe83a14da"
+        },
+        "tbl_content": {
+            "before_rows": 1543,
+            "after_rows": 1543,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "ab096d508ce22f10fb864369a6d69a78023a7e8f64166ae8305db2c01752e2ce",
+            "after_sha256": "ab096d508ce22f10fb864369a6d69a78023a7e8f64166ae8305db2c01752e2ce"
+        },
+        "tbl_course": {
+            "before_rows": 500,
+            "after_rows": 500,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "f0ae0279fdee1dc0bf6f0b88ed3394c97eccccdd155df1ccd516464a8b40a9b8",
+            "after_sha256": "f0ae0279fdee1dc0bf6f0b88ed3394c97eccccdd155df1ccd516464a8b40a9b8"
+        },
+        "tbl_courseparent": {
+            "before_rows": 259,
+            "after_rows": 259,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "a213d22c843df9a4ed74303ae4c4ec72c567dc04720cc9966c24773ee57ab0a6",
+            "after_sha256": "a213d22c843df9a4ed74303ae4c4ec72c567dc04720cc9966c24773ee57ab0a6"
+        },
+        "tbl_form": {
+            "before_rows": 21,
+            "after_rows": 21,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "eaa353dc98ec73b9e3a4f22e7ca49c0bee854b5aa8e530330c5a88d79150e759",
+            "after_sha256": "eaa353dc98ec73b9e3a4f22e7ca49c0bee854b5aa8e530330c5a88d79150e759"
+        },
+        "tbl_logo": {
+            "before_rows": 10,
+            "after_rows": 10,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "61c10888167f8c1741f0d2248d5762a7f50e6e964818b4fe73b91edf0d187998",
+            "after_sha256": "61c10888167f8c1741f0d2248d5762a7f50e6e964818b4fe73b91edf0d187998"
+        },
+        "tbl_menu": {
+            "before_rows": 32,
+            "after_rows": 32,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "f8d2a58cba989d50c268cad0c099ce5965ed987b6ab9eb17dcc5be871882fd1e",
+            "after_sha256": "f8d2a58cba989d50c268cad0c099ce5965ed987b6ab9eb17dcc5be871882fd1e"
+        },
+        "tbl_menufooter": {
+            "before_rows": 36,
+            "after_rows": 36,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "54060d3c14e655c9d211c81b5bfe43ab51f3a66d2287e574959d42f3d9720d8c",
+            "after_sha256": "54060d3c14e655c9d211c81b5bfe43ab51f3a66d2287e574959d42f3d9720d8c"
+        },
+        "tbl_page_builder_layouts": {
+            "before_rows": 28,
+            "after_rows": 28,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "d6996ff073a60b8995bc243efd5d8a9f9382236c2927cb71ab24014b3ab3c22e",
+            "after_sha256": "d6996ff073a60b8995bc243efd5d8a9f9382236c2927cb71ab24014b3ab3c22e"
+        },
+        "tbl_page_component_instances": {
+            "before_rows": 194,
+            "after_rows": 194,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "4cf07c91e03003eed5b29892ffb394e91bd9de335de919232d47653d2f00f433",
+            "after_sha256": "4cf07c91e03003eed5b29892ffb394e91bd9de335de919232d47653d2f00f433"
+        },
+        "tbl_pages": {
+            "before_rows": 4,
+            "after_rows": 4,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "13ddd0bcddbf4b8f123167a4a8cee7af7216e86fcdf0a7ef4dcf74a1e16fe8ce",
+            "after_sha256": "13ddd0bcddbf4b8f123167a4a8cee7af7216e86fcdf0a7ef4dcf74a1e16fe8ce"
+        },
+        "tbl_question": {
+            "before_rows": 225,
+            "after_rows": 225,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "7b7e9f204b43ae634558ca7c3f8b163ebc2a19c3c8a9110e627f8c3b3237c328",
+            "after_sha256": "7b7e9f204b43ae634558ca7c3f8b163ebc2a19c3c8a9110e627f8c3b3237c328"
+        },
+        "tbl_rateuser": {
+            "before_rows": 1,
+            "after_rows": 1,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "7819fc3b895ce616c75407e9ae077eb1aa1a9c00995b93ab63925e869af3df3b",
+            "after_sha256": "7819fc3b895ce616c75407e9ae077eb1aa1a9c00995b93ab63925e869af3df3b"
+        },
+        "tbl_rating": {
+            "before_rows": 1,
+            "after_rows": 1,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "87798eee19d8696977a664759352744d3d91012fad14468a88b26720a49297de",
+            "after_sha256": "87798eee19d8696977a664759352744d3d91012fad14468a88b26720a49297de"
+        },
+        "tbl_register": {
+            "before_rows": 1230,
+            "after_rows": 1230,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "942f470a47947220daaf6254004406ea79247c3e236b9f6f7316073b30e7484b",
+            "after_sha256": "942f470a47947220daaf6254004406ea79247c3e236b9f6f7316073b30e7484b"
+        },
+        "tbl_section": {
+            "before_rows": 358,
+            "after_rows": 358,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "ec5766c2948a3e2e988b0e113369b45587f1ea3e38e0ccecfd058db4ca804dfe",
+            "after_sha256": "ec5766c2948a3e2e988b0e113369b45587f1ea3e38e0ccecfd058db4ca804dfe"
+        },
+        "tbl_seo": {
+            "before_rows": 1,
+            "after_rows": 1,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "d8b322d923a59e0d23d9719304236a1f45203fb8ee760cb4679fbcf49d335bac",
+            "after_sha256": "d8b322d923a59e0d23d9719304236a1f45203fb8ee760cb4679fbcf49d335bac"
+        },
+        "tbl_setting": {
+            "before_rows": 1,
+            "after_rows": 1,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "1506a5f3fc85b7b305a19c6a3484e830f5229cd26e02c9f82bcd367d9812895e",
+            "after_sha256": "1506a5f3fc85b7b305a19c6a3484e830f5229cd26e02c9f82bcd367d9812895e"
+        },
+        "tbl_studio_component_versions": {
+            "before_rows": 3,
+            "after_rows": 64,
+            "missing_original_rows": 0,
+            "unchanged": false,
+            "legacy": false,
+            "before_sha256": "9ab5a03df70e1063fb30397252e0463288620cbbbd6fe9787941e265d9e9205d",
+            "after_sha256": "b36cc52748e4e89b50dfde0a8b90a05dd387f48950bb13d28537b5dd3d0b18a1"
+        },
+        "tbl_studio_design_tokens": {
+            "before_rows": 1,
+            "after_rows": 2,
+            "missing_original_rows": 0,
+            "unchanged": false,
+            "legacy": false,
+            "before_sha256": "d2d426505e8fb049a74b3c58193cbf11c6d75a7475fb09692400d7fa6a9f97b7",
+            "after_sha256": "afa0b76cedeae9dd1fec9f54ee5f97eb5245cdb2228a17326e34d3eeab1150f8"
+        },
+        "tbl_studio_events": {
+            "before_rows": 1,
+            "after_rows": 2,
+            "missing_original_rows": 0,
+            "unchanged": false,
+            "legacy": false,
+            "before_sha256": "2531debece3dc3f68dae01f21bbd0d01061f311ba82cab4e8c48384ec9467999",
+            "after_sha256": "a73ec754027cab0b7160cbcd881a593b92bb9236fa7699352faf05c1e3c29dc2"
+        },
+        "tbl_studio_media": {
+            "before_rows": 0,
+            "after_rows": 0,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": false,
+            "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "after_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "tbl_studio_migrations": {
+            "before_rows": 1,
+            "after_rows": 2,
+            "missing_original_rows": 0,
+            "unchanged": false,
+            "legacy": false,
+            "before_sha256": "dccf8d0d809803c86eaf11e32c2fdaa38f2dfb9922d43ea2d2c6031237e262b4",
+            "after_sha256": "204d476c3df8c000de2a6fb40ee4ae1418d4ebb0ff3d5c40b00c5ba7025ede33"
+        },
+        "tbl_studio_pages": {
+            "before_rows": 1,
+            "after_rows": 2,
+            "missing_original_rows": 0,
+            "unchanged": false,
+            "legacy": false,
+            "before_sha256": "7e5c65714e541d370988b87dc5fb9b0f9f4745e90587f30f8dad66b48af46234",
+            "after_sha256": "4afb879e0879e1e348276c9a0c125489841430b6805015e34d7e7043106a42fd"
+        },
+        "tbl_studio_revisions": {
+            "before_rows": 1,
+            "after_rows": 2,
+            "missing_original_rows": 0,
+            "unchanged": false,
+            "legacy": false,
+            "before_sha256": "2719cd7720c24e8211e4d84efb01afcb95d5faaf0eefed5be1fa58c7c51b3cd9",
+            "after_sha256": "3155a05dce691c0e302595e557b131995756aa6547bac9b4113abfeab4aba4df"
+        },
+        "tbl_studio_templates": {
+            "before_rows": 1,
+            "after_rows": 2,
+            "missing_original_rows": 0,
+            "unchanged": false,
+            "legacy": false,
+            "before_sha256": "0958417e65a46eb9d992b7a2eeba61f745eda80c386e42ce4da002c2edbb70d2",
+            "after_sha256": "d7c17467c93bd9193d991fe7a696d6f65b14cf49e938c8022ebe3cca16ad7676"
+        },
+        "tbl_teacher": {
+            "before_rows": 11,
+            "after_rows": 11,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "866664cda31f617e03d4b02ce98087e0232835622b3871033e8798d3940090e6",
+            "after_sha256": "866664cda31f617e03d4b02ce98087e0232835622b3871033e8798d3940090e6"
+        },
+        "tbl_textsection": {
+            "before_rows": 325,
+            "after_rows": 325,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "8dcbf621054d325ba8bd5282a5aa86722280d7b8b8f3bde37c975a7b2a20f36f",
+            "after_sha256": "8dcbf621054d325ba8bd5282a5aa86722280d7b8b8f3bde37c975a7b2a20f36f"
+        },
+        "tbl_user": {
+            "before_rows": 4,
+            "after_rows": 4,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "b56adb48c61a5cbf8ffc4e87c574c873c41daa1b9181e270db95c7a619594bee",
+            "after_sha256": "b56adb48c61a5cbf8ffc4e87c574c873c41daa1b9181e270db95c7a619594bee"
+        },
+        "tbl_view": {
+            "before_rows": 6938,
+            "after_rows": 6938,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "8dc7fb51911581e76d1364403107387d2ba2e4c8c54ab0aaf65eefa7a65631b0",
+            "after_sha256": "8dc7fb51911581e76d1364403107387d2ba2e4c8c54ab0aaf65eefa7a65631b0"
+        },
+        "tbl_workshop": {
+            "before_rows": 1,
+            "after_rows": 1,
+            "missing_original_rows": 0,
+            "unchanged": true,
+            "legacy": true,
+            "before_sha256": "f243f3f00f3950e4d9f90b25af74baf4d28f288aaaca110fa48bbb5d52aae32d",
+            "after_sha256": "f243f3f00f3950e4d9f90b25af74baf4d28f288aaaca110fa48bbb5d52aae32d"
+        }
+    }
+}

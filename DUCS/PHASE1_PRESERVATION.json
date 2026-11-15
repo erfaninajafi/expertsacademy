@@ -1,0 +1,152 @@
+{
+    "checked_at": "2026-11-01T06:03:30+00:00",
+    "legacy_tables_checked": 27,
+    "changed_legacy_tables": [],
+    "legacy_tables": {
+        "tbl_ads": {
+            "unchanged": true,
+            "rows": 8,
+            "content_sha256": "ebd9b23c1044a056c1aff8e888f9b17ce9c96ed5a07b6ed571f6e81989d1f3d2"
+        },
+        "tbl_categories": {
+            "unchanged": true,
+            "rows": 62,
+            "content_sha256": "5f3abea0072b7e5d1269ca5a7e5d8aefd06c5fcd4d16e39429d4477a0392602c"
+        },
+        "tbl_certificate": {
+            "unchanged": true,
+            "rows": 8,
+            "content_sha256": "99b93a41c23713d666fbdbf4039770734146aeb043a0a8f206604e3923587df5"
+        },
+        "tbl_class": {
+            "unchanged": true,
+            "rows": 47,
+            "content_sha256": "02b1b25e924fc20d6ff570dd071a33b758863d01473ec5b3e86a5315a6ce87c0"
+        },
+        "tbl_comment": {
+            "unchanged": true,
+            "rows": 1,
+            "content_sha256": "0c32c6966ccd4021b0f5d59c23d8363bf196aafb90ec2711d5f37b2fe83a14da"
+        },
+        "tbl_content": {
+            "unchanged": true,
+            "rows": 1543,
+            "content_sha256": "ab096d508ce22f10fb864369a6d69a78023a7e8f64166ae8305db2c01752e2ce"
+        },
+        "tbl_course": {
+            "unchanged": true,
+            "rows": 500,
+            "content_sha256": "f0ae0279fdee1dc0bf6f0b88ed3394c97eccccdd155df1ccd516464a8b40a9b8"
+        },
+        "tbl_courseparent": {
+            "unchanged": true,
+            "rows": 259,
+            "content_sha256": "a213d22c843df9a4ed74303ae4c4ec72c567dc04720cc9966c24773ee57ab0a6"
+        },
+        "tbl_form": {
+            "unchanged": true,
+            "rows": 21,
+            "content_sha256": "eaa353dc98ec73b9e3a4f22e7ca49c0bee854b5aa8e530330c5a88d79150e759"
+        },
+        "tbl_logo": {
+            "unchanged": true,
+            "rows": 10,
+            "content_sha256": "61c10888167f8c1741f0d2248d5762a7f50e6e964818b4fe73b91edf0d187998"
+        },
+        "tbl_menu": {
+            "unchanged": true,
+            "rows": 32,
+            "content_sha256": "f8d2a58cba989d50c268cad0c099ce5965ed987b6ab9eb17dcc5be871882fd1e"
+        },
+        "tbl_menufooter": {
+            "unchanged": true,
+            "rows": 36,
+            "content_sha256": "54060d3c14e655c9d211c81b5bfe43ab51f3a66d2287e574959d42f3d9720d8c"
+        },
+        "tbl_page_builder_layouts": {
+            "unchanged": true,
+            "rows": 28,
+            "content_sha256": "818d830c2e92d5966dea498ce92368009ebc49df487016793665c8d195107bc4"
+        },
+        "tbl_page_component_instances": {
+            "unchanged": true,
+            "rows": 193,
+            "content_sha256": "a1c4c6f5a62a86fd6cd478b43ab56f12b04ffb3423765d1d4d54f1b1e25a664e"
+        },
+        "tbl_pages": {
+            "unchanged": true,
+            "rows": 4,
+            "content_sha256": "13ddd0bcddbf4b8f123167a4a8cee7af7216e86fcdf0a7ef4dcf74a1e16fe8ce"
+        },
+        "tbl_question": {
+            "unchanged": true,
+            "rows": 225,
+            "content_sha256": "7b7e9f204b43ae634558ca7c3f8b163ebc2a19c3c8a9110e627f8c3b3237c328"
+        },
+        "tbl_rateuser": {
+            "unchanged": true,
+            "rows": 1,
+            "content_sha256": "7819fc3b895ce616c75407e9ae077eb1aa1a9c00995b93ab63925e869af3df3b"
+        },
+        "tbl_rating": {
+            "unchanged": true,
+            "rows": 1,
+            "content_sha256": "87798eee19d8696977a664759352744d3d91012fad14468a88b26720a49297de"
+        },
+        "tbl_register": {
+            "unchanged": true,
+            "rows": 1230,
+            "content_sha256": "942f470a47947220daaf6254004406ea79247c3e236b9f6f7316073b30e7484b"
+        },
+        "tbl_section": {
+            "unchanged": true,
+            "rows": 358,
+            "content_sha256": "ec5766c2948a3e2e988b0e113369b45587f1ea3e38e0ccecfd058db4ca804dfe"
+        },
+        "tbl_seo": {
+            "unchanged": true,
+            "rows": 1,
+            "content_sha256": "d8b322d923a59e0d23d9719304236a1f45203fb8ee760cb4679fbcf49d335bac"
+        },
+        "tbl_setting": {
+            "unchanged": true,
+            "rows": 1,
+            "content_sha256": "1506a5f3fc85b7b305a19c6a3484e830f5229cd26e02c9f82bcd367d9812895e"
+        },
+        "tbl_teacher": {
+            "unchanged": true,
+            "rows": 11,
+            "content_sha256": "866664cda31f617e03d4b02ce98087e0232835622b3871033e8798d3940090e6"
+        },
+        "tbl_textsection": {
+            "unchanged": true,
+            "rows": 325,
+            "content_sha256": "8dcbf621054d325ba8bd5282a5aa86722280d7b8b8f3bde37c975a7b2a20f36f"
+        },
+        "tbl_user": {
+            "unchanged": true,
+            "rows": 4,
+            "content_sha256": "b56adb48c61a5cbf8ffc4e87c574c873c41daa1b9181e270db95c7a619594bee"
+        },
+        "tbl_view": {
+            "unchanged": true,
+            "rows": 6938,
+            "content_sha256": "8dc7fb51911581e76d1364403107387d2ba2e4c8c54ab0aaf65eefa7a65631b0"
+        },
+        "tbl_workshop": {
+            "unchanged": true,
+            "rows": 1,
+            "content_sha256": "f243f3f00f3950e4d9f90b25af74baf4d28f288aaaca110fa48bbb5d52aae32d"
+        }
+    },
+    "studio_table_rows": {
+        "tbl_studio_component_versions": 3,
+        "tbl_studio_design_tokens": 1,
+        "tbl_studio_events": 1,
+        "tbl_studio_media": 0,
+        "tbl_studio_migrations": 1,
+        "tbl_studio_pages": 1,
+        "tbl_studio_revisions": 1,
+        "tbl_studio_templates": 1
+    }
+}

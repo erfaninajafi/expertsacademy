@@ -1,0 +1,6 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="6.9251819999999995">
+<testsuite name="design-delivery.spec.ts" timestamp="2026-11-01T12:28:45.072Z" hostname="chromium" tests="1" failures="0" skipped="0" time="6.461" errors="0">
+<testcase name="complete demonstration in mobile, RTL and dark layouts; final gallery assets" classname="design-delivery.spec.ts" time="6.461">
+</testcase>
+</testsuite>
+</testsuites>

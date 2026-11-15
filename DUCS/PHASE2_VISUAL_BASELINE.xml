@@ -1,0 +1,615 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites><testsuite name="component-matrix.spec.ts / shard 1" timestamp="2026-11-01T12:21:42.050Z" hostname="chromium" tests="1" failures="0" skipped="0" time="211.033" errors="0">
+<testcase name="every registered composition: responsive, RTL, dark mode, keyboard and accessibility matrix" classname="component-matrix.spec.ts" time="211.033">
+<system-out>
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--split--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--split--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--split--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--poster--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--poster--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--poster--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--poster--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--poster--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--framed--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--framed--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--framed--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--framed--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--asymmetric--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--asymmetric--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--asymmetric--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--asymmetric--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v1--asymmetric--desktop-en-dark.png is re-generated, writing actual.
+Completed category heroes: 24 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--horizontal--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--horizontal--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--horizontal--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--horizontal--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--horizontal--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--horizontal--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--centered--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--centered--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--centered--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--centered--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--centered--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--centered--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--sidebar--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--sidebar--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--sidebar--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--sidebar--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--sidebar--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--stacked--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--stacked--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--stacked--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--stacked--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--stacked--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-mega--v1--stacked--desktop-en-dark.png is re-generated, writing actual.
+Completed category navigation: 48 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/bento-impact--v1--mosaic--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/bento-impact--v1--feature-rail--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/bento-impact--v1--feature-rail--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/bento-impact--v1--feature-rail--desktop-en-dark.png is re-generated, writing actual.
+Completed category bento: 72 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/editorial-article--v1--dropcap--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/editorial-article--v1--dropcap--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/editorial-article--v1--dropcap--desktop-en-dark.png is re-generated, writing actual.
+Completed category editorial: 96 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/gallery-film--v1--contact-sheet--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/gallery-film--v1--contact-sheet--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/gallery-film--v1--contact-sheet--desktop-en-dark.png is re-generated, writing actual.
+Completed category galleries: 120 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/testimonial-rating--v1--columns--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/testimonial-rating--v1--columns--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/testimonial-rating--v1--columns--desktop-en-dark.png is re-generated, writing actual.
+Completed category testimonials: 144 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/stats-scorecard--v1--ledger--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/stats-scorecard--v1--ledger--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/stats-scorecard--v1--ledger--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/stats-scorecard--v1--ledger--desktop-en-dark.png is re-generated, writing actual.
+Completed category statistics: 168 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/process-steps--v1--horizontal--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/process-steps--v1--horizontal--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/process-steps--v1--vertical--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/process-steps--v1--vertical--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/process-steps--v1--vertical--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/process-steps--v1--vertical--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/process-steps--v1--vertical--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/process-steps--v1--cards--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/process-steps--v1--editorial--mobile-en-light.png is re-generated, writing actual.
+Completed category process: 192 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-journey--v1--chapters--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-journey--v1--chapters--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-journey--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-journey--v1--split--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-journey--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-journey--v1--split--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-journey--v1--split--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-journey--v1--panels--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-journey--v1--editorial--mobile-en-light.png is re-generated, writing actual.
+Completed category storytelling: 216 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--split--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--split--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--split--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--split--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--billboard--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--billboard--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--billboard--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--billboard--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--billboard--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--billboard--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--framed--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--framed--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--framed--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--framed--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--framed--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--framed--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--rail--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--rail--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--rail--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--rail--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--rail--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-editorial--v1--rail--desktop-en-dark.png is re-generated, writing actual.
+Completed category calls-to-action: 240 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--split--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--split--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--split--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--split--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--card--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--card--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--card--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--card--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--card--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--card--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--editorial--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--editorial--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--editorial--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--stacked--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--stacked--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--stacked--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--stacked--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--stacked--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-newsletter--v1--stacked--desktop-en-dark.png is re-generated, writing actual.
+Completed category forms: 264 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--split--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--columns--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--columns--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--columns--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--columns--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--columns--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--ruled--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--ruled--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--cards--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-spotlight--v1--cards--mobile-en-light.png is re-generated, writing actual.
+Completed category faq: 288 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/team-grid--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/team-grid--v1--editorial--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/team-grid--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/team-grid--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+Completed category people: 312 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/case-study--v1--grid--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/case-study--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/case-study--v1--editorial--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/case-study--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/case-study--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/case-study--v1--filmstrip--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/case-study--v1--index--mobile-en-light.png is re-generated, writing actual.
+Completed category projects: 336 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--cards--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--cards--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--cards--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--cards--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--cards--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--editorial--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--editorial--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--rail--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--stacked--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--stacked--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--stacked--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--stacked--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/event-schedule--v1--stacked--desktop-en-dark.png is re-generated, writing actual.
+Completed category education: 360 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--split--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--split--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--poster--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--poster--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--poster--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--poster--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--poster--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--framed--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--framed--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--asymmetric--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--asymmetric--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--asymmetric--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--asymmetric--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-editorial--v2--asymmetric--desktop-en-dark.png is re-generated, writing actual.
+Matrix complete: 384 renders, 0 failures
+
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="component-matrix.spec.ts / shard 2" timestamp="2026-11-01T12:21:42.066Z" hostname="chromium" tests="1" failures="0" skipped="0" time="171.098" errors="0">
+<testcase name="every registered composition: responsive, RTL, dark mode, keyboard and accessibility matrix" classname="component-matrix.spec.ts" time="171.098">
+<system-out>
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--split--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--split--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--poster--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--poster--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--poster--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--poster--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--poster--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--framed--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--framed--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--framed--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--framed--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--framed--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--asymmetric--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--asymmetric--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--asymmetric--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--asymmetric--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-platform--v1--asymmetric--desktop-en-dark.png is re-generated, writing actual.
+Completed category heroes: 24 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--horizontal--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--horizontal--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--horizontal--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--horizontal--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--horizontal--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--horizontal--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--centered--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--centered--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--centered--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--centered--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--centered--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--centered--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--sidebar--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--sidebar--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--sidebar--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--sidebar--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--sidebar--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--sidebar--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--stacked--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--stacked--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--stacked--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--stacked--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--stacked--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-utility--v1--stacked--desktop-en-dark.png is re-generated, writing actual.
+Completed category navigation: 48 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-split--v1--alternating--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-split--v1--alternating--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-split--v1--alternating--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-split--v1--numbered--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-split--v1--numbered--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-split--v1--numbered--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-split--v1--numbered--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-split--v1--numbered--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-split--v1--poster--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-split--v1--rail--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-split--v1--rail--mobile-en-light.png is re-generated, writing actual.
+Completed category features: 72 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/editorial-manifesto--v1--dropcap--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/editorial-manifesto--v1--dropcap--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/editorial-manifesto--v1--dropcap--desktop-en-dark.png is re-generated, writing actual.
+Completed category editorial: 96 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/gallery-carousel--v1--contact-sheet--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/gallery-carousel--v1--contact-sheet--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/gallery-carousel--v1--contact-sheet--desktop-en-dark.png is re-generated, writing actual.
+Completed category galleries: 120 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-cloud--v1--grid--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-cloud--v1--grid--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-cloud--v1--grid--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-cloud--v1--grid--desktop-en-dark.png is re-generated, writing actual.
+Completed category logos: 144 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/stats-progress--v1--ledger--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/stats-progress--v1--ledger--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/stats-progress--v1--ledger--desktop-en-dark.png is re-generated, writing actual.
+Completed category statistics: 168 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/timeline-milestones--v1--vertical--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/timeline-milestones--v1--vertical--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/timeline-milestones--v1--vertical--desktop-en-dark.png is re-generated, writing actual.
+Completed category process: 192 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/pricing-plans--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/pricing-plans--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/pricing-plans--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+Completed category pricing: 216 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-card--v1--billboard--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-card--v1--billboard--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-card--v1--billboard--desktop-en-dark.png is re-generated, writing actual.
+Completed category calls-to-action: 240 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-application--v1--split--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-application--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-application--v1--card--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-application--v1--card--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-application--v1--card--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-application--v1--card--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-application--v1--card--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-application--v1--editorial--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-application--v1--editorial--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-application--v1--stacked--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-application--v1--stacked--mobile-en-light.png is re-generated, writing actual.
+Completed category forms: 264 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-solutions--v1--vertical--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-solutions--v1--vertical--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-solutions--v1--vertical--desktop-en-dark.png is re-generated, writing actual.
+Completed category tabs: 288 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/expert-profile--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/expert-profile--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/expert-profile--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+Completed category people: 312 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/project-index--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/project-index--v1--editorial--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/project-index--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/project-index--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+Completed category projects: 336 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--columns--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--columns--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--columns--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--columns--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--columns--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--columns--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--editorial--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--editorial--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--editorial--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--compact--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--compact--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--compact--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--compact--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--compact--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--compact--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--split--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--split--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--split--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-directory--v1--split--desktop-en-dark.png is re-generated, writing actual.
+Matrix complete: 360 renders, 0 failures
+
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="component-matrix.spec.ts / shard 3" timestamp="2026-11-01T12:21:42.038Z" hostname="chromium" tests="1" failures="0" skipped="0" time="167.337" errors="0">
+<testcase name="every registered composition: responsive, RTL, dark mode, keyboard and accessibility matrix" classname="component-matrix.spec.ts" time="167.337">
+<system-out>
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-immersive--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-immersive--v1--poster--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-immersive--v1--poster--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-immersive--v1--poster--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-immersive--v1--poster--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-immersive--v1--framed--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/hero-immersive--v1--asymmetric--mobile-en-light.png is re-generated, writing actual.
+Completed category heroes: 24 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/bento-capabilities--v1--feature-rail--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/bento-capabilities--v1--feature-rail--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/bento-capabilities--v1--feature-rail--desktop-en-dark.png is re-generated, writing actual.
+Completed category bento: 48 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-orbit--v1--alternating--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-orbit--v1--alternating--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-orbit--v1--numbered--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-orbit--v1--numbered--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-orbit--v1--numbered--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-orbit--v1--numbered--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-orbit--v1--numbered--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-orbit--v1--poster--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-orbit--v1--rail--mobile-en-light.png is re-generated, writing actual.
+Completed category features: 72 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/editorial-quote--v1--dropcap--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/editorial-quote--v1--dropcap--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/editorial-quote--v1--dropcap--desktop-en-dark.png is re-generated, writing actual.
+Completed category editorial: 96 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/testimonial-spotlight--v1--columns--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/testimonial-spotlight--v1--columns--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/testimonial-spotlight--v1--columns--desktop-en-dark.png is re-generated, writing actual.
+Completed category testimonials: 120 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--row--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--row--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--row--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--row--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--grid--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--grid--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--grid--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--grid--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--grid--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--grid--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--feature--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--feature--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--feature--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--stacked--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--stacked--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-ecosystem--v1--stacked--mobile-fa-dark.png is re-generated, writing actual.
+Completed category logos: 144 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/stats-dashboard--v1--ledger--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/stats-dashboard--v1--ledger--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/stats-dashboard--v1--ledger--desktop-en-dark.png is re-generated, writing actual.
+Completed category statistics: 168 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-chapters--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-chapters--v1--split--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-chapters--v1--split--desktop-en-dark.png is re-generated, writing actual.
+Completed category storytelling: 192 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/pricing-comparison--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/pricing-comparison--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/pricing-comparison--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+Completed category pricing: 216 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--split--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--split--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--billboard--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--billboard--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--billboard--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--billboard--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--billboard--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--framed--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--framed--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--rail--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/cta-contact--v1--rail--mobile-en-light.png is re-generated, writing actual.
+Completed category calls-to-action: 240 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-list--v1--columns--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-list--v1--columns--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-list--v1--columns--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-list--v1--columns--desktop-en-dark.png is re-generated, writing actual.
+Completed category faq: 264 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-curriculum--v1--vertical--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-curriculum--v1--vertical--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-curriculum--v1--vertical--desktop-en-dark.png is re-generated, writing actual.
+Completed category tabs: 288 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/team-spotlight--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/team-spotlight--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/team-spotlight--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+Completed category people: 312 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/course-catalog--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/course-catalog--v1--editorial--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/course-catalog--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/course-catalog--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+Completed category education: 336 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--columns--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--columns--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--columns--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--columns--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--columns--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--columns--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--editorial--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--editorial--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--editorial--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--compact--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--compact--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--compact--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--compact--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--compact--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--compact--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--split--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--split--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--split--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/footer-editorial--v1--split--desktop-en-dark.png is re-generated, writing actual.
+Matrix complete: 360 renders, 0 failures
+
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="component-matrix.spec.ts / shard 4" timestamp="2026-11-01T12:21:42.036Z" hostname="chromium" tests="1" failures="0" skipped="0" time="171.909" errors="0">
+<testcase name="every registered composition: responsive, RTL, dark mode, keyboard and accessibility matrix" classname="component-matrix.spec.ts" time="171.909">
+<system-out>
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--horizontal--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--horizontal--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--horizontal--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--horizontal--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--horizontal--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--horizontal--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--centered--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--centered--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--centered--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--centered--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--centered--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--centered--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--sidebar--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--sidebar--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--sidebar--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--sidebar--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--sidebar--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--sidebar--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--stacked--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--stacked--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--stacked--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--stacked--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--stacked--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/navigation-primary--v1--stacked--desktop-en-dark.png is re-generated, writing actual.
+Completed category navigation: 24 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/bento-learning--v1--feature-rail--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/bento-learning--v1--feature-rail--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/bento-learning--v1--feature-rail--desktop-en-dark.png is re-generated, writing actual.
+Completed category bento: 48 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-workflow--v1--alternating--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-workflow--v1--numbered--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-workflow--v1--numbered--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-workflow--v1--numbered--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-workflow--v1--numbered--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-workflow--v1--numbered--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-workflow--v1--poster--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/feature-workflow--v1--rail--mobile-en-light.png is re-generated, writing actual.
+Completed category features: 72 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/gallery-masonry--v1--contact-sheet--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/gallery-masonry--v1--contact-sheet--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/gallery-masonry--v1--contact-sheet--desktop-en-dark.png is re-generated, writing actual.
+Completed category galleries: 96 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/testimonial-wall--v1--columns--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/testimonial-wall--v1--columns--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/testimonial-wall--v1--columns--desktop-en-dark.png is re-generated, writing actual.
+Completed category testimonials: 120 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-partners--v1--row--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-partners--v1--row--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-partners--v1--grid--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-partners--v1--grid--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-partners--v1--grid--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-partners--v1--grid--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-partners--v1--grid--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-partners--v1--feature--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-partners--v1--feature--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-partners--v1--stacked--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/logo-partners--v1--stacked--mobile-en-light.png is re-generated, writing actual.
+Completed category logos: 144 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/timeline-roadmap--v1--vertical--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/timeline-roadmap--v1--vertical--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/timeline-roadmap--v1--vertical--desktop-en-dark.png is re-generated, writing actual.
+Completed category process: 168 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-comparison--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-comparison--v1--split--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/story-comparison--v1--split--desktop-en-dark.png is re-generated, writing actual.
+Completed category storytelling: 192 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/pricing-calculator--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/pricing-calculator--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/pricing-calculator--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+Completed category pricing: 216 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--split--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--card--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--card--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--card--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--card--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--card--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--editorial--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--editorial--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--stacked--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/form-contact--v1--stacked--mobile-en-light.png is re-generated, writing actual.
+Completed category forms: 240 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-categories--v1--columns--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-categories--v1--columns--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/faq-categories--v1--columns--desktop-en-dark.png is re-generated, writing actual.
+Completed category faq: 264 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-resources--v1--horizontal--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-resources--v1--vertical--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-resources--v1--vertical--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-resources--v1--vertical--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-resources--v1--vertical--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-resources--v1--cards--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-resources--v1--cards--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-resources--v1--cards--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/tabs-resources--v1--cards--desktop-en-dark.png is re-generated, writing actual.
+Completed category tabs: 288 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/project-showcase--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/project-showcase--v1--editorial--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/project-showcase--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/project-showcase--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+Completed category projects: 312 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/learning-path--v1--cards--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/learning-path--v1--cards--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/learning-path--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/learning-path--v1--editorial--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/learning-path--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/learning-path--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/learning-path--v1--rail--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/learning-path--v1--stacked--mobile-en-light.png is re-generated, writing actual.
+Completed category education: 336 responsive renders
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--columns--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--columns--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--columns--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--columns--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--columns--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--columns--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--editorial--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--editorial--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--editorial--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--editorial--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--editorial--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--editorial--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--compact--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--compact--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--compact--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--compact--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--compact--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--compact--desktop-en-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--split--desktop-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--split--tablet-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--split--mobile-en-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--split--desktop-fa-light.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--split--mobile-fa-dark.png is re-generated, writing actual.
+/home/igx7/.codex/visualizations/2026/10/27/01a17c31-7846-7222-8dcc-72ce7dfc5b2a/phase2-visual/baseline/chromium/utility-banner--v1--split--desktop-en-dark.png is re-generated, writing actual.
+Matrix complete: 360 renders, 0 failures
+
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

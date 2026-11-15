@@ -1,0 +1,32 @@
+{
+    "name": "expertsacademy/cms-studio",
+    "description": "Experts Academy CMS page builder foundation: contract, registry, renderer, repositories, API.",
+    "type": "library",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.2",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "ext-dom": "*",
+        "ext-fileinfo": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "ExpertsAcademy\\Studio\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ExpertsAcademy\\Studio\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "platform-check": false
+    }
+}
