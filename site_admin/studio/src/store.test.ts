@@ -51,7 +51,7 @@ const page = (): PageRecord => ({
         shadow: 'soft',
         button: { height: 48, weight: 600, style: 'solid' },
         background: { pattern: 'none', gradient: 'none', overlay: 0 },
-        motion: { preset: 'reveal', enabled: true, duration: 480, distance: 20, easing: 'calm' },
+        motion: { preset: 'reveal', enabled: true, duration: 480, distance: 20, spacing: 12, easing: 'calm' },
       },
     },
     settings: { container: 1280, background: 'canvas' },

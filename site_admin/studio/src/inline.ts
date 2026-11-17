@@ -1,15 +1,16 @@
-import type { PropSchema } from './نوع';
+import type { PropSchema } from './types';
+import { fieldLabel as translateField } from './i18n';
 
 export interface InlineField {
   path: string;
   label: string;
-  طرح‌واره: PropSchema;
+  schema: PropSchema;
 }
 
 const LABELS: Record<string, string> = { cta: 'CTA', seo: 'SEO', url: 'URL', id: 'ID', href: 'href' };
 
 /** Human label for a dotted prop path, e.g. `primaryCta.label` → `Primary CTA label`. */
-export function fieldبرچسب(path: string): string {
+export function fieldLabel(path: string): string {
   const parts = path.split('.');
   const leaf = parts[parts.length - 1] ?? path;
   const human = (value: string): string => {
@@ -19,7 +20,9 @@ export function fieldبرچسب(path: string): string {
       .map((word) => LABELS[word.toLowerCase()] ?? word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   };
-  return parts.length > 1 ? `${human(parts[parts.length - 2] ?? '')} ${human(leaf)}` : human(leaf);
+  return parts.length > 1
+    ? `${translateField(parts[parts.length - 2] ?? '')} ${translateField(leaf)}`
+    : translateField(leaf);
 }
 
 /** Mirrors Sanitizer::isSafeUrl in PHP so inline editing fails at the same boundary. */
@@ -32,22 +35,22 @@ export function isSafeUrl(value: string): boolean {
 }
 
 /** The same rules the server applies to string, text, URL and media props. */
-export function propError(طرح‌واره: PropSchema, value: unknown): string | null {
-  const required = طرح‌واره.required === true;
-  if (طرح‌واره.type === 'string' || طرح‌واره.type === 'text' || طرح‌واره.type === 'richtext') {
-    if (typeof value !== 'string') return 'Expected a string.';
-    if (required && value.trim() === '') return 'This field is required.';
-    if (value.length > طرح‌واره.max) return `Must be at most ${طرح‌واره.max} characters.`;
-    if (طرح‌واره.type === 'string' && /[\r\n]/.test(value)) return 'Line breaks are not allowed here.';
+export function propError(schema: PropSchema, value: unknown): string | null {
+  const required = schema.required === true;
+  if (schema.type === 'string' || schema.type === 'text' || schema.type === 'richtext') {
+    if (typeof value !== 'string') return 'مقدار باید متن باشد.';
+    if (required && value.trim() === '') return 'این فیلد الزامی است.';
+    if (value.length > schema.max) return `حداکثر ${schema.max} نویسه مجاز است.`;
+    if (schema.type === 'string' && /[\r\n]/.test(value)) return 'خط جدید در این فیلد مجاز نیست.';
     return null;
   }
-  if (طرح‌واره.type === 'url') {
-    if (typeof value !== 'string' || value === '') return required ? 'This field is required.' : null;
-    return isSafeUrl(value) ? null : 'Use a relative path, anchor or http(s) URL.';
+  if (schema.type === 'url') {
+    if (typeof value !== 'string' || value === '') return required ? 'این فیلد الزامی است.' : null;
+    return isSafeUrl(value) ? null : 'از مسیر نسبی، لنگر یا نشانی http(s) استفاده کنید.';
   }
-  if (طرح‌واره.type === 'media') {
+  if (schema.type === 'media') {
     const id = (value as { id?: unknown } | null)?.id;
-    if (required && (typeof id !== 'string' || id === '')) return 'انتخاب تصویر.';
+    if (required && (typeof id !== 'string' || id === '')) return 'Choose an image.';
     return null;
   }
   return null;
@@ -57,19 +60,19 @@ export function isHeadingField(path: string): boolean {
   return /(heading|headline|title|eyebrow|display)/i.test(path.split('.').pop() ?? path);
 }
 
-/** Fields that can be edited directly on the بوم, including flat object children (CTAs). */
-export function inlineFields(طرح‌واره: Record<string, PropSchema>): InlineField[] {
+/** Fields that can be edited directly on the canvas, including flat object children (CTAs). */
+export function inlineFields(schema: Record<string, PropSchema>): InlineField[] {
   const fields: InlineField[] = [];
-  for (const [key, rule] of Object.entries(طرح‌واره)) {
+  for (const [key, rule] of Object.entries(schema)) {
     if (rule.type === 'string' || rule.type === 'text' || rule.type === 'url' || rule.type === 'media') {
-      fields.push({ path: key, label: fieldبرچسب(key), طرح‌واره: rule });
+      fields.push({ path: key, label: fieldLabel(key), schema: rule });
       continue;
     }
     if (rule.type === 'object') {
       for (const [childKey, child] of Object.entries(rule.fields)) {
         if (child.type === 'string' || child.type === 'text' || child.type === 'url') {
           const path = `${key}.${childKey}`;
-          fields.push({ path, label: fieldبرچسب(path), طرح‌واره: child });
+          fields.push({ path, label: fieldLabel(path), schema: child });
         }
       }
     }

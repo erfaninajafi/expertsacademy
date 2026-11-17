@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { ApiClient } from '../api';
 import { ApiError } from '../api';
 import { diffDocuments, type DocumentDiff } from '../diff';
-import type { صفحهDocument, صفحهRecord } from '../نوع';
+import type { PageDocument, PageRecord } from '../types';
 import { Modal } from './Dialogs';
 
 interface RevisionDetail {
@@ -10,26 +10,26 @@ interface RevisionDetail {
   revisionNumber: number;
   createdAt: string;
   createdBy: string;
-  document: صفحهDocument;
+  document: PageDocument;
 }
 
 interface Props {
   open: boolean;
-  onOpenتغییر: (open: boolean) => void;
+  onOpenChange: (open: boolean) => void;
   api: ApiClient;
-  page: صفحهRecord;
-  current: صفحهDocument;
+  page: PageRecord;
+  current: PageDocument;
   busy: boolean;
-  onبازیابی: (revisionId: string) => Promise<void>;
+  onRestore: (revisionId: string) => Promise<void>;
   onRollback?: (revisionId: string) => Promise<void>;
 }
 
 const when = (value: string): string => {
   const date = new Date(value.replace(' ', 'T'));
-  return Number.isNaN(date.getTime()) ? value : date.toزبانString();
+  return Number.isNaN(date.getTime()) ? value : date.toLocaleString('fa-IR', { dateStyle: 'medium', timeStyle: 'medium' });
 };
 
-export function تاریخچهDialog({ open, onOpenتغییر, api, page, current, busy, onبازیابی, onRollback }: Props) {
+export function HistoryDialog({ open, onOpenChange, api, page, current, busy, onRestore, onRollback }: Props) {
   const [selected, setSelected] = useState<string | null>(null);
   const [detail, setDetail] = useState<RevisionDetail | null>(null);
   const [diff, setDiff] = useState<DocumentDiff | null>(null);
@@ -72,24 +72,22 @@ export function تاریخچهDialog({ open, onOpenتغییر, api, page, curren
   return (
     <Modal
       open={open}
-      onOpenتغییر={onOpenتغییر}
+      onOpenChange={onOpenChange}
       title="تاریخچهٔ نسخه‌ها"
       description="هر ذخیره یک نسخهٔ تغییرناپذیر می‌سازد. نسخهٔ گذشته را با پیش‌نویس فعلی مقایسه و به‌عنوان نسخهٔ جدید بازیابی کنید؛ تاریخچه هرگز بازنویسی نمی‌شود."
       footer={
-        <button type="button" className="rounded-lg px-3 py-2 text-sm text-slate-600" onClick={() => onOpenتغییر(false)}>
-          بستن
-        </button>
+        <button type="button" className="rounded-lg px-3 py-2 text-sm text-slate-600" onClick={() => onOpenChange(false)}>بستن</button>
       }
     >
       <div className="grid gap-3 sm:grid-cols-[9rem_minmax(0,1fr)]">
-        <ol className="max-h-80 space-y-1 overflow-auto" aria-label="Revisions">
+        <ol className="max-h-80 space-y-1 overflow-auto" aria-label="نسخه‌ها">
           {page.revisions.map((revision) => (
             <li key={revision.id}>
               <button
                 type="button"
                 aria-current={selected === revision.id ? 'true' : undefined}
                 onClick={() => setSelected(revision.id)}
-                className={`w-کامل rounded-lg px-2 py-1.5 text-left text-xs ${
+                className={`w-full rounded-lg px-2 py-1.5 text-right text-xs ${
                   selected === revision.id ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100'
                 }`}
               >
@@ -120,7 +118,7 @@ export function تاریخچهDialog({ open, onOpenتغییر, api, page, curren
               <dl className="grid grid-cols-2 gap-2 text-xs">
                 <div className="rounded-md bg-slate-50 p-2">
                   <dt className="text-slate-500">بخش‌ها</dt>
-                  <dd className="font-semibold text-slate-900">{diff.بخشBefore} → {diff.بخشAfter}</dd>
+                  <dd className="font-semibold text-slate-900">{diff.sectionsBefore} → {diff.sectionsAfter}</dd>
                 </div>
                 <div className="rounded-md bg-slate-50 p-2">
                   <dt className="text-slate-500">تغییرات کامپوننت</dt>
@@ -129,15 +127,14 @@ export function تاریخچهDialog({ open, onOpenتغییر, api, page, curren
               </dl>
 
               {diff.changedFields.length > 0 && (
-                <p className="text-xs text-slate-600">
-                  صفحه-level changes: <span className="font-medium text-slate-900">{diff.changedFields.join(', ')}</span>
+                <p className="text-xs text-slate-600">تغییرات سطح صفحه:<span className="font-medium text-slate-900">{diff.changedFields.join(', ')}</span>
                 </p>
               )}
 
               {diff.components.length > 0 ? (
-                <ul className="max-h-40 space-y-1 overflow-auto text-xs" aria-label="Structural differences">
+                <ul className="max-h-40 space-y-1 overflow-auto text-xs" aria-label="تفاوت‌های ساختاری">
                   {diff.components.slice(0, 40).map((change) => (
-                    <li key={`${change.kind}-${change.id}`} className="flex items-وسط justify-between gap-2 rounded bg-slate-50 px-2 py-1">
+                    <li key={`${change.kind}-${change.id}`} className="flex items-center justify-between gap-2 rounded bg-slate-50 px-2 py-1">
                       <span className="truncate font-medium text-slate-800">{change.type} · {change.variant}</span>
                       <span
                         className={
@@ -160,27 +157,25 @@ export function تاریخچهDialog({ open, onOpenتغییر, api, page, curren
               <button
                 type="button"
                 disabled={busy || isCurrentDraft || detail.document === null}
-                onClick={() => void onبازیابی(detail.id)}
-                className="justify-self-شروع rounded-lg bg-indigo-600 px-3 py-2 text-xs font-semibold text-white disabled:opacity-40"
+                onClick={() => void onRestore(detail.id)}
+                className="justify-self-start rounded-lg bg-indigo-600 px-3 py-2 text-xs font-semibold text-white disabled:opacity-40"
               >
-                {busy ? 'در حال بازیابی…' : isCurrentDraft ? 'همین پیش‌نویس فعلی است' : 'بازیابی this revision'}
+                {busy ? 'در حال بازیابی…' : isCurrentDraft ? 'همین پیش‌نویس فعلی است' : 'بازیابی این نسخه'}
               </button>
               <p className="text-[11px] leading-4 text-slate-500">
-                Restoring creates revision #{page.revisions[0]?.revision_number ? page.revisions[0].revision_number + 1 : 1}; nothing is deleted.
+                بازگردانی نسخهٔ #{page.revisions[0]?.revision_number ? page.revisions[0].revision_number + 1 : 1} را می‌سازد؛ چیزی حذف نمی‌شود.
               </p>
               {onRollback && (
                 <button
                   type="button"
                   disabled={busy || page.status === 'archived' || detail.document === null}
                   onClick={() => {
-                    if (window.confirm(`انتشار نسخه #${detail.revisionNumber} to the live site? Current draft revisions are kept.`)) {
+                    if (window.confirm(`Publish revision #${detail.revisionNumber} to the live site? Current draft revisions are kept.`)) {
                       void onRollback(detail.id);
                     }
                   }}
-                  className="justify-self-شروع rounded-lg border border-emerald-300 px-3 py-2 text-xs font-semibold text-emerald-800 disabled:opacity-40"
-                >
-                  انتشار این نسخه (بازگردانی)
-                </button>
+                  className="justify-self-start rounded-lg border border-emerald-300 px-3 py-2 text-xs font-semibold text-emerald-800 disabled:opacity-40"
+                >انتشار این نسخه (بازگردانی)</button>
               )}
             </div>
           )}

@@ -1,20 +1,20 @@
-import type { StudioConfig, ValidationResult } from './نوع';
+import type { StudioConfig, ValidationResult } from './types';
 
-export class ApiError extپایانs Error {
+export class ApiError extends Error {
   constructor(
     message: string,
     public readonly status: number,
     public readonly errors: Record<string, string> = {},
   ) {
-    sبه بالاer(message);
+    super(message);
     this.name = 'ApiError';
   }
 }
 
 export interface ApiClient {
   get<T>(resource: string, params?: Record<string, string>): Promise<T>;
-  sپایان<T>(resource: string, method: 'POST' | 'PUT', body?: unknown, id?: string): Promise<T>;
-  به بالاload<T>(file: File, alt: string): Promise<T>;
+  send<T>(resource: string, method: 'POST' | 'PUT', body?: unknown, id?: string): Promise<T>;
+  upload<T>(file: File, alt: string): Promise<T>;
   preview(document: unknown): Promise<string>;
 }
 
@@ -57,13 +57,13 @@ export function createApi(config: StudioConfig): ApiClient {
       return parse<T>(response);
     },
 
-    async sپایان<T>(resource: string, method: 'POST' | 'PUT', body: unknown, id?: string): Promise<T> {
+    async send<T>(resource: string, method: 'POST' | 'PUT', body: unknown, id?: string): Promise<T> {
       const response = await fetch(url(resource, id ? { id } : {}), {
         method,
         credentials: 'same-origin',
         headers: {
           Accept: 'application/json',
-          'محتوا-نوع': 'application/json',
+          'Content-types': 'application/json',
           'X-CSRF-Token': config.csrf,
         },
         body: JSON.stringify(body ?? {}),
@@ -71,7 +71,7 @@ export function createApi(config: StudioConfig): ApiClient {
       return parse<T>(response);
     },
 
-    async به بالاload<T>(file: File, alt: string): Promise<T> {
+    async upload<T>(file: File, alt: string): Promise<T> {
       const form = new FormData();
       form.set('file', file);
       form.set('alt', alt);
@@ -88,12 +88,12 @@ export function createApi(config: StudioConfig): ApiClient {
       const response = await fetch(new URL(config.preview, window.location.href), {
         method: 'POST',
         credentials: 'same-origin',
-        headers: { 'محتوا-نوع': 'application/json', 'X-CSRF-Token': config.csrf },
+        headers: { 'Content-types': 'application/json', 'X-CSRF-Token': config.csrf },
         body: JSON.stringify({ document }),
       });
       const text = await response.text();
       if (!response.ok) {
-        throw new ApiError(text.split('\n')[0] || 'پیش‌نمایش failed.', response.status);
+        throw new ApiError(text.split('\n')[0] || 'پیش‌نمایش انجام نشد.', response.status);
       }
       return text;
     },
@@ -108,7 +108,7 @@ export async function validate(config: StudioConfig, document: unknown): Promise
       credentials: 'same-origin',
       headers: {
         Accept: 'application/json',
-        'محتوا-نوع': 'application/json',
+        'Content-types': 'application/json',
         'X-CSRF-Token': config.csrf,
       },
       body: JSON.stringify({ document }),

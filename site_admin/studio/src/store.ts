@@ -3,23 +3,23 @@ import type {
   Animation,
   A11y,
   ComponentDefinition,
-  طراحیProps,
+  DesignProps,
   Device,
-  صفحهComponent,
-  صفحهDocument,
-  صفحهRecord,
-  واکنش‌گراOverride,
-  بخشLayout,
+  PageComponent,
+  PageDocument,
+  PageRecord,
+  ResponsiveOverride,
+  sectionLayout,
   ThemeTokens,
   Visibility,
-} from './نوع';
+} from './types';
 
 export const uid = (): string =>
   typeof crypto !== 'undefined' && 'randomUUID' in crypto
     ? crypto.randomUUID()
     : `${Date.now().toString(16)}-0000-4000-8000-${Math.random().toString(16).slice(2, 14)}`;
 
-export function moveآیتم<T>(list: T[], from: number, to: number): T[] {
+export function moveItem<T>(list: T[], from: number, to: number): T[] {
   if (from === to || from < 0 || to < 0 || from >= list.length || to >= list.length) {
     return list;
   }
@@ -29,76 +29,76 @@ export function moveآیتم<T>(list: T[], from: number, to: number): T[] {
   return next;
 }
 
-export function findComponent(doc: صفحهDocument | null, id: string | null): صفحهComponent | null {
+export function findComponent(doc: PageDocument | null, id: string | null): PageComponent | null {
   if (!doc || !id) return null;
-  for (const section of doc.بخش) {
+  for (const section of doc.sections) {
     const match = section.components.find((component) => component.id === id);
     if (match) return match;
   }
   return null;
 }
 
-export function پیش‌فرضبخش(): { id: string; label: string; layout: بخشLayout; نمایش: Visibility; components: صفحهComponent[] } {
+export function defaultSection(): { id: string; label: string; layout: sectionLayout; visibility: Visibility; components: PageComponent[] } {
   return {
     id: uid(),
-    label: 'New section',
-    layout: { width: 'محدود', columns: 12, gap: 24, paddingY: 72, background: 'هیچ' },
-    نمایش: { devices: ['desktop', 'tablet', 'mobile'] },
+    label: 'بخش جدید',
+    layout: { width: 'contained', columns: 12, gap: 24, paddingY: 72, background: 'none' },
+    visibility: { devices: ['desktop', 'tablet', 'mobile'] },
     components: [],
   };
 }
 
-export function newComponent(definition: ComponentDefinition): صفحهComponent {
+export function newComponent(definition: ComponentDefinition): PageComponent {
   return {
     id: uid(),
     type: definition.type,
     version: definition.version,
-    variant: definition.گونه[0]?.id ?? 'پیش‌فرض',
-    props: structuredClone(definition.پیش‌فرضProps),
-    design: { align: 'شروع', tone: 'پیش‌فرض', spacing: 'md' },
+    variant: definition.variants[0]?.id ?? 'default',
+    props: structuredClone(definition.defaultProps),
+    design: { align: 'start', tone: 'default', spacing: 'md' },
     responsive: {},
-    animation: { preset: 'هیچ', مدت: 480, delay: 0, easing: 'آرام' },
-    نمایش: { devices: ['desktop', 'tablet', 'mobile'] },
-    a11y: { landmark: 'هیچ', label: '', headingLevel: 2 },
+    animation: { preset: 'none', duration: 480, delay: 0, easing: 'calm' },
+    visibility: { devices: ['desktop', 'tablet', 'mobile'] },
+    a11y: { landmark: 'none', label: '', headingLevel: 2 },
   };
 }
 
 interface EditorState {
-  page: صفحهRecord | null;
-  draft: صفحهDocument | null;
+  page: PageRecord | null;
+  draft: PageDocument | null;
   selected: string | null;
-  activeبخش: string | null;
+  activeSection: string | null;
   dirty: boolean;
-  past: صفحهDocument[];
-  future: صفحهDocument[];
+  past: PageDocument[];
+  future: PageDocument[];
   lastMergeKey: string | null;
   lastMergeAt: number;
   undo: () => void;
   redo: () => void;
-  load: (page: صفحهRecord) => void;
+  load: (page: PageRecord) => void;
   reset: () => void;
   select: (id: string | null) => void;
-  setعنوان: (title: string) => void;
-  setSeo: <K extپایانs keyof صفحهDocument['seo']>(key: K, value: صفحهDocument['seo'][K]) => void;
+  setTitle: (title: string) => void;
+  setSeo: <K extends keyof PageDocument['seo']>(key: K, value: PageDocument['seo'][K]) => void;
   setTheme: (tokens: ThemeTokens) => void;
-  setSettings: <K extپایانs keyof صفحهDocument['settings']>(key: K, value: صفحهDocument['settings'][K]) => void;
-  addبخش: () => void;
-  removeبخش: (id: string) => void;
-  moveبخش: (id: string, direction: -1 | 1) => void;
-  reorderبخش‌ها: (from: number, to: number) => void;
-  به بالاdateبخش: <K extپایانs keyof صفحهDocument['بخش'][number]>(id: string, key: K, value: صفحهDocument['بخش'][number][K]) => void;
-  setبخشLayout: <K extپایانs keyof بخشLayout>(id: string, key: K, value: بخشLayout[K]) => void;
+  setSettings: <K extends keyof PageDocument['settings']>(key: K, value: PageDocument['settings'][K]) => void;
+  addSection: () => void;
+  removeSection: (id: string) => void;
+  moveSection: (id: string, direction: -1 | 1) => void;
+  reorderSections: (from: number, to: number) => void;
+  updateSection: <K extends keyof PageDocument['sections'][number]>(id: string, key: K, value: PageDocument['sections'][number][K]) => void;
+  setSectionLayout: <K extends keyof sectionLayout>(id: string, key: K, value: sectionLayout[K]) => void;
   addComponent: (definition: ComponentDefinition, sectionId?: string) => void;
   removeComponent: (id: string) => void;
-  dبه بالاlicateComponent: (id: string) => void;
+  duplicateComponent: (id: string) => void;
   moveComponent: (id: string, direction: -1 | 1) => void;
-  moveComponentToبخش: (id: string, sectionId: string) => void;
-  به بالاdateProps: (id: string, props: Record<string, unknown>) => void;
-  setگونه: (id: string, variant: string) => void;
-  setطراحی: <K extپایانs keyof طراحیProps>(id: string, key: K, value: طراحیProps[K]) => void;
-  setواکنش‌گرا: (id: string, breakpoint: Device, value: واکنش‌گراOverride | null) => void;
-  setAnimation: <K extپایانs keyof Animation>(id: string, key: K, value: Animation[K]) => void;
-  setA11y: <K extپایانs keyof A11y>(id: string, key: K, value: A11y[K]) => void;
+  moveComponentToSection: (id: string, sectionId: string) => void;
+  updateProps: (id: string, props: Record<string, unknown>) => void;
+  setvariants: (id: string, variant: string) => void;
+  setDesign: <K extends keyof DesignProps>(id: string, key: K, value: DesignProps[K]) => void;
+  setResponsive: (id: string, breakpoint: Device, value: ResponsiveOverride | null) => void;
+  setAnimation: <K extends keyof Animation>(id: string, key: K, value: Animation[K]) => void;
+  setA11y: <K extends keyof A11y>(id: string, key: K, value: A11y[K]) => void;
   setDevices: (id: string, devices: Device[], kind: 'component' | 'section') => void;
 }
 
@@ -108,7 +108,7 @@ const MERGE_WINDOW_MS = 700;
 export const useEditor = create<EditorState>((set) => {
   const commit = (
     state: EditorState,
-    draft: صفحهDocument,
+    draft: PageDocument,
     extra: Partial<EditorState> = {},
     mergeKey?: string,
   ): Partial<EditorState> => {
@@ -118,7 +118,7 @@ export const useEditor = create<EditorState>((set) => {
     return {
       draft,
       dirty: true,
-      past: merge ? state.past : [...state.past, state.draft as صفحهDocument].slice(-HISTORY_LIMIT),
+      past: merge ? state.past : [...state.past, state.draft as PageDocument].slice(-HISTORY_LIMIT),
       future: [],
       lastMergeKey: mergeKey ?? null,
       lastMergeAt: now,
@@ -126,17 +126,17 @@ export const useEditor = create<EditorState>((set) => {
     };
   };
 
-  const mutate = (fn: (doc: صفحهDocument) => صفحهDocument, mergeKey?: string) =>
+  const mutate = (fn: (doc: PageDocument) => PageDocument, mergeKey?: string) =>
     set((state) => {
       if (!state.draft) return {};
       const draft = fn(state.draft);
       return draft === state.draft ? {} : commit(state, draft, {}, mergeKey);
     });
 
-  const mapComponent = (id: string, fn: (component: صفحهComponent) => صفحهComponent) =>
+  const mapComponent = (id: string, fn: (component: PageComponent) => PageComponent) =>
     mutate((doc) => ({
       ...doc,
-      بخش: doc.بخش.map((section) => ({
+      sections: doc.sections.map((section) => ({
         ...section,
         components: section.components.map((component) => (component.id === id ? fn(component) : component)),
       })),
@@ -146,7 +146,7 @@ export const useEditor = create<EditorState>((set) => {
     page: null,
     draft: null,
     selected: null,
-    activeبخش: null,
+    activeSection: null,
     dirty: false,
     past: [],
     future: [],
@@ -157,8 +157,8 @@ export const useEditor = create<EditorState>((set) => {
       set({
         page,
         draft: page.document ? structuredClone(page.document) : null,
-        selected: page.document?.بخش[0]?.components[0]?.id ?? null,
-        activeبخش: page.document?.بخش[0]?.id ?? null,
+        selected: page.document?.sections[0]?.components[0]?.id ?? null,
+        activeSection: page.document?.sections[0]?.id ?? null,
         dirty: false,
         past: [],
         future: [],
@@ -166,14 +166,14 @@ export const useEditor = create<EditorState>((set) => {
         lastMergeAt: 0,
       }),
 
-    reset: () => set({ page: null, draft: null, selected: null, activeبخش: null, dirty: false, past: [], future: [], lastMergeKey: null, lastMergeAt: 0 }),
+    reset: () => set({ page: null, draft: null, selected: null, activeSection: null, dirty: false, past: [], future: [], lastMergeKey: null, lastMergeAt: 0 }),
     select: (id) => set({ selected: id }),
 
     undo: () =>
       set((state) => {
         if (!state.draft || state.past.length === 0) return {};
         const previous = state.past[state.past.length - 1];
-        const stillExists = previous.بخش.some((section) =>
+        const stillExists = previous.sections.some((section) =>
           section.components.some((component) => component.id === state.selected),
         );
         return {
@@ -191,7 +191,7 @@ export const useEditor = create<EditorState>((set) => {
       set((state) => {
         if (!state.draft || state.future.length === 0) return {};
         const next = state.future[0];
-        const stillExists = next.بخش.some((section) =>
+        const stillExists = next.sections.some((section) =>
           section.components.some((component) => component.id === state.selected),
         );
         return {
@@ -205,42 +205,42 @@ export const useEditor = create<EditorState>((set) => {
         };
       }),
 
-    setعنوان: (title) =>
+    setTitle: (title) =>
       mutate((doc) => ({ ...doc, title, seo: { ...doc.seo, title: doc.seo.title === doc.title ? title : doc.seo.title } }), 'title'),
     setSeo: (key, value) => mutate((doc) => ({ ...doc, seo: { ...doc.seo, [key]: value } }), `seo:${key}`),
     setTheme: (tokens) => mutate((doc) => ({ ...doc, theme: { ...doc.theme, tokens } }), 'theme'),
     setSettings: (key, value) => mutate((doc) => ({ ...doc, settings: { ...doc.settings, [key]: value } }), `settings:${key}`),
 
-    addبخش: () =>
-      mutate((doc) => ({ ...doc, بخش: [...doc.بخش, پیش‌فرضبخش()] })),
+    addSection: () =>
+      mutate((doc) => ({ ...doc, sections: [...doc.sections, defaultSection()] })),
 
-    removeبخش: (id) =>
+    removeSection: (id) =>
       set((state) => {
-        if (!state.draft || state.draft.بخش.length <= 1) return {};
-        return commit(state, { ...state.draft, بخش: state.draft.بخش.filter((section) => section.id !== id) }, {
-          activeبخش: state.activeبخش === id ? null : state.activeبخش,
+        if (!state.draft || state.draft.sections.length <= 1) return {};
+        return commit(state, { ...state.draft, sections: state.draft.sections.filter((section) => section.id !== id) }, {
+          activeSection: state.activeSection === id ? null : state.activeSection,
         });
       }),
 
-    moveبخش: (id, direction) =>
+    moveSection: (id, direction) =>
       mutate((doc) => {
-        const index = doc.بخش.findIndex((section) => section.id === id);
-        return { ...doc, بخش: moveآیتم(doc.بخش, index, index + direction) };
+        const index = doc.sections.findIndex((section) => section.id === id);
+        return { ...doc, sections: moveItem(doc.sections, index, index + direction) };
       }),
 
-    reorderبخش‌ها: (from, to) =>
-      mutate((doc) => ({ ...doc, بخش: moveآیتم(doc.بخش, from, to) })),
+    reorderSections: (from, to) =>
+      mutate((doc) => ({ ...doc, sections: moveItem(doc.sections, from, to) })),
 
-    به بالاdateبخش: (id, key, value) =>
+    updateSection: (id, key, value) =>
       mutate((doc) => ({
         ...doc,
-        بخش: doc.بخش.map((section) => (section.id === id ? { ...section, [key]: value } : section)),
+        sections: doc.sections.map((section) => (section.id === id ? { ...section, [key]: value } : section)),
       }), `section:${id}:${String(key)}`),
 
-    setبخشLayout: (id, key, value) =>
+    setSectionLayout: (id, key, value) =>
       mutate((doc) => ({
         ...doc,
-        بخش: doc.بخش.map((section) =>
+        sections: doc.sections.map((section) =>
           section.id === id ? { ...section, layout: { ...section.layout, [key]: value } } : section,
         ),
       })),
@@ -250,19 +250,19 @@ export const useEditor = create<EditorState>((set) => {
         if (!state.draft) return {};
         const targetId =
           sectionId ??
-          state.draft.بخش.find((section) => section.components.some((c) => c.id === state.selected))?.id ??
-          state.draft.بخش[0]?.id;
+          state.draft.sections.find((section) => section.components.some((c) => c.id === state.selected))?.id ??
+          state.draft.sections[0]?.id;
         if (!targetId) return {};
         const component = newComponent(definition);
         return commit(
           state,
           {
             ...state.draft,
-            بخش: state.draft.بخش.map((section) =>
+            sections: state.draft.sections.map((section) =>
               section.id === targetId ? { ...section, components: [...section.components, component] } : section,
             ),
           },
-          { selected: component.id, activeبخش: targetId },
+          { selected: component.id, activeSection: targetId },
         );
       }),
 
@@ -273,7 +273,7 @@ export const useEditor = create<EditorState>((set) => {
           state,
           {
             ...state.draft,
-            بخش: state.draft.بخش.map((section) => ({
+            sections: state.draft.sections.map((section) => ({
               ...section,
               components: section.components.filter((component) => component.id !== id),
             })),
@@ -282,64 +282,64 @@ export const useEditor = create<EditorState>((set) => {
         );
       }),
 
-    dبه بالاlicateComponent: (id) =>
+    duplicateComponent: (id) =>
       set((state) => {
         if (!state.draft) return {};
-        const copies: صفحهComponent[] = [];
-        const بخش = state.draft.بخش.map((section) => {
+        const copies: PageComponent[] = [];
+        const sections = state.draft.sections.map((section) => {
           const index = section.components.findIndex((component) => component.id === id);
           if (index < 0 || copies.length > 0) return section;
-          const copy: صفحهComponent = { ...structuredClone(section.components[index]), id: uid() };
+          const copy: PageComponent = { ...structuredClone(section.components[index]), id: uid() };
           const components = [...section.components];
           components.splice(index + 1, 0, copy);
           copies.push(copy);
           return { ...section, components };
         });
-        return commit(state, { ...state.draft, بخش }, { selected: copies[0]?.id ?? state.selected });
+        return commit(state, { ...state.draft, sections }, { selected: copies[0]?.id ?? state.selected });
       }),
 
     moveComponent: (id, direction) =>
       mutate((doc) => ({
         ...doc,
-        بخش: doc.بخش.map((section) => {
+        sections: doc.sections.map((section) => {
           const index = section.components.findIndex((component) => component.id === id);
           return index < 0
             ? section
-            : { ...section, components: moveآیتم(section.components, index, index + direction) };
+            : { ...section, components: moveItem(section.components, index, index + direction) };
         }),
       })),
 
-    moveComponentToبخش: (id, sectionId) =>
+    moveComponentToSection: (id, sectionId) =>
       set((state) => {
         if (!state.draft) return {};
-        let moved: صفحهComponent | null = null;
-        const stripped = state.draft.بخش.map((section) => {
+        let moved: PageComponent | null = null;
+        const stripped = state.draft.sections.map((section) => {
           const found = section.components.find((component) => component.id === id);
           if (found && !moved) moved = found;
           return { ...section, components: section.components.filter((component) => component.id !== id) };
         });
         if (!moved) return {};
-        const بخش = stripped.map((section) =>
-          section.id === sectionId ? { ...section, components: [...section.components, moved as صفحهComponent] } : section,
+        const sections = stripped.map((section) =>
+          section.id === sectionId ? { ...section, components: [...section.components, moved as PageComponent] } : section,
         );
-        return commit(state, { ...state.draft, بخش }, { activeبخش: sectionId });
+        return commit(state, { ...state.draft, sections }, { activeSection: sectionId });
       }),
 
-    به بالاdateProps: (id, props) =>
+    updateProps: (id, props) =>
       set((state) => {
         if (!state.draft) return {};
-        const بخش = state.draft.بخش.map((section) => ({
+        const sections = state.draft.sections.map((section) => ({
           ...section,
           components: section.components.map((component) =>
             component.id === id ? { ...component, props } : component,
           ),
         }));
-        return commit(state, { ...state.draft, بخش }, {}, `props:${id}`);
+        return commit(state, { ...state.draft, sections }, {}, `props:${id}`);
       }),
-    setگونه: (id, variant) => mapComponent(id, (component) => ({ ...component, variant })),
-    setطراحی: (id, key, value) =>
+    setvariants: (id, variant) => mapComponent(id, (component) => ({ ...component, variant })),
+    setDesign: (id, key, value) =>
       mapComponent(id, (component) => ({ ...component, design: { ...component.design, [key]: value } })),
-    setواکنش‌گرا: (id, breakpoint, value) =>
+    setResponsive: (id, breakpoint, value) =>
       mapComponent(id, (component) => {
         const responsive = { ...component.responsive };
         if (value === null) delete responsive[breakpoint];
@@ -355,13 +355,13 @@ export const useEditor = create<EditorState>((set) => {
       if (kind === 'section') {
         mutate((doc) => ({
           ...doc,
-          بخش: doc.بخش.map((section) =>
-            section.id === id ? { ...section, نمایش: { devices } } : section,
+          sections: doc.sections.map((section) =>
+            section.id === id ? { ...section, visibility: { devices } } : section,
           ),
         }));
         return;
       }
-      mapComponent(id, (component) => ({ ...component, نمایش: { devices } }));
+      mapComponent(id, (component) => ({ ...component, visibility: { devices } }));
     },
   };
 });

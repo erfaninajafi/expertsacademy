@@ -69,11 +69,11 @@ $config = [
         <div class="d-flex align-items-start justify-content-between mb-3">
             <div>
                 <h4 class="mb-1">Page Studio</h4>
-                <p class="text-muted mb-0">Structured drafts, versioned revisions and one PHP renderer.</p>
+                <p class="text-muted mb-0">پیش‌نویس‌های ساختاریافته، نسخه‌های تاریخی و یک رندر مشترک PHP.</p>
             </div>
             <div class="text-end small">
                 <div><?= htmlspecialchars($actor['name'], ENT_QUOTES, 'UTF-8') ?></div>
-                <div class="text-muted"><?= htmlspecialchars(($actor['role'] ?? '') . ' · ' . implode(' · ', $actor['capabilities']), ENT_QUOTES, 'UTF-8') ?></div>
+                <div class="text-muted"><?= htmlspecialchars(($actor['role'] === 'administrator' ? 'مدیر' : (($actor['role'] ?? '') === 'editor' ? 'ویرایشگر' : ($actor['role'] ?? ''))) . ' · ' . implode(' · ', array_map(fn($cap) => ['read' => 'مشاهده', 'edit' => 'ویرایش', 'publish' => 'انتشار'][$cap] ?? $cap, $actor['capabilities'])), ENT_QUOTES, 'UTF-8') ?></div>
             </div>
         </div>
 
@@ -84,7 +84,7 @@ $config = [
                 and reload this page.
             </div>
         <?php else: ?>
-            <div id="ea-studio-root" dir="ltr"></div>
+            <div id="ea-studio-root" dir="rtl"></div>
             <script type="application/json" id="ea-studio-config"><?= json_encode(
                 $config,
                 JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_THROW_ON_ERROR

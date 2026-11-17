@@ -31,16 +31,16 @@ describe('inline field discovery', () => {
   });
 
   it('labels nested paths for accessible controls', () => {
-    expect(fieldLabel('primaryCta.href')).toBe('Primary CTA href');
-    expect(fieldLabel('heading')).toBe('Heading');
+    expect(fieldLabel('primaryCta.href')).toBe('دکمهٔ اصلی پیوند');
+    expect(fieldLabel('heading')).toBe('عنوان');
   });
 });
 
 describe('inline prop validation', () => {
   it('reports required and length failures like the server', () => {
-    expect(propError(schema.heading, '')).toBe('This field is required.');
-    expect(propError(schema.heading, 'A'.repeat(201))).toBe('Must be at most 200 characters.');
-    expect(propError({ type: 'string', max: 20 }, 'two\nlines')).toBe('Line breaks are not allowed here.');
+    expect(propError(schema.heading, '')).toBe('این فیلد الزامی است.');
+    expect(propError(schema.heading, 'A'.repeat(201))).toBe('حداکثر 200 نویسه مجاز است.');
+    expect(propError({ type: 'string', max: 20 }, 'two\nlines')).toBe('خط جدید در این فیلد مجاز نیست.');
     expect(propError({ type: 'string', max: 20 }, 'fine')).toBeNull();
   });
 
@@ -51,7 +51,7 @@ describe('inline prop validation', () => {
     expect(isSafeUrl('mailto:hello@example.com')).toBe(true);
     expect(isSafeUrl('javascript:alert(1)')).toBe(false);
     expect(isSafeUrl('//evil.example')).toBe(false);
-    expect(propError({ type: 'url', required: true }, 'javascript:alert(1)')).toBe('Use a relative path, anchor or http(s) URL.');
+    expect(propError({ type: 'url', required: true }, 'javascript:alert(1)')).toBe('از مسیر نسبی، لنگر یا نشانی http(s) استفاده کنید.');
   });
 
   it('requires an image id only when the schema does', () => {

@@ -1,22 +1,22 @@
-/** Shared contracts. These mirror src/قرارداد/*.php and the رجیستری طرح‌واره. */
+/** Shared contracts. These mirror src/Contract/*.php and the registry schema. */
 export const PAGE_SCHEMA_VERSION = 1 as const;
 
-export type زبان = 'fa' | 'en';
-export type جهت = 'rtl' | 'ltr';
+export type Locale = 'fa' | 'en';
+export type Direction = 'rtl' | 'ltr';
 export type Device = 'desktop' | 'tablet' | 'mobile';
 
-export interface رسانهRef {
+export interface MediaRef {
   id: string;
   alt?: string;
 }
 
-export type Tokenحالت = 'روشن' | 'تیره';
+export type TokenMode = 'light' | 'dark';
 
 export interface ThemeTokens {
-  طرح‌وارهنسخه: 2;
+  schemaVersion: 2;
   name: string;
-  mode: Tokenحالت;
-  colors: Record<Tokenحالت, Record<string, string>>;
+  mode: TokenMode;
+  colors: Record<TokenMode, Record<string, string>>;
   typography: {
     latin: 'editorial' | 'academy' | 'manrope' | 'system';
     rtl: 'editorial' | 'academy' | 'manrope' | 'system';
@@ -40,26 +40,26 @@ export interface ThemeTokens {
     breakpoints: { mobile: number; tablet: number; desktop: number };
   };
   radius: { small: number; medium: number; large: number; xl?: number; pill?: number };
-  shadow: 'نرم' | 'تیز' | 'هیچ';
+  shadow: 'soft' | 'crisp' | 'none';
   shadows?: { sm: string; md: string; lg: string };
   button: {
     height: number;
     weight: number;
     style: 'solid' | 'outline';
-    radius?: 'small' | 'medium' | 'large' | 'xl' | 'pill';
+    radius?: 'small' | 'medium' | 'large' | 'xl' | 'قرصی';
     paddingX?: number;
   };
-  background: { pattern: 'هیچ' | 'grid' | 'grain'; gradient: 'هیچ' | 'dawn' | 'midnight'; overlay: number };
+  background: { pattern: 'none' | 'grid' | 'grain'; gradient: 'none' | 'dawn' | 'midnight'; overlay: number };
   gradients?: Record<'dawn' | 'midnight' | 'sand' | 'forest', { from: string; to: string; angle: number }>;
   motion: {
-    preset: 'هیچ' | 'reveal' | 'پله‌ای' | 'emphasis';
+    preset: 'none' | 'reveal' | 'stagger' | 'emphasis';
     enabled: boolean;
-    مدت: number;
-    فاصله: number;
-    easing: 'آرام' | 'snappy';
-    presets?: Record<'محو' | 'بالا آمدن' | 'slide' | 'scale', { مدت: number; فاصله: number }>;
+    duration: number;
+    spacing: number;
+    easing: 'calm' | 'snappy';
+    presets?: Record<'muted' | 'rise' | 'slide' | 'scale', { duration: number; spacing: number }>;
   };
-  rtl?: { fontScale: number; letterفاصله: number };
+  rtl?: { fontScale: number; letterspacing: number };
 }
 
 export interface Seo {
@@ -67,78 +67,78 @@ export interface Seo {
   description: string;
   keywords: string[];
   canonical: string;
-  ogImage: رسانهRef | null;
+  ogImage: MediaRef | null;
   robots?: 'index,follow' | 'noindex,follow' | 'index,nofollow' | 'noindex,nofollow';
 }
 
-export interface بخشLayout {
-  width: 'محدود' | 'کامل';
+export interface sectionLayout {
+  width: 'contained' | 'full';
   columns: number;
   gap: number;
   paddingY: number;
-  background: 'هیچ' | 'بوم' | 'سطح' | 'تأکیدی';
+  background: 'none' | 'canvas' | 'surface' | 'accent';
 }
 
 export interface Visibility {
   devices: Device[];
 }
 
-export interface طراحیProps {
-  align: 'شروع' | 'وسط' | 'پایان';
-  tone: 'پیش‌فرض' | 'معکوس' | 'تأکیدی';
+export interface DesignProps {
+  align: 'start' | 'center' | 'end';
+  tone: 'default' | 'inverse' | 'accent';
   spacing: 'sm' | 'md' | 'lg';
 }
 
-export interface واکنش‌گراOverride {
+export interface ResponsiveOverride {
   columns?: number;
-  align?: 'شروع' | 'وسط' | 'پایان';
+  align?: 'start' | 'center' | 'end';
   size?: 'sm' | 'md' | 'lg';
   hide?: boolean;
 }
 
 export interface Animation {
-  preset: 'هیچ' | 'محو' | 'بالا آمدن' | 'پله‌ای';
-  مدت: number;
+  preset: 'none' | 'muted' | 'rise' | 'stagger';
+  duration: number;
   delay: number;
-  easing: 'استاندارد' | 'آرام';
+  easing: 'standard' | 'calm';
 }
 
 export interface A11y {
-  landmark: 'هیچ' | 'ناحیه' | 'تکمیلی';
+  landmark: 'none' | 'region' | 'complementary';
   label: string;
   headingLevel: 2 | 3 | 4;
 }
 
-export interface صفحهComponent {
+export interface PageComponent {
   id: string;
   type: string;
   version: number;
   variant: string;
   props: Record<string, unknown>;
-  design: طراحیProps;
-  responsive: Partial<Record<Device, واکنش‌گراOverride>>;
+  design: DesignProps;
+  responsive: Partial<Record<Device, ResponsiveOverride>>;
   animation: Animation;
-  نمایش: Visibility;
+  visibility: Visibility;
   a11y: A11y;
 }
 
-export interface صفحهبخش {
+export interface PageSection {
   id: string;
   label: string;
-  layout: بخشLayout;
-  نمایش: Visibility;
-  components: صفحهComponent[];
+  layout: sectionLayout;
+  visibility: Visibility;
+  components: PageComponent[];
 }
 
-export interface صفحهDocument {
-  طرح‌وارهنسخه: typeof PAGE_SCHEMA_VERSION;
+export interface PageDocument {
+  schemaVersion: typeof PAGE_SCHEMA_VERSION;
   title: string;
-  locale: زبان;
-  direction: جهت;
+  locale: Locale;
+  direction: Direction;
   seo: Seo;
   theme: { id: string | null; version: number | null; tokens: ThemeTokens };
-  settings: { container: number; background: 'بوم' | 'سطح' | 'محو' };
-  بخش: صفحهبخش[];
+  settings: { container: number; background: 'canvas' | 'surface' | 'muted' };
+  sections: PageSection[];
 }
 
 export interface RevisionSummary {
@@ -149,12 +149,12 @@ export interface RevisionSummary {
   created_at: string;
 }
 
-export interface صفحهRecord {
+export interface PageRecord {
   id: string;
   title: string;
   slug: string | null;
-  locale: زبان;
-  direction: جهت;
+  locale: Locale;
+  direction: Direction;
   legacyCode: string | null;
   version: number;
   status: 'draft' | 'published' | 'scheduled' | 'unpublished' | 'archived';
@@ -165,22 +165,22 @@ export interface صفحهRecord {
   archivedAt?: string | null;
   schedules?: Array<{ id: string; status: string; publish_at: string; attempts: number; last_error: string | null }>;
   createdAt: string;
-  به بالاdatedAt: string;
-  document: صفحهDocument | null;
+  updatedAt: string;
+  document: PageDocument | null;
   revisions: RevisionSummary[];
 }
 
-export interface صفحهSummary {
+export interface PageSummary {
   id: string;
   title: string;
-  locale: زبان;
+  locale: Locale;
   slug?: string | null;
   legacyCode: string | null;
   version: number;
   status: 'draft' | 'published' | 'scheduled' | 'unpublished' | 'archived';
   publishedAt: string | null;
   scheduledAt?: string | null;
-  به بالاdatedAt: string;
+  updatedAt: string;
 }
 
 export type PropSchema =
@@ -191,7 +191,7 @@ export type PropSchema =
   | { type: 'object'; fields: Record<string, PropSchema>; required?: boolean }
   | { type: 'list'; min?: number; max?: number; item: Record<string, PropSchema>; required?: boolean };
 
-export interface گونهDefinition {
+export interface variantsDefinition {
   id: string;
   label: string;
 }
@@ -202,9 +202,9 @@ export interface ComponentDefinition {
   label: string;
   category: string;
   description: string;
-  گونه: گونهDefinition[];
-  طرح‌واره: Record<string, PropSchema>;
-  پیش‌فرضProps: Record<string, unknown>;
+  variants: variantsDefinition[];
+  schema: Record<string, PropSchema>;
+  defaultProps: Record<string, unknown>;
   status: 'stable' | 'deprecated' | 'experimental';
   container: boolean;
 }
@@ -214,24 +214,24 @@ export interface ComponentMeta {
   tags: string[];
   docs: string;
   a11y: string;
-  animation: { preset: 'هیچ' | 'محو' | 'بالا آمدن' | 'slide' | 'scale' | 'پله‌ای'; مدت?: number };
-  به بالاdated_by: string | null;
-  به بالاdated_at: string | null;
+  animation: { preset: 'none' | 'muted' | 'rise' | 'slide' | 'scale' | 'stagger'; duration?: number };
+  updated_by: string | null;
+  updated_at: string | null;
 }
 
-export interface StudioComponent extپایانs ComponentDefinition {
+export interface StudioComponent extends ComponentDefinition {
   meta: ComponentMeta;
 }
 
-export interface Componentقرارداد {
+export interface ComponentContract {
   id: string;
   version: number;
-  طرح‌واره: Record<string, PropSchema>;
-  گونه: گونهDefinition[];
-  پیش‌فرضs: Record<string, unknown>;
+  schema: Record<string, PropSchema>;
+  variants: variantsDefinition[];
+  defaults: Record<string, unknown>;
   responsive: { breakpoints: string[] };
   rtl: boolean;
-  rپایانerer: 'php';
+  renderer: 'php';
   assets: { css: string };
   a11y: string;
   animation: ComponentMeta['animation'];
@@ -239,7 +239,7 @@ export interface Componentقرارداد {
   status: ComponentMeta['status'];
 }
 
-export interface Componentپیش‌تنظیم {
+export interface ComponentPreset {
   id: string;
   type_key: string;
   name: string;
@@ -249,7 +249,7 @@ export interface Componentپیش‌تنظیم {
   created_at: string;
 }
 
-export interface Componentنسخه {
+export interface ComponentVersion {
   type_key: string;
   version: number;
   label: string;
@@ -257,25 +257,25 @@ export interface Componentنسخه {
   released_at: string;
 }
 
-export interface طراحیDraft {
+export interface DesignDraft {
   id: string;
   name: string;
-  locale: زبان;
+  locale: Locale;
   base_theme_id: string | null;
   tokens: ThemeTokens;
   checksum: string;
   version: number;
   status: 'draft' | 'published';
-  به بالاdated_by: string;
-  به بالاdated_at: string;
+  updated_by: string;
+  updated_at: string;
 }
 
-export interface طراحیتاریخچهEntry {
+export interface DesignHistoryEntry {
   id: string;
   draft_id: string;
   theme_id: string;
   tokens_version: number;
-  locale: زبان;
+  locale: Locale;
   checksum: string;
   published_at: string;
   published_by: string;
@@ -283,20 +283,20 @@ export interface طراحیتاریخچهEntry {
   document: string;
 }
 
-export interface طراحیPayload {
-  drafts: Array<Pick<طراحیDraft, 'id' | 'name' | 'locale' | 'version' | 'status' | 'به بالاdated_by' | 'به بالاdated_at'>>;
-  working: طراحیDraft;
-  history: طراحیتاریخچهEntry[];
+export interface DesignPayload {
+  drafts: Array<Pick<DesignDraft, 'id' | 'name' | 'locale' | 'version' | 'status' | 'updated_by' | 'updated_at'>>;
+  working: DesignDraft;
+  history: DesignHistoryEntry[];
   current: { id: string; version: number; name: string; tokens: ThemeTokens } | null;
-  locales: زبان[];
+  locales: Locale[];
 }
 
 export interface ThemeRecord {
   id: string;
   version: number;
   name: string;
-  locale: زبان;
-  is_پیش‌فرض: number | string;
+  locale: Locale;
+  is_default: number | string;
   status: string;
   created_at: string;
   tokens_id: string;
@@ -304,7 +304,7 @@ export interface ThemeRecord {
   document: string;
 }
 
-export interface رسانهآیتم {
+export interface MediaItem {
   id: string;
   original_name: string;
   mime_type: string;
@@ -316,7 +316,7 @@ export interface رسانهآیتم {
   focal_y?: number;
 }
 
-export interface رسانهRecord extپایانs رسانهآیتم {
+export interface MediaRecord extends MediaItem {
   storage_key: string;
   size_bytes: number;
   created_at: string;
@@ -327,21 +327,21 @@ export interface Actor {
   name: string;
   capabilities: Array<'read' | 'edit' | 'publish'>;
   role?: string;
-  دسترسی?: string[];
+  permissions?: string[];
 }
 
 export interface StudioConfig {
   mode: 'pages';
   api: string;
   preview: string;
-  componentپیش‌نمایش: string;
+  componentPreview: string;
   csrf: string;
-  actor: { id: string; name: string; role?: string; دسترسی?: string[] };
+  actor: { id: string; name: string; role?: string; permissions?: string[] };
   capabilities: Actor['capabilities'];
   role: string;
-  دسترسی: string[];
-  طرح‌وارهنسخه: number;
-  رجیسترینسخه: number;
+  permissions: string[];
+  schemaVersion: number;
+  registryVersion: number;
 }
 
 export interface QualityIssue {
@@ -359,11 +359,11 @@ export interface QualityChecks {
   checkedAt: string;
 }
 
-export interface نقشکاربر {
+export interface RoleUser {
   id: string;
   username: string;
   role: string;
-  دسترسی: string[];
+  permissions: string[];
 }
 
 export interface ValidationResult {
@@ -382,6 +382,6 @@ export interface TemplateSummary {
   createdAt: string;
 }
 
-export interface TemplateDetail extپایانs TemplateSummary {
-  document: صفحهDocument;
+export interface TemplateDetail extends TemplateSummary {
+  document: PageDocument;
 }

@@ -1,25 +1,25 @@
-import type { صفحهComponent, صفحهDocument } from './نوع';
+import type { PageComponent, PageDocument } from './types';
 
-export type ComponentتغییرKind = 'added' | 'removed' | 'changed';
+export type ComponentChangeKind = 'added' | 'removed' | 'changed';
 
-export interface Componentتغییر {
+export interface ComponentChange {
   id: string;
   type: string;
   variant: string;
-  kind: ComponentتغییرKind;
+  kind: ComponentChangeKind;
 }
 
 export interface DocumentDiff {
-  بخشBefore: number;
-  بخشAfter: number;
-  titleتغییرd: boolean;
+  sectionsBefore: number;
+  sectionsAfter: number;
+  titleChanged: boolean;
   changedFields: string[];
-  components: Componentتغییر[];
+  components: ComponentChange[];
 }
 
-function flatten(document: صفحهDocument): Map<string, { component: صفحهComponent; section: string }> {
-  const map = new Map<string, { component: صفحهComponent; section: string }>();
-  for (const section of document.بخش) {
+function flatten(document: PageDocument): Map<string, { component: PageComponent; section: string }> {
+  const map = new Map<string, { component: PageComponent; section: string }>();
+  for (const section of document.sections) {
     for (const component of section.components) {
       map.set(component.id, { component, section: section.id });
     }
@@ -28,10 +28,10 @@ function flatten(document: صفحهDocument): Map<string, { component: صفحهC
 }
 
 /** Structural comparison between two page documents, ignoring revision ids. */
-export function diffDocuments(before: صفحهDocument, after: صفحهDocument): DocumentDiff {
+export function diffDocuments(before: PageDocument, after: PageDocument): DocumentDiff {
   const previous = flatten(before);
   const next = flatten(after);
-  const components: Componentتغییر[] = [];
+  const components: ComponentChange[] = [];
 
   for (const [id, entry] of next) {
     const old = previous.get(id);
@@ -46,14 +46,14 @@ export function diffDocuments(before: صفحهDocument, after: صفحهDocument)
         props: old.component.props,
         design: old.component.design,
         animation: old.component.animation,
-        نمایش: old.component.نمایش,
+        visibility: old.component.visibility,
       }) !==
         JSON.stringify({
           variant: entry.component.variant,
           props: entry.component.props,
           design: entry.component.design,
           animation: entry.component.animation,
-          نمایش: entry.component.نمایش,
+          visibility: entry.component.visibility,
         });
     if (changed) {
       components.push({ id, type: entry.component.type, variant: entry.component.variant, kind: 'changed' });
@@ -73,9 +73,9 @@ export function diffDocuments(before: صفحهDocument, after: صفحهDocument)
   if (JSON.stringify(before.theme) !== JSON.stringify(after.theme)) changedFields.push('theme');
 
   return {
-    بخشBefore: before.بخش.length,
-    بخشAfter: after.بخش.length,
-    titleتغییرd: before.title !== after.title,
+    sectionsBefore: before.sections.length,
+    sectionsAfter: after.sections.length,
+    titleChanged: before.title !== after.title,
     changedFields,
     components,
   };
