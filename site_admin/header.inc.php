@@ -57,6 +57,7 @@ $adminMenuGroups = [
         'items' => [
             ['label' => 'طراحی صفحات', 'href' => 'category_manage.php?t=4', 'page' => 'category_manage.php', 'type' => '4', 'related' => ['misctwo.php', 'section.php', 'page_builder.php']],
             ['label' => 'Page Studio', 'href' => 'page_studio.php', 'page' => 'page_studio.php'],
+            ['label' => 'راهنمای Page Studio', 'href' => 'page_studio_help.php', 'page' => 'page_studio_help.php'],
             ['label' => 'صفحات متنی', 'href' => 'misc.php?t=1', 'page' => 'misc.php', 'type' => '1'],
             ['label' => 'راهنمای قسمت‌ها', 'href' => 'help.php', 'page' => 'help.php'],
         ],
