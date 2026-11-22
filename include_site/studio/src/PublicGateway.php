@@ -6,6 +6,7 @@ namespace ExpertsAcademy\Studio;
 use ExpertsAcademy\Studio\Render\MediaResolver;
 use ExpertsAcademy\Studio\Repo\MediaRepository;
 use ExpertsAcademy\Studio\Repo\PageRepository;
+use ExpertsAcademy\Studio\Routing\PageRoute;
 
 /** A published page resolved for the public request path. */
 final class PublishedPage
@@ -58,6 +59,52 @@ final class PublishedPage
  */
 final class PublicGateway
 {
+    /**
+     * Resolve a published Studio page by its public URL path.
+     *
+     * Draft, unpublished and archived pages are never returned.
+     */
+    public static function findByPath(
+        string $fullPath,
+        string $locale
+    ): ?PublishedPage {
+        if (!in_array($locale, ['fa', 'en'], true)) {
+            return null;
+        }
+
+        try {
+            // Only canonical, valid paths are accepted.
+            if (PageRoute::normalize($fullPath, $locale) !== $fullPath) {
+                return null;
+            }
+        } catch (Problem $error) {
+            return null;
+        }
+
+        try {
+            $document = (new PageRepository())->publishedForPath(
+                $fullPath,
+                $locale
+            );
+
+            if ($document === null) {
+                return null;
+            }
+
+            $media = (new MediaRepository())->resolverFor($document);
+
+            return new PublishedPage($document, $media);
+
+        } catch (\Throwable $error) {
+            Db::log(
+                'public studio path lookup failed: ' .
+                $error->getMessage()
+            );
+
+            return null;
+        }
+    }
+
     public static function find(string $legacyCode, string $locale): ?PublishedPage
     {
         if (preg_match('/\A[A-Za-z0-9_-]{1,64}\z/D', $legacyCode) !== 1 || !in_array($locale, ['fa', 'en'], true)) {

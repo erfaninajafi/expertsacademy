@@ -321,6 +321,40 @@ function AppShell() {
     }
   }, [api, applyPage, page]);
 
+  const handlePublicPath = useCallback(async (fullPath: string | null) => {
+    if (!page) return;
+
+    if (dirty) {
+      notify('error', 'ابتدا تغییرات محتوای صفحه را ذخیره کنید.');
+      return;
+    }
+
+    setBusy('publish');
+    try {
+      const response = await api.send<{ page: PageRecord }>(
+        'public_path',
+        'PUT',
+        {
+          fullPath,
+          expectedVersion: page.version,
+        },
+        page.id,
+      );
+
+      await applyPage(response.page, 'آدرس عمومی صفحه ذخیره شد.');
+    } catch (error) {
+      const message = error instanceof ApiError
+        ? error.errors.fullPath ?? error.message
+        : error instanceof Error
+          ? error.message
+          : 'ذخیره آدرس عمومی ممکن نشد.';
+
+      notify('error', message);
+    } finally {
+      setBusy(null);
+    }
+  }, [api, applyPage, dirty, page]);
+
   const handlePreviewLink = useCallback(async () => {
     if (!page) return;
     setBusy('publish');
@@ -406,13 +440,14 @@ function AppShell() {
   );
 
   const handleCreate = useCallback(
-    async (input: { title: string; locale: 'fa' | 'en'; legacyCode: string }) => {
+    async (input: { title: string; locale: 'fa' | 'en'; legacyCode: string; fullPath: string }) => {
       setBusy('create');
       try {
         const response = await api.send<{ page: PageRecord }>('pages', 'POST', {
           title: input.title,
           locale: input.locale,
           legacyCode: input.legacyCode || null,
+          fullPath: input.fullPath || null,
         });
         setCreateOpen(false);
         await refreshPages();
@@ -421,7 +456,15 @@ function AppShell() {
         setSectionId(response.page.document?.sections[0]?.id ?? null);
         notify('ok', 'پیش‌نویس ساخته شد.');
       } catch (error) {
-        notify('error', error instanceof Error ? error.message : 'ساخت صفحه ممکن نشد.');
+        const message = error instanceof ApiError && Object.keys(error.errors).length > 0
+          ? Object.entries(error.errors)
+              .map(([field, detail]) => `${field}: ${detail}`)
+              .join(' | ')
+          : error instanceof Error
+            ? error.message
+            : 'ساخت صفحه ممکن نشد.';
+
+        notify('error', message);
       } finally {
         setBusy(null);
       }
@@ -674,6 +717,8 @@ function AppShell() {
           status={page.status}
           code={page.legacyCode}
           slug={page.slug}
+          fullPath={page.fullPath}
+          locale={page.locale}
           scheduledAt={page.scheduledAt ?? null}
           checks={qualityChecks}
           canPublish={canPublish}
@@ -686,6 +731,7 @@ function AppShell() {
           onUnpublish={handleUnpublish}
           onArchive={handleArchive}
           onRoute={handleRoute}
+          onPublicPath={handlePublicPath}
           onPreviewLink={handlePreviewLink}
         />
       )}

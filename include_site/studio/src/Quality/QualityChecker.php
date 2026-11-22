@@ -44,10 +44,13 @@ final class QualityChecker
         if ($title === '') {
             $errors[] = ['code' => 'title.missing', 'message' => 'Page title is required.', 'path' => 'title'];
         }
-        if (($page['legacy_code'] ?? null) === null && ($page['slug'] ?? null) === null) {
+        if (
+            trim((string) ($page['legacyCode'] ?? $page['legacy_code'] ?? '')) === ''
+            && trim((string) ($page['fullPath'] ?? $page['full_path'] ?? '')) === ''
+        ) {
             $warnings[] = [
                 'code' => 'route.missing',
-                'message' => 'No CMS code or slug is bound; the published revision has no public route yet.',
+                'message' => 'No public route is assigned. Set a Full Path or legacy CMS code.',
                 'path' => 'route',
             ];
         }

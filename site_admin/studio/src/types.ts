@@ -153,6 +153,7 @@ export interface PageRecord {
   id: string;
   title: string;
   slug: string | null;
+  fullPath: string | null;
   locale: Locale;
   direction: Direction;
   legacyCode: string | null;
@@ -175,6 +176,7 @@ export interface PageSummary {
   title: string;
   locale: Locale;
   slug?: string | null;
+  fullPath: string | null;
   legacyCode: string | null;
   version: number;
   status: 'draft' | 'published' | 'scheduled' | 'unpublished' | 'archived';

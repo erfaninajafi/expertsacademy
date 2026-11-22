@@ -9,6 +9,7 @@ use ExpertsAcademy\Studio\Db;
 use ExpertsAcademy\Studio\Json;
 use ExpertsAcademy\Studio\Problem;
 use ExpertsAcademy\Studio\Uuid;
+use ExpertsAcademy\Studio\Routing\PageRoute;
 
 /**
  * Pages, immutable revisions and publications.
@@ -25,22 +26,28 @@ final class PageRepository
     ) {}
 
     /** @return array<string,mixed> */
-    public function create(array $document, string $actorId, ?string $legacyCode = null, ?string $templateId = null): array
+    public function create(array $document, string $actorId, ?string $legacyCode = null, ?string $templateId = null, ?string $fullPath = null): array
     {
         $this->validator->assert($document);
         if ($legacyCode !== null && preg_match('/\A[A-Za-z0-9_-]{1,64}\z/D', $legacyCode) !== 1) {
             throw Problem::invalid(['legacyCode' => 'Binding must be 1-64 letters, digits, dashes or underscores.']);
         }
+        if ($fullPath !== null) {
+            $fullPath = PageRoute::normalize(
+                $fullPath,
+                (string) $document['locale']
+            );
+        }
         $id = Uuid::v4();
         $revisionId = Uuid::v4();
 
-        return Db::transaction(function () use ($id, $revisionId, $document, $actorId, $legacyCode, $templateId): array {
+        return Db::transaction(function () use ($id, $revisionId, $document, $actorId, $legacyCode, $templateId, $fullPath): array {
             Db::run(
                 'INSERT INTO tbl_studio_pages
-                    (id, title, locale, direction, legacy_code, lock_version, status, created_by)
-                 VALUES (?, ?, ?, ?, ?, 1, ?, ?)',
+                    (id, title, full_path, locale, direction, legacy_code, lock_version, status, created_by)
+                 VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?)',
                 [
-                    $id, mb_substr((string) $document['title'], 0, 200), $document['locale'],
+                    $id, mb_substr((string) $document['title'], 0, 200), $fullPath, $document['locale'],
                     $document['direction'], $legacyCode, 'draft', $actorId,
                 ]
             );
@@ -59,7 +66,7 @@ final class PageRepository
     public function get(string $id): array
     {
         $page = Db::one(
-            'SELECT id, title, slug, locale, direction, legacy_code, lock_version, status,
+            'SELECT id, title, slug, full_path, locale, direction, legacy_code, lock_version, status,
                     draft_revision_id, published_revision_id, published_at, scheduled_at, archived_at,
                     created_at, updated_at
              FROM tbl_studio_pages WHERE id = ?',
@@ -85,6 +92,7 @@ final class PageRepository
             'id' => (string) $page['id'],
             'title' => (string) $page['title'],
             'slug' => $page['slug'] !== null ? (string) $page['slug'] : null,
+            'fullPath' => $page['full_path'] !== null ? (string) $page['full_path'] : null,
             'locale' => (string) $page['locale'],
             'direction' => (string) $page['direction'],
             'legacyCode' => $page['legacy_code'] !== null ? (string) $page['legacy_code'] : null,
@@ -119,7 +127,7 @@ final class PageRepository
         $limit = max(1, min(100, $limit));
         $offset = max(0, $offset);
         $rows = Db::all(
-            "SELECT id, title, slug, locale, legacy_code, lock_version, status, published_at, scheduled_at, updated_at
+            "SELECT id, title, slug, full_path, locale, legacy_code, lock_version, status, published_at, scheduled_at, updated_at
              FROM tbl_studio_pages ORDER BY updated_at DESC, id DESC LIMIT {$limit} OFFSET {$offset}"
         );
         $total = (int) (Db::one('SELECT COUNT(*) AS c FROM tbl_studio_pages')['c'] ?? 0);
@@ -129,6 +137,7 @@ final class PageRepository
                 'title' => (string) $row['title'],
                 'locale' => (string) $row['locale'],
                 'slug' => $row['slug'] !== null ? (string) $row['slug'] : null,
+                'fullPath' => $row['full_path'] !== null ? (string) $row['full_path'] : null,
                 'legacyCode' => $row['legacy_code'] !== null ? (string) $row['legacy_code'] : null,
                 'version' => (int) $row['lock_version'],
                 'status' => (string) $row['status'],
@@ -189,7 +198,7 @@ final class PageRepository
     {
         return Db::transaction(function () use ($id, $expectedVersion, $actorId, $revisionId): array {
             $page = Db::one(
-                'SELECT lock_version, draft_revision_id, locale, legacy_code FROM tbl_studio_pages WHERE id = ? FOR UPDATE',
+                'SELECT lock_version, draft_revision_id, locale, legacy_code, full_path FROM tbl_studio_pages WHERE id = ? FOR UPDATE',
                 [$id]
             );
             if ($page === null) {
@@ -219,10 +228,10 @@ final class PageRepository
                 'INSERT INTO tbl_studio_publications
                     (id, page_id, revision_id, locale, path, checksum, status, published_by)
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                 ON DUPLICATE KEY UPDATE status = VALUES(status), unpublished_at = NULL, published_at = CURRENT_TIMESTAMP',
+                 ON DUPLICATE KEY UPDATE status = VALUES(status), path = VALUES(path), unpublished_at = NULL, published_at = CURRENT_TIMESTAMP',
                 [
                     Uuid::v4(), $id, $revisionId, (string) $page['locale'],
-                    (string) ($page['legacy_code'] ?? ''), (string) $revision['checksum'], 'published', $actorId,
+                    (string) ($page['full_path'] ?: ($page['legacy_code'] ?? '')), (string) $revision['checksum'], 'published', $actorId,
                 ]
             );
             Db::run(
@@ -414,6 +423,128 @@ final class PageRepository
     }
 
     /** @return array<string,mixed> */
+    /**
+     * Change a Studio page's public path.
+     *
+     * Published/scheduled pages are temporarily protected until
+     * redirect handling and public routing are implemented.
+     *
+     * @return array<string,mixed>
+     */
+    public function updatePublicPath(
+        string $id,
+        ?string $fullPath,
+        int $expectedVersion,
+        string $actorId
+    ): array {
+        return Db::transaction(function () use (
+            $id, $fullPath, $expectedVersion, $actorId
+        ): array {
+            $page = Db::one(
+                'SELECT id, locale, status, full_path, lock_version
+                 FROM tbl_studio_pages
+                 WHERE id = ?
+                 FOR UPDATE',
+                [$id]
+            );
+
+            if ($page === null) {
+                throw new Problem(404, 'Page not found.');
+            }
+
+            if ((int) $page['lock_version'] !== $expectedVersion) {
+                throw new Problem(
+                    409,
+                    'This page has changed. Reload before editing its path.'
+                );
+            }
+
+            $normalized = null;
+
+            if ($fullPath !== null && trim($fullPath) !== '') {
+                $normalized = PageRoute::normalize(
+                    $fullPath,
+                    (string) $page['locale']
+                );
+            }
+
+            $previous = $page['full_path'] !== null
+                ? (string) $page['full_path']
+                : null;
+
+            if ($previous === $normalized) {
+                return $this->get($id);
+            }
+
+            // Do not change public URLs until automatic redirects
+            // and the unified public router are ready.
+            if (in_array(
+                (string) $page['status'],
+                ['published', 'scheduled'],
+                true
+            )) {
+                throw new Problem(
+                    409,
+                    'Changing a published or scheduled URL is not enabled yet.'
+                );
+            }
+
+            if ($normalized !== null) {
+                $existing = Db::one(
+                    'SELECT id
+                     FROM tbl_studio_pages
+                     WHERE full_path = ? AND id <> ?
+                     LIMIT 1',
+                    [$normalized, $id]
+                );
+
+                if ($existing !== null) {
+                    throw Problem::invalid([
+                        'fullPath' => 'This public path is already in use.'
+                    ]);
+                }
+
+                $redirect = Db::one(
+                    'SELECT id
+                     FROM tbl_studio_redirects
+                     WHERE locale = ?
+                       AND from_path = ?
+                       AND active = 1
+                     LIMIT 1',
+                    [(string) $page['locale'], $normalized]
+                );
+
+                if ($redirect !== null) {
+                    throw Problem::invalid([
+                        'fullPath' => 'This path is reserved by a redirect.'
+                    ]);
+                }
+            }
+
+            Db::run(
+                'UPDATE tbl_studio_pages
+                 SET full_path = ?,
+                     lock_version = lock_version + 1
+                 WHERE id = ? AND lock_version = ?',
+                [$normalized, $id, $expectedVersion]
+            );
+
+            $this->audit->record(
+                $actorId,
+                'page.public_path_changed',
+                'page',
+                $id,
+                $id,
+                [
+                    'from' => $previous,
+                    'to' => $normalized,
+                ]
+            );
+
+            return $this->get($id);
+        });
+    }
+
     public function updateRoute(string $id, ?string $slug, ?string $legacyCode, int $expectedVersion, string $actorId): array
     {
         $slug = $slug !== null ? trim($slug) : '';
@@ -543,6 +674,44 @@ final class PageRepository
             ]);
             return $this->get($id);
         });
+    }
+
+
+    /**
+     * Find a published Studio document using its public path.
+     *
+     * @return array<string,mixed>|null
+     */
+    public function publishedForPath(string $fullPath, string $locale): ?array
+    {
+        $row = Db::one(
+            "SELECT r.document
+             FROM tbl_studio_pages p
+             JOIN tbl_studio_revisions r
+               ON r.id = p.published_revision_id
+              AND r.page_id = p.id
+             WHERE p.full_path = ?
+               AND p.locale = ?
+               AND p.status = 'published'
+             LIMIT 1",
+            [$fullPath, $locale]
+        );
+
+        if ($row === null) {
+            return null;
+        }
+
+        $document = Json::decode((string) $row['document']);
+
+        if (
+            !is_array($document) ||
+            ($document['schemaVersion'] ?? null) !== PageDocument::SCHEMA_VERSION
+        ) {
+            Db::log('Invalid published document for path: ' . $fullPath);
+            return null;
+        }
+
+        return $document;
     }
 
     /**

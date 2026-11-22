@@ -161,7 +161,7 @@ try {
 
     if ($resource === 'pages' && $method === 'POST') {
         Auth::requirePermission($actor, 'pages.create');
-        Http::only($body, ['title', 'locale', 'legacyCode', 'template', 'templateVersion']);
+        Http::only($body, ['title', 'locale', 'legacyCode', 'template', 'templateVersion', 'fullPath']);
         $title = is_string($body['title'] ?? null) ? trim($body['title']) : '';
         $pageLocale = $body['locale'] ?? null;
         if ($title === '' || mb_strlen($title) > 200 || !in_array($pageLocale, ['fa', 'en'], true)) {
@@ -171,6 +171,16 @@ try {
         if ($binding !== null && (!is_string($binding) || trim($binding) === '')) {
             $binding = null;
         }
+        $fullPath = $body['fullPath'] ?? null;
+        if ($fullPath !== null && !is_string($fullPath)) {
+            throw Problem::invalid([
+                'fullPath' => 'Full path must be a string.'
+            ]);
+        }
+        $fullPath = is_string($fullPath) && trim($fullPath) !== ''
+            ? trim($fullPath)
+            : null;
+
         $templateId = is_string($body['template'] ?? null) ? trim($body['template']) : '';
         if ($templateId !== '') {
             $template = $templates->get(
@@ -190,7 +200,8 @@ try {
             $document,
             $actor['id'],
             $binding !== null ? trim($binding) : null,
-            $templateId !== '' ? $templateId : null
+            $templateId !== '' ? $templateId : null,
+            $fullPath
         )], 201);
     }
 
@@ -308,6 +319,36 @@ try {
             Http::version($body),
             $actor['id']
         )]);
+    }
+
+    if ($resource === 'public_path' && $method === 'PUT') {
+        Auth::requirePermission($actor, 'pages.route');
+        Http::only($body, ['fullPath', 'expectedVersion']);
+
+        if (!array_key_exists('fullPath', $body)) {
+            throw Problem::invalid([
+                'fullPath' => 'Full path field is required.'
+            ]);
+        }
+
+        if (
+            $body['fullPath'] !== null &&
+            !is_string($body['fullPath'])
+        ) {
+            throw Problem::invalid([
+                'fullPath' => 'Full path must be a string or null.'
+            ]);
+        }
+
+        Http::json([
+            'ok' => true,
+            'page' => $pages->updatePublicPath(
+                Uuid::require($_GET['id'] ?? null),
+                $body['fullPath'],
+                Http::version($body),
+                (string) $actor['id']
+            )
+        ]);
     }
 
     if ($resource === 'route' && $method === 'PUT') {

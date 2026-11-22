@@ -63,7 +63,7 @@ export function createApi(config: StudioConfig): ApiClient {
         credentials: 'same-origin',
         headers: {
           Accept: 'application/json',
-          'Content-types': 'application/json',
+          'Content-Type': 'application/json',
           'X-CSRF-Token': config.csrf,
         },
         body: JSON.stringify(body ?? {}),
@@ -88,7 +88,7 @@ export function createApi(config: StudioConfig): ApiClient {
       const response = await fetch(new URL(config.preview, window.location.href), {
         method: 'POST',
         credentials: 'same-origin',
-        headers: { 'Content-types': 'application/json', 'X-CSRF-Token': config.csrf },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': config.csrf },
         body: JSON.stringify({ document }),
       });
       const text = await response.text();
@@ -108,7 +108,7 @@ export async function validate(config: StudioConfig, document: unknown): Promise
       credentials: 'same-origin',
       headers: {
         Accept: 'application/json',
-        'Content-types': 'application/json',
+        'Content-Type': 'application/json',
         'X-CSRF-Token': config.csrf,
       },
       body: JSON.stringify({ document }),

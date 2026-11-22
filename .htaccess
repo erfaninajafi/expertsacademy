@@ -3,6 +3,13 @@ DirectoryIndex index.php
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 RewriteRule ^robots\.txt$ robots.php [L]
 
+# Studio full-path routing (fa/en only).
+# Existing files and directories always take precedence.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(fa|en)/([a-z0-9]+(?:-[a-z0-9]+)*(?:/[a-z0-9]+(?:-[a-z0-9]+)*)*)$ index.php [L]
+
+
 # Long-lived caching for immutable compiled/built asset filenames.
 <IfModule mod_headers.c>
   <FilesMatch "\.(css|js|woff2|webp|avif|svg|png|jpe?g)$">

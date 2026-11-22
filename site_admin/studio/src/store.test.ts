@@ -19,6 +19,7 @@ const page = (): PageRecord => ({
   id: '11111111-1111-4111-8111-111111111111',
   title: 'Test page',
   slug: null,
+  fullPath: null,
   locale: 'en',
   direction: 'ltr',
   legacyCode: null,

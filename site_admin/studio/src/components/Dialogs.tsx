@@ -1,5 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog';
-import { useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { MediaItem } from '../types';
 import { issueMessage, permissionLabel, roleLabel, statusLabel } from '../i18n';
 
@@ -41,22 +41,23 @@ interface CreateProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   busy: boolean;
-  onCreate: (input: { title: string; locale: 'fa' | 'en'; legacyCode: string }) => Promise<void>;
+  onCreate: (input: { title: string; locale: 'fa' | 'en'; legacyCode: string; fullPath: string }) => Promise<void>;
 }
 
 export function CreatePageDialog({ open, onOpenChange, busy, onCreate }: CreateProps) {
   const [title, setTitle] = useState('');
   const [locale, setLocale] = useState<'fa' | 'en'>('en');
   const [legacyCode, setLegacyCode] = useState('');
+  const [fullPath, setFullPath] = useState('');
 
   return (
     <Modal open={open} onOpenChange={onOpenChange} title="صفحهٔ جدید"
-      description="صفحهٔ خالی به‌صورت پیش‌نویس ساخته می‌شود و تا زمانی که منتشر نشود و به کد یک صفحهٔ موجود CMS متصل نشود، عمومی نیست."
+      description="صفحه به‌صورت پیش‌نویس ساخته می‌شود. برای صفحات جدید، آدرس عمومی را وارد کنید؛ نیازی به کد CMS نیست. نمایش عمومی پس از تکمیل سیستم مسیریابی فعال می‌شود."
       footer={
         <>
           <button type="button" className="rounded-lg px-3 py-2 text-sm text-slate-600" onClick={() => onOpenChange(false)}>انصراف</button>
           <button type="button" disabled={busy || title.trim() === ''}
-            onClick={() => void onCreate({ title: title.trim(), locale, legacyCode: legacyCode.trim() })}
+            onClick={() => void onCreate({ title: title.trim(), locale, legacyCode: legacyCode.trim(), fullPath: fullPath.trim() })}
             className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
             {busy ? 'در حال ساخت…' : 'ساخت پیش‌نویس'}
           </button>
@@ -71,6 +72,20 @@ export function CreatePageDialog({ open, onOpenChange, busy, onCreate }: CreateP
             <option value="en">انگلیسی (چپ‌به‌راست)</option>
             <option value="fa">فارسی (راست‌به‌چپ)</option>
           </select>
+        </label>
+        <label className="text-xs font-medium text-slate-600">
+          آدرس عمومی صفحه
+          <input
+            dir="ltr"
+            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+            maxLength={255}
+            placeholder={`${locale}/courses/engineering-math`}
+            value={fullPath}
+            onChange={(event) => setFullPath(event.target.value)}
+          />
+          <span className="mt-1 block text-[11px] text-slate-500">
+            نمونه: /{locale}/courses/engineering-math — برای ذخیرهٔ پیش‌نویس بدون مسیر می‌توانید خالی بگذارید.
+          </span>
         </label>
         <label className="text-xs font-medium text-slate-600">کد صفحهٔ موجود CMS (اختیاری)<input className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" maxLength={64}
             placeholder="مثلاً about" value={legacyCode}
@@ -211,6 +226,8 @@ interface PublishingProps {
   status: string;
   code: string | null;
   slug: string | null;
+  fullPath: string | null;
+  locale: 'fa' | 'en';
   scheduledAt: string | null;
   checks: import('../types').QualityChecks | null;
   canPublish: boolean;
@@ -223,6 +240,7 @@ interface PublishingProps {
   onUnpublish: () => Promise<void>;
   onArchive: () => Promise<void>;
   onRoute: (slug: string, code: string) => Promise<void>;
+  onPublicPath: (path: string | null) => Promise<void>;
   onPreviewLink: () => Promise<void>;
 }
 
@@ -236,6 +254,11 @@ export function PublishingDialog(props: PublishingProps) {
   const [timezone, setTimezone] = useState(() => Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC');
   const [slugValue, setSlugValue] = useState(slug ?? '');
   const [codeValue, setCodeValue] = useState(code ?? '');
+  const [fullPathValue, setFullPathValue] = useState(props.fullPath ?? '');
+
+  useEffect(() => {
+    if (open) setFullPathValue(props.fullPath ?? '');
+  }, [open, props.fullPath]);
 
   return (
     <Modal open={open} onOpenChange={onOpenChange} title="انتشار" wide
@@ -248,8 +271,9 @@ export function PublishingDialog(props: PublishingProps) {
             {scheduledAt && <span className="mr-2 text-xs text-slate-600">Scheduled for {scheduledAt} UTC</span>}
           </p>
           <dl className="mt-3 grid gap-1 text-xs text-slate-600">
-            <div className="flex justify-between gap-3"><dt>اتصال عمومی</dt><dd className="font-medium text-slate-900">{code || '—'}</dd></div>
+            <div className="flex justify-between gap-3"><dt>کد CMS قدیمی</dt><dd className="font-medium text-slate-900">{code || '—'}</dd></div>
             <div className="flex justify-between gap-3"><dt>نامک</dt><dd className="font-medium text-slate-900">{slug || '—'}</dd></div>
+            <div className="flex justify-between gap-3"><dt>آدرس Studio</dt><dd dir="ltr" className="break-all font-medium text-slate-900">{props.fullPath || '—'}</dd></div>
           </dl>
           <div className="mt-3 flex flex-wrap gap-2">
             <button type="button" disabled={busy || !props.canPublish || checks?.ok === false} onClick={() => void props.onPublish()}
@@ -317,6 +341,29 @@ export function PublishingDialog(props: PublishingProps) {
           <section className="rounded-xl border border-slate-200 p-3">
             <h3 className="text-sm font-semibold text-slate-800">مسیر</h3>
             <div className="mt-2 grid gap-2">
+              <label className="text-xs font-medium text-slate-600">
+                آدرس عمومی جدید
+                <input
+                  dir="ltr"
+                  value={fullPathValue}
+                  onChange={(event) => setFullPathValue(event.target.value)}
+                  maxLength={255}
+                  placeholder={`/${props.locale}/courses/example`}
+                  className="mt-1 w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
+                />
+              </label>
+              <button
+                type="button"
+                disabled={busy || status === 'published' || status === 'scheduled'}
+                onClick={() => void props.onPublicPath(fullPathValue.trim() || null)}
+                className="w-fit rounded-lg border border-indigo-300 px-3 py-2 text-xs font-semibold text-indigo-700 disabled:opacity-40"
+              >
+                ذخیره آدرس عمومی
+              </button>
+              <p className="text-[11px] text-slate-500">
+                این آدرس فعلاً ذخیره می‌شود؛ نمایش عمومی آن پس از فعال‌سازی Router امکان‌پذیر خواهد بود.
+                مسیر صفحات منتشرشده یا زمان‌بندی‌شده فعلاً قابل تغییر نیست.
+              </p>
               <label className="text-xs font-medium text-slate-600">نامک<input value={slugValue} onChange={(event) => setSlugValue(event.target.value)} maxLength={120}
                   placeholder="course-launch" className="mt-1 w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm" />
               </label>
