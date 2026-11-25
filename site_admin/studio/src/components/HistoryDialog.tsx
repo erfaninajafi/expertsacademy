@@ -4,6 +4,7 @@ import { ApiError } from '../api';
 import { diffDocuments, type DocumentDiff } from '../diff';
 import type { PageDocument, PageRecord } from '../types';
 import { Modal } from './Dialogs';
+import { RevisionComparisonPanel } from './RevisionComparisonPanel';
 
 interface RevisionDetail {
   id: string;
@@ -153,6 +154,8 @@ export function HistoryDialog({ open, onOpenChange, api, page, current, busy, on
               ) : (
                 <p className="text-xs text-slate-500">تفاوت ساختاری با پیش‌نویس فعلی وجود ندارد.</p>
               )}
+
+              <RevisionComparisonPanel api={api} page={page} selected={detail} current={current} />
 
               <button
                 type="button"

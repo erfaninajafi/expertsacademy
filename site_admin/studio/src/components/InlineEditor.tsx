@@ -157,17 +157,43 @@ function TextControl({
   );
 }
 
-/** Direct content editing rendered inside the selected block on the canvas. */
+/** Compact inline content editing: preview by default, edit on demand. */
 export function InlineEditor({ component, definition, canEdit, media, onUpload, busy }: Props) {
   const updateProps = useEditor((state) => state.updateProps);
+  const [expanded, setExpanded] = useState(false);
   const fields = inlineFields(definition.schema);
 
   if (fields.length === 0) return null;
 
+  const summary = fields
+    .filter((field) => field.schema.type === 'string' || field.schema.type === 'text')
+    .map((field) => ({ label: field.label, text: readProp(component.props, field.path) }))
+    .filter((item) => typeof item.text === 'string' && item.text.trim().length > 0)
+    .slice(0, 2);
+
   return (
-    <div data-testid="inline-editor" className="mt-2 border-t border-indigo-100 bg-indigo-50/50 px-3 py-2">
-      <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-indigo-700">ویرایش مستقیم محتوا</p>
-      <div className="grid gap-2">
+    <section data-testid="inline-editor" className="border-t border-indigo-100 bg-indigo-50/30 px-3 py-2">
+      <button
+        type="button"
+        aria-expanded={expanded}
+        aria-controls={`inline-fields-${component.id}`}
+        onClick={() => setExpanded((value) => !value)}
+        className="flex w-full items-center justify-between gap-2 rounded-md border border-indigo-100 bg-white px-2.5 py-1.5 text-right text-xs font-medium text-indigo-800 transition hover:border-indigo-300 hover:bg-indigo-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-500"
+      >
+        <span>ویرایش سریع محتوا</span>
+        <span aria-hidden="true" className="shrink-0 text-[11px] text-indigo-600">{expanded ? '− بستن' : '+ باز کردن'}</span>
+      </button>
+      {!expanded && (
+        <div className="mt-1.5 space-y-1" aria-label="خلاصه محتوای بلوک">
+          {summary.length > 0 ? summary.map((item) => (
+            <p key={item.label} className="flex min-w-0 gap-2 text-[11px] leading-5 text-slate-600">
+              <span className="shrink-0 font-medium text-slate-500">{item.label}:</span>
+              <span className="min-w-0 flex-1 truncate" dir="auto">{item.text as string}</span>
+            </p>
+          )) : <p className="text-[11px] text-slate-500">برای ویرایش متن و تصویر، این بخش را باز کنید.</p>}
+        </div>
+      )}
+      <div id={`inline-fields-${component.id}`} className={`mt-2 gap-3 rounded-lg border border-indigo-100 bg-white p-2.5 ${expanded ? 'grid' : 'hidden'}`}>
         {fields.map((field) => {
           const value = readProp(component.props, field.path);
           const change = (next: unknown): void =>
@@ -189,6 +215,6 @@ export function InlineEditor({ component, definition, canEdit, media, onUpload, 
           return <TextControl key={field.path} field={field} value={value} canEdit={canEdit} onChange={change} />;
         })}
       </div>
-    </div>
+    </section>
   );
 }

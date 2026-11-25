@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import gsap from 'gsap';
 import { animate } from 'motion';
 import { ApiError, createApi, validate, type ApiClient } from './api';
 import { useEditor } from './store';
-import { localizeComponent, statusLabel } from './i18n';
+import { localizeComponent } from './i18n';
 import type {
   ComponentDefinition,
   Device,
@@ -21,15 +22,26 @@ import { Library } from './components/Library';
 import { Canvas } from './components/Canvas';
 import { Inspector } from './components/Inspector';
 import { Preview } from './components/Preview';
-import { CreatePageDialog, MediaDialog, PermissionsDialog, PublishingDialog } from './components/Dialogs';
+import { CreatePageDialog, MediaDialog, PermissionsDialog, PublishingDialog, Modal } from './components/Dialogs';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { DesignSystemManager } from './components/DesignSystemManager';
 import { ComponentStudio } from './components/ComponentStudio';
 import { HistoryDialog } from './components/HistoryDialog';
+import { PageStatusSummary } from './components/PageStatusSummary';
+import { PagesBrowserDialog } from './components/PagesBrowserDialog';
 import { TemplatesDialog } from './components/TemplatesDialog';
+import { StudioTour } from './components/StudioTour';
 import { LayersPanel } from './components/LayersPanel';
 
 type Status = { tone: 'ok' | 'error' | 'info'; message: string };
+
+type LegacyPageTarget = {
+  legacyCode: string;
+  titleFa: string;
+  titleEn: string;
+  hasFa: boolean;
+  hasEn: boolean;
+};
 
 function readConfig(): StudioConfig {
   const node = document.getElementById('ea-studio-config');
@@ -46,19 +58,27 @@ function AppShell() {
     : config.capabilities.includes('publish');
   const canEdit = can('pages.edit') || (permissions.length === 0 && config.capabilities.includes('edit'));
   const canPublish = can('pages.publish');
-  const canSchedule = can('pages.schedule');
   const canRoute = can('pages.route');
   const canManageUsers = can('users.manage');
+  const roleActionRoot = document.getElementById('ea-studio-role-action');
 
   const { draft, page, selected, dirty, load, reset, select, past, future, undo, redo } = useEditor();
   const [registry, setRegistry] = useState<ComponentDefinition[]>([]);
   const [pages, setPages] = useState<PageSummary[]>([]);
+  const [pagesLoaded, setPagesLoaded] = useState(false);
+  const [creationSource, setCreationSource] = useState<{
+    title: string; locale: 'fa' | 'en'; legacyCode: string; fullPath: string;
+    hasLegacyEditor?: boolean;
+  } | null>(null);
+  const [legacyLanguageTarget, setLegacyLanguageTarget] = useState<LegacyPageTarget | null>(null);
+  const initialNavigationHandled = useRef(false);
   const [activePage, setActivePage] = useState<string | null>(null);
   const [sectionId, setSectionId] = useState<string | null>(null);
   const [status, setStatus] = useState<Status | null>(null);
   const [busy, setBusy] = useState<'save' | 'publish' | 'create' | 'upload' | null>(null);
   const [preview, setPreview] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
+  const [pagesBrowserOpen, setPagesBrowserOpen] = useState(false);
   const [publishOpen, setPublishOpen] = useState(false);
   const [qualityChecks, setQualityChecks] = useState<QualityChecks | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -74,9 +94,11 @@ function AppShell() {
   const [conflict, setConflict] = useState(false);
   const [recovery, setRecovery] = useState<{ document: PageDocument; at: number } | null>(null);
   const saveRef = useRef<(silent?: boolean) => Promise<void>>(async () => {});
-  const [view, setView] = useState<'pages' | 'design' | 'components'>('pages');
+  const [view, setView] = useState<'pages' | 'design' | 'components'>(() =>
+    new URLSearchParams(window.location.search).get('view') === 'components' ? 'components' : 'pages'
+  );
   const [leftTab, setLeftTab] = useState<'blocks' | 'layers'>('blocks');
-  const [device, setDevice] = useState<Device>('desktop');
+  const device: Device = 'desktop';
   const [themes, setThemes] = useState<ThemeRecord[]>([]);
   const headerRef = useRef<HTMLDivElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
@@ -106,6 +128,7 @@ function AppShell() {
   const refreshPages = useCallback(async () => {
     const response = await api.get<{ pages: PageSummary[]; total: number }>('pages');
     setPages(response.pages);
+    setPagesLoaded(true);
     return response.pages;
   }, [api]);
 
@@ -155,10 +178,58 @@ function AppShell() {
     [api, load],
   );
 
+  const openLegacyPage = useCallback(async (target: LegacyPageTarget, locale: 'fa' | 'en') => {
+    setLegacyLanguageTarget(null);
+    const title = (locale === 'fa' ? target.titleFa : target.titleEn)
+      || target.titleFa || target.titleEn || 'صفحه جدید';
+    try {
+      const found = await api.get<{ id: string | null }>('page_lookup', {
+        legacyCode: target.legacyCode, locale,
+      });
+      if (found.id) {
+        await openPage(found.id);
+        return;
+      }
+      const hasLegacyEditor = locale === 'fa' ? target.hasFa : target.hasEn;
+      setCreationSource({ title, locale, legacyCode: target.legacyCode, fullPath: '', hasLegacyEditor });
+      setCreateOpen(true);
+      notify('info', hasLegacyEditor
+        ? 'این صفحه هنوز نسخه Studio ندارد. می‌توانید آن را بسازید یا با CMS قدیمی ویرایش کنید.'
+        : 'این زبان هنوز نسخه CMS قدیمی ندارد. می‌توانید نسخه جدید Studio را بسازید.');
+    } catch (error) {
+      notify('error', error instanceof Error ? error.message : 'یافتن صفحه در Studio ممکن نشد.');
+    }
+  }, [api, openPage]);
+
   useEffect(() => {
-    if (activePage || pages.length === 0) return;
-    void openPage(pages[0].id);
-  }, [activePage, openPage, pages]);
+    if (!pagesLoaded || initialNavigationHandled.current) return;
+    initialNavigationHandled.current = true;
+    const params = new URLSearchParams(window.location.search);
+    const pageId = params.get('page_id');
+    if (pageId) {
+      void openPage(pageId);
+      return;
+    }
+    const legacyCode = params.get('legacy_code');
+    if (legacyCode) {
+      const target: LegacyPageTarget = {
+        legacyCode,
+        titleFa: (params.get('title_fa') ?? params.get('title') ?? '').slice(0, 200),
+        titleEn: (params.get('title_en') ?? '').slice(0, 200),
+        hasFa: params.get('has_fa') !== '0',
+        hasEn: params.get('has_en') === '1',
+      };
+      const locale = params.get('locale');
+      if (locale === 'fa' || locale === 'en') {
+        // Backward compatibility for older direct links specifying a locale.
+        void openLegacyPage(target, locale);
+      } else {
+        setLegacyLanguageTarget(target);
+      }
+      return;
+    }
+    if (pages.length > 0) void openPage(pages[0].id);
+  }, [openLegacyPage, openPage, pages, pagesLoaded]);
 
   const handleSave = useCallback(async (silent = false) => {
     if (!page || !draft) return;
@@ -244,37 +315,6 @@ function AppShell() {
     }
   }, [api, applyPage, loadChecks, page]);
 
-  const handleSchedule = useCallback(async (publishAt: string, timezone: string) => {
-    if (!page) return;
-    setBusy('publish');
-    try {
-      const response = await api.send<{ page: PageRecord }>('schedule', 'POST', {
-        expectedVersion: page.version, publishAt, timezone,
-      }, page.id);
-      await applyPage(response.page, `زمان‌بندی برای ${response.page.scheduledAt ?? publishAt} (UTC) ثبت شد.`);
-    } catch (error) {
-      if (error instanceof ApiError && error.status === 422 && page) await loadChecks(page.id);
-      notify('error', error instanceof Error ? error.message : 'زمان‌بندی انجام نشد.');
-    } finally {
-      setBusy(null);
-    }
-  }, [api, applyPage, loadChecks, page]);
-
-  const handleCancelSchedule = useCallback(async () => {
-    if (!page) return;
-    setBusy('publish');
-    try {
-      const response = await api.send<{ page: PageRecord }>('schedule_cancel', 'POST', {
-        expectedVersion: page.version,
-      }, page.id);
-      await applyPage(response.page, 'زمان‌بندی لغو شد.');
-    } catch (error) {
-      notify('error', error instanceof Error ? error.message : 'لغو زمان‌بندی ممکن نشد.');
-    } finally {
-      setBusy(null);
-    }
-  }, [api, applyPage, page]);
-
   const handleUnpublish = useCallback(async () => {
     if (!page) return;
     setBusy('publish');
@@ -290,8 +330,38 @@ function AppShell() {
     }
   }, [api, applyPage, page]);
 
+  // EA_UIUX_STAGE19_SAFE_ARCHIVE_V1
+  const handleRestoreArchived = useCallback(async () => {
+    if (!page || page.status !== 'archived') return;
+    setBusy('publish');
+    try {
+      const response = await api.send<{ page: PageRecord }>('archive_restore', 'POST', {
+        expectedVersion: page.version,
+      }, page.id);
+      load(response.page);
+      setActivePage(response.page.id);
+      setSectionId(response.page.document?.sections[0]?.id ?? null);
+      await refreshPages();
+      notify('ok', 'صفحه از بایگانی خارج شد و به پیش‌نویس برگشت. انتشار عمومی انجام نشده است.');
+    } catch (error) {
+      notify('error', error instanceof Error ? error.message : 'بازیابی صفحه از بایگانی انجام نشد.');
+    } finally {
+      setBusy(null);
+    }
+  }, [api, load, page, refreshPages]);
+
   const handleArchive = useCallback(async () => {
-    if (!page || !window.confirm('این صفحه آرشیو شود؟ از سایت عمومی و صف زمان‌بندی خارج می‌شود.')) return;
+    if (!page || page.status === 'archived') return;
+    if (dirty) {
+      notify('error', 'ابتدا تغییرات ذخیره‌نشده صفحه را ذخیره کنید.');
+      return;
+    }
+    const confirmed = window.prompt(`برای انتقال «${page.title}» به بایگانی، عنوان صفحه را دقیقاً وارد کنید:`);
+    if (confirmed === null) return;
+    if (confirmed.trim() !== page.title.trim()) {
+      notify('error', 'عنوان واردشده با عنوان صفحه برابر نیست؛ هیچ تغییری انجام نشد.');
+      return;
+    }
     setBusy('publish');
     try {
       const response = await api.send<{ page: PageRecord }>('archive', 'POST', {
@@ -304,14 +374,14 @@ function AppShell() {
     } finally {
       setBusy(null);
     }
-  }, [api, applyPage, page]);
+  }, [api, applyPage, dirty, page]);
 
-  const handleRoute = useCallback(async (slug: string, code: string) => {
+  const handleRoute = useCallback(async (slug: string) => {
     if (!page) return;
     setBusy('publish');
     try {
       const response = await api.send<{ page: PageRecord }>('route', 'PUT', {
-        slug, legacyCode: code, expectedVersion: page.version,
+        slug, expectedVersion: page.version,
       }, page.id);
       await applyPage(response.page, 'مسیر ذخیره شد.');
     } catch (error) {
@@ -440,13 +510,12 @@ function AppShell() {
   );
 
   const handleCreate = useCallback(
-    async (input: { title: string; locale: 'fa' | 'en'; legacyCode: string; fullPath: string }) => {
+    async (input: { title: string; locale: 'fa' | 'en'; fullPath: string }) => {
       setBusy('create');
       try {
         const response = await api.send<{ page: PageRecord }>('pages', 'POST', {
           title: input.title,
           locale: input.locale,
-          legacyCode: input.legacyCode || null,
           fullPath: input.fullPath || null,
         });
         setCreateOpen(false);
@@ -554,6 +623,16 @@ function AppShell() {
 
   return (
     <div dir="rtl" className="rounded-2xl bg-slate-50 p-3 text-right text-slate-900">
+      {canManageUsers && roleActionRoot && createPortal(
+        <button
+          type="button"
+          className="btn btn-sm btn-outline-primary"
+          onClick={() => void openPermissions()}
+        >
+          نقش‌ها
+        </button>,
+        roleActionRoot
+      )}
       <nav aria-label="بخش‌های Page Studio" className="mb-3 flex flex-wrap gap-1 rounded-xl border border-slate-200 bg-white p-1">
         {([['pages', 'صفحه‌ها'], ['design', 'سیستم طراحی'], ['components', 'استودیوی کامپوننت']] as const).map(([id, label]) => (
           <button
@@ -568,51 +647,80 @@ function AppShell() {
         ))}
       </nav>
       <div className={view === 'pages' ? '' : 'hidden'}>
-      <div ref={headerRef} className="mb-3 flex flex-wrap items-center gap-2 rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
-        <div data-toolbar-item className="ml-auto flex min-w-0 max-w-full items-center gap-2">
-          <label className="text-xs font-medium text-slate-500" htmlFor="page-select">صفحه</label>
-          <select
-            id="page-select"
-            className="min-w-0 max-w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-            value={activePage ?? ''}
-            onChange={(event) => {
-              const value = event.target.value;
-              if (value === '') { reset(); setActivePage(null); return; }
-              if (dirty && !window.confirm('تغییرات ذخیره‌نشده دور انداخته شود؟')) return;
-              void openPage(value);
-            }}
-          >
-            <option value="">— انتخاب کنید —</option>
-            {pages.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.title} · {item.locale.toUpperCase()} · {statusLabel(item.status)}{item.legacyCode ? ` · ${item.legacyCode}` : ''}
-              </option>
-            ))}
-          </select>
-          {dirty && <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-800">ذخیره‌نشده</span>}
-          {page && <span data-testid="page-status" className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
-            page.status === 'published' ? 'bg-emerald-100 text-emerald-800'
-              : page.status === 'scheduled' ? 'bg-indigo-100 text-indigo-800'
-                : page.status === 'archived' ? 'bg-slate-200 text-slate-700'
-                  : page.status === 'unpublished' ? 'bg-amber-100 text-amber-800'
-                    : 'bg-slate-100 text-slate-700'
-          }`}>{statusLabel(page.status)}</span>}
+      <div ref={headerRef} data-ea-toolbar="v2" className="mb-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4">
+        <div data-toolbar-item className="flex flex-wrap items-end justify-between gap-3 border-b border-slate-200 pb-3">
+          <div className="min-w-0 w-full flex-1 sm:min-w-[16rem]">
+            <label className="mb-1.5 block text-xs font-bold text-slate-700" htmlFor="page-select">صفحه در حال ویرایش</label>
+            <button
+              type="button"
+              id="page-select"
+              data-ea-page-selector="browser-v1"
+              aria-label="جست‌وجو و انتخاب صفحه در حال ویرایش"
+              aria-haspopup="dialog"
+              aria-expanded={pagesBrowserOpen}
+              onClick={() => setPagesBrowserOpen(true)}
+              className="flex w-full min-w-0 items-center justify-between gap-3 rounded-lg border border-slate-300 bg-white px-3 py-2 text-right text-sm text-slate-800 transition-colors hover:border-indigo-400 hover:bg-indigo-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-500"
+            >
+              <span className="min-w-0 truncate font-medium">{draft?.title ?? page?.title ?? 'برای انتخاب صفحه کلیک کنید'}</span>
+              <span className="shrink-0 text-xs font-semibold text-indigo-700">جست‌وجو و انتخاب</span>
+            </button>
+          </div>
+          <PageStatusSummary
+            page={page}
+            dirty={dirty}
+            saving={busy === 'save'}
+            conflict={conflict}
+          />
         </div>
-        <div data-toolbar-item className="flex flex-wrap items-center gap-1.5">
-          <button type="button" aria-label="واگرد" title="واگرد (Ctrl/Cmd+Z)" disabled={!canEdit || past.length === 0} onClick={undo} className="rounded-lg border border-slate-200 px-2.5 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400 disabled:opacity-40">↶</button>
-          <button type="button" aria-label="ازنو" title="ازنو (Ctrl/Cmd+Shift+Z)" disabled={!canEdit || future.length === 0} onClick={redo} className="rounded-lg border border-slate-200 px-2.5 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400 disabled:opacity-40">↷</button>
-          <button type="button" onClick={() => setTemplatesOpen(true)} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400">قالب‌ها</button>
-          <button type="button" onClick={() => setCreateOpen(true)} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400">صفحهٔ جدید</button>
-          <button type="button" onClick={() => setMediaOpen(true)} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400">رسانه</button>
-          <button type="button" disabled={!page} onClick={() => setHistoryOpen(true)} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400 disabled:opacity-40">تاریخچه</button>
-          <button type="button" disabled={!draft} onClick={() => setPreview(true)} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400 disabled:opacity-40">پیش‌نمایش</button>
-          <button type="button" disabled={!canEdit || !draft || busy !== null} onClick={() => void handleSave()} className="rounded-lg bg-indigo-600 px-3 py-2 text-xs font-semibold text-white disabled:opacity-40">
-            {busy === 'save' ? 'در حال ذخیره…' : dirty ? 'ذخیرهٔ تغییرات' : 'ذخیره شد'}
-          </button>
-          <button type="button" disabled={!page || busy !== null} onClick={openPublishing} className="rounded-lg bg-emerald-700 px-3 py-2 text-xs font-semibold text-white disabled:opacity-40">انتشار</button>
-          {canManageUsers && <button type="button" onClick={() => void openPermissions()} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400">نقش‌ها</button>}
+        <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-[minmax(9rem,0.75fr)_minmax(20rem,1.5fr)_minmax(18rem,1.25fr)]">
+          <section data-toolbar-item role="group" aria-label="ویرایش" className="min-w-0 border border-slate-200 rounded-xl bg-slate-50/60 p-3">
+            <div className="mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+              <h3 className="text-xs font-bold text-slate-800">ویرایش</h3>
+              <span className="text-[11px] text-slate-500">واگرد و تکرار</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button type="button" aria-label="واگرد" title="واگرد (Ctrl/Cmd+Z)" disabled={!canEdit || past.length === 0} onClick={undo} className="rounded-lg border border-slate-200 px-2.5 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400 disabled:opacity-40">↶</button>
+              <button type="button" aria-label="ازنو" title="ازنو (Ctrl/Cmd+Shift+Z)" disabled={!canEdit || future.length === 0} onClick={redo} className="rounded-lg border border-slate-200 px-2.5 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400 disabled:opacity-40">↷</button>
+            </div>
+          </section>
+          <section data-toolbar-item role="group" aria-label="مدیریت صفحه" className="min-w-0 border border-slate-200 rounded-xl bg-slate-50/60 p-3">
+            <div className="mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+              <h3 className="text-xs font-bold text-slate-800">مدیریت صفحه</h3>
+              <span className="text-[11px] text-slate-500">ساخت، محتوا و نسخه‌ها</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button title="نمایش قالب‌های آماده برای ساخت یا طراحی صفحه" type="button" onClick={() => setTemplatesOpen(true)} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400">قالب‌ها</button>
+              <button title="ایجاد یک صفحه جدید در Page Studio" type="button" onClick={() => { setCreationSource(null); setCreateOpen(true); }} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400">صفحه جدید</button>
+              <button title="بازکردن کتابخانه تصاویر و رسانه‌ها" type="button" onClick={() => setMediaOpen(true)} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400">تصاویر</button>
+              <button title="مشاهده نسخه‌های قبلی صفحه" type="button" disabled={!page} onClick={() => setHistoryOpen(true)} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400 disabled:opacity-40">نسخه‌ها</button>
+            </div>
+          </section>
+          <section data-toolbar-item role="group" aria-label="بررسی و انتشار" className="min-w-0 border border-slate-200 rounded-xl bg-slate-50/60 p-3">
+            <div className="mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+              <h3 className="text-xs font-bold text-slate-800">بررسی و انتشار</h3>
+              <span className="text-[11px] text-slate-500">پیش‌نویس و انتشار</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button title="بررسی ظاهر صفحه بدون انتشار در سایت عمومی" type="button" disabled={!draft} onClick={() => setPreview(true)} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-indigo-400 disabled:opacity-40">پیش‌نمایش</button>
+              <button title="ذخیره پیش‌نویس؛ صفحه عمومی تا زمان انتشار تغییر نمی‌کند" type="button" disabled={!canEdit || !draft || busy !== null} onClick={() => void handleSave()} className="rounded-lg bg-indigo-600 px-3 py-2 text-xs font-semibold text-white disabled:opacity-40">
+                          {busy === 'save' ? 'در حال ذخیره…' : dirty ? 'ذخیرهٔ تغییرات' : 'ذخیره شد'}
+                        </button>
+              <button title="بازکردن تنظیمات انتشار صفحه در سایت عمومی" type="button" disabled={!page || busy !== null} onClick={openPublishing} className="rounded-lg bg-emerald-700 px-3 py-2 text-xs font-semibold text-white disabled:opacity-40">انتشار…</button>
+            </div>
+          </section>
         </div>
       </div>
+      {page?.status === 'archived' && (
+        <div data-ea-archive-notice="v1" role="status" className="mb-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-950">
+          <span><strong>این صفحه در بایگانی است.</strong> در سایت عمومی نمایش داده نمی‌شود. نسخه‌ها و تاریخچه آن حفظ شده‌اند.</span>
+          <button
+            type="button"
+            disabled={busy !== null || !can('pages.archive')}
+            onClick={() => void handleRestoreArchived()}
+            className="rounded-lg bg-slate-900 px-3 py-2 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-40"
+          >بازیابی به پیش‌نویس</button>
+        </div>
+      )}
 
       {conflict && (
         <div role="alert" className="mb-2 flex flex-wrap items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-800">
@@ -626,20 +734,58 @@ function AppShell() {
           <button type="button" className="rounded border border-amber-300 px-2 py-1 font-semibold" onClick={() => { if (page) window.localStorage.removeItem(`ea-studio:backup:${page.id}`); setRecovery(null); }}>دور انداختن</button>
         </div>
       )}
-      <div ref={statusRef} role="status" data-testid="studio-status" aria-live="polite" className="min-h-6 px-1 text-xs">
-        {status && (
-          <span className={status.tone === 'error' ? 'font-medium text-red-700' : status.tone === 'ok' ? 'font-medium text-emerald-700' : 'text-slate-600'}>
-            {status.message}
-          </span>
+      <div ref={statusRef} data-testid="studio-status" data-ea-status-feedback="v2" className="mb-2 min-h-6">
+        {busy === 'save' ? (
+          <div role="status" aria-live="polite" className="inline-flex max-w-full items-center gap-2 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-xs text-indigo-900">
+            <span aria-hidden="true" className="inline-block h-3 w-3 animate-pulse rounded-full bg-indigo-500" />
+            <span>در حال ذخیره پیش‌نویس… این کار صفحه منتشرشده را تغییر نمی‌دهد.</span>
+          </div>
+        ) : busy === 'publish' ? (
+          <div role="status" aria-live="polite" className="inline-flex max-w-full items-center gap-2 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-xs text-indigo-900">
+            <span aria-hidden="true" className="inline-block h-3 w-3 animate-pulse rounded-full bg-indigo-500" />
+            <span>در حال پردازش درخواست مربوط به انتشار یا مدیریت صفحه…</span>
+          </div>
+        ) : status && (
+          <div
+            role={status.tone === 'error' ? 'alert' : 'status'}
+            aria-live={status.tone === 'error' ? 'assertive' : 'polite'}
+            className={`inline-flex max-w-full items-start gap-2 rounded-lg border px-3 py-2 text-xs ${
+              status.tone === 'error'
+                ? 'border-red-200 bg-red-50 text-red-800'
+                : status.tone === 'ok'
+                  ? 'border-emerald-200 bg-emerald-50 text-emerald-900'
+                  : 'border-slate-200 bg-white text-slate-700'
+            }`}
+          >
+            <span className="mt-0.5 shrink-0 font-bold" aria-hidden="true">
+              {status.tone === 'error' ? '!' : status.tone === 'ok' ? '✓' : 'ℹ'}
+            </span>
+            <div className="min-w-0">
+              <span className="font-semibold">
+                {status.tone === 'error' ? 'عملیات انجام نشد' : status.tone === 'ok' ? 'عملیات موفق' : 'اطلاع'}:
+              </span>{' '}{status.message}
+            </div>
+            <button
+              type="button"
+              aria-label="بستن پیام وضعیت"
+              title="بستن پیام"
+              onClick={() => setStatus(null)}
+              className="mr-1 shrink-0 rounded-md px-1.5 text-base leading-5 opacity-80 hover:bg-black/5 hover:opacity-100"
+            >×</button>
+          </div>
         )}
-        {errorCount > 0 && <span className="mr-2 font-semibold text-red-700">{errorCount} خطای اعتبارسنجی</span>}
+        {errorCount > 0 && (
+          <p className="mt-1 text-xs font-semibold text-red-700" role="status">
+            {errorCount} خطای اعتبارسنجی؛ فیلدهای مشخص‌شده را بررسی کنید.
+          </p>
+        )}
       </div>
 
       {!draft && (
         <div className="mt-3 rounded-xl border border-dashed border-slate-300 bg-white p-10 text-center">
           <h2 className="text-base font-semibold">صفحه‌ای انتخاب نشده است</h2>
           <p className="mt-1 text-sm text-slate-500">یک صفحهٔ موجود را از بالا انتخاب کنید یا برای شروع، پیش‌نویس بسازید.</p>
-          <button type="button" onClick={() => setCreateOpen(true)} className="mt-4 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">ساخت صفحه</button>
+          <button type="button" onClick={() => { setCreationSource(null); setCreateOpen(true); }} className="mt-4 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">ساخت صفحه</button>
         </div>
       )}
 
@@ -682,7 +828,6 @@ function AppShell() {
               definitions={definitions}
               canEdit={canEdit}
               device={device}
-              onDeviceChange={setDevice}
               media={media}
               onUpload={handleUpload}
               busy={busy !== null}
@@ -692,6 +837,7 @@ function AppShell() {
           </div>
           <div className="rounded-xl border border-slate-200 bg-white p-3 lg:max-h-[70vh]">
             <Inspector
+              api={api}
               document={draft}
               definitions={definitions}
               section={activeSection}
@@ -707,27 +853,55 @@ function AppShell() {
       {mediaOpen && (
         <MediaDialog open={mediaOpen} onOpenChange={setMediaOpen} items={media} onUpload={handleUpload} onMeta={handleMediaMeta} busy={busy === 'upload'} />
       )}
-      <CreatePageDialog open={createOpen} onOpenChange={setCreateOpen} busy={busy === 'create'} onCreate={handleCreate} />
+      <Modal
+        open={legacyLanguageTarget !== null}
+        onOpenChange={(open) => { if (!open) setLegacyLanguageTarget(null); }}
+        title="انتخاب زبان صفحه"
+        description="ابتدا زبان موردنظر را انتخاب کنید؛ اگر صفحه قبلاً در Studio ساخته شده باشد، همان صفحه باز می‌شود."
+      >
+        {legacyLanguageTarget && (
+          <div className="grid gap-3 sm:grid-cols-2">
+            <button type="button"
+              className="rounded-xl border border-slate-200 p-4 text-right hover:border-indigo-500 hover:bg-indigo-50"
+              onClick={() => void openLegacyPage(legacyLanguageTarget, 'fa')}>
+              <span className="block text-sm font-semibold">فارسی</span>
+              <span className="mt-1 block text-xs text-slate-600">{legacyLanguageTarget.titleFa || 'نسخه فارسی'}</span>
+              {!legacyLanguageTarget.hasFa && <span className="mt-2 block text-xs text-amber-700">در CMS قدیمی موجود نیست</span>}
+            </button>
+            <button type="button"
+              className="rounded-xl border border-slate-200 p-4 text-right hover:border-indigo-500 hover:bg-indigo-50"
+              onClick={() => void openLegacyPage(legacyLanguageTarget, 'en')}>
+              <span className="block text-sm font-semibold">انگلیسی</span>
+              <span className="mt-1 block text-xs text-slate-600">{legacyLanguageTarget.titleEn || 'نسخه انگلیسی'}</span>
+              {!legacyLanguageTarget.hasEn && <span className="mt-2 block text-xs text-amber-700">در CMS قدیمی موجود نیست؛ ایجاد نسخه Studio ممکن است</span>}
+            </button>
+          </div>
+        )}
+      </Modal>
+      <CreatePageDialog
+        initial={creationSource}
+        legacyEditorUrl={creationSource?.legacyCode && creationSource.hasLegacyEditor !== false
+          ? `category_manage.php?t=4&do=edit&id=${encodeURIComponent(creationSource.legacyCode)}`
+          : undefined}
+        open={createOpen} onOpenChange={setCreateOpen} busy={busy === 'create'} onCreate={handleCreate} />
       {page && (
         <PublishingDialog
           open={publishOpen}
           onOpenChange={setPublishOpen}
           busy={busy === 'publish'}
+          dirty={dirty || busy === 'save'}
           title={draft?.title ?? page.title}
           status={page.status}
-          code={page.legacyCode}
           slug={page.slug}
           fullPath={page.fullPath}
           locale={page.locale}
-          scheduledAt={page.scheduledAt ?? null}
           checks={qualityChecks}
+          document={draft}
           canPublish={canPublish}
-          canSchedule={canSchedule}
+          canArchive={can('pages.archive')}
           canRoute={canRoute}
           previewUrl={previewUrl}
           onPublish={handlePublish}
-          onSchedule={handleSchedule}
-          onCancelSchedule={handleCancelSchedule}
           onUnpublish={handleUnpublish}
           onArchive={handleArchive}
           onRoute={handleRoute}
@@ -744,6 +918,24 @@ function AppShell() {
         canManage={canManageUsers}
         busy={busy !== null}
         onAssign={handleAssignRole}
+      />
+      <PagesBrowserDialog
+        api={api}
+        open={pagesBrowserOpen}
+        onOpenChange={setPagesBrowserOpen}
+        activeId={activePage}
+        onSelect={(selectedPage) => {
+          if (selectedPage.id === activePage) {
+            setPagesBrowserOpen(false);
+            return;
+          }
+          if (dirty && !window.confirm('تغییرات ذخیره‌نشده دور انداخته شود؟')) return;
+          // Keep the existing selector consistent if a page is older than its first 30 entries.
+          setPages((current) => current.some((item) => item.id === selectedPage.id)
+            ? current : [selectedPage, ...current]);
+          setPagesBrowserOpen(false);
+          void openPage(selectedPage.id);
+        }}
       />
       <TemplatesDialog
         open={templatesOpen}
@@ -769,6 +961,8 @@ function AppShell() {
       )}
       {preview && draft && <Preview api={api} document={draft} initialWidth={device} onClose={() => setPreview(false)} />}
       </div>
+      {/* EA_UIUX_STAGE20_GUIDED_ONBOARDING_V1: guided UI help, view-only */}
+      <StudioTour currentView={view} onNavigate={setView} hasDraft={Boolean(draft)} />
       {view === 'design' && <DesignSystemManager api={api} config={config} notify={notify} />}
       {view === 'components' && <ComponentStudio api={api} config={config} notify={notify} />}
       <p className="mt-3 text-xs text-slate-500">

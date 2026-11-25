@@ -20,6 +20,7 @@ export function Preview({ api, document, initialWidth = 'desktop', onClose }: Pr
   const [width, setWidth] = useState<Width>(initialWidth);
   const [busy, setBusy] = useState(true);
   const panel = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useLayoutEffect(() => {
     if (!panel.current) return;
@@ -42,6 +43,40 @@ export function Preview({ api, document, initialWidth = 'desktop', onClose }: Pr
     }, 250);
     return () => { cancelled = true; window.clearTimeout(timer); };
   }, [api, document]);
+
+  // EA_STUDIO_PREVIEW_ESCAPE_V1: close even when keyboard focus is inside srcDoc iframe.
+  useEffect(() => {
+    let focusedFrameWindow: Window | null = null;
+    const closeOnEscape = (event: KeyboardEvent): void => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      event.stopPropagation();
+      onClose();
+    };
+
+    const iframe = iframeRef.current;
+    const attachFrameListener = (): void => {
+      focusedFrameWindow?.removeEventListener('keydown', closeOnEscape, true);
+      focusedFrameWindow = null;
+      try {
+        // This iframe uses srcDoc with allow-same-origin, so its window is accessible.
+        focusedFrameWindow = iframe?.contentWindow ?? null;
+        focusedFrameWindow?.addEventListener('keydown', closeOnEscape, true);
+      } catch {
+        // If a future preview becomes cross-origin, host-window Esc still works.
+        focusedFrameWindow = null;
+      }
+    };
+
+    window.addEventListener('keydown', closeOnEscape, true);
+    iframe?.addEventListener('load', attachFrameListener);
+    attachFrameListener();
+    return () => {
+      window.removeEventListener('keydown', closeOnEscape, true);
+      iframe?.removeEventListener('load', attachFrameListener);
+      focusedFrameWindow?.removeEventListener('keydown', closeOnEscape, true);
+    };
+  }, [onClose]);
 
   return (
     <div ref={panel} className="fixed inset-0 z-[2000] flex flex-col bg-slate-900/60 p-3 backdrop-blur-sm">
@@ -67,6 +102,7 @@ export function Preview({ api, document, initialWidth = 'desktop', onClose }: Pr
         style={{ width: WIDTHS[width], maxWidth: '100%' }}>
         <iframe
           title="پیش‌نمایش صفحه"
+          ref={iframeRef}
           srcDoc={html}
           sandbox="allow-same-origin"
           className="h-[70vh] w-full border-0"

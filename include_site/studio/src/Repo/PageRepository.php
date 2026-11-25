@@ -149,6 +149,20 @@ final class PageRepository
         ];
     }
 
+    /** Find a Studio page tied to a legacy CMS category, without loading its document. */
+    public function idForLegacyCode(string $code, string $locale): ?string
+    {
+        if (preg_match('/\A[A-Za-z0-9_-]{1,64}\z/D', $code) !== 1 ||
+            !in_array($locale, ['fa', 'en'], true)) {
+            throw Problem::invalid(['legacyCode' => 'Invalid legacy page identifier or locale.']);
+        }
+        $row = Db::one(
+            'SELECT id FROM tbl_studio_pages WHERE legacy_code = ? AND locale = ? LIMIT 1',
+            [$code, $locale]
+        );
+        return $row !== null ? (string) $row['id'] : null;
+    }
+
     /** @return array<string,mixed> */
     public function save(string $id, array $document, int $expectedVersion, string $actorId): array
     {
@@ -198,7 +212,7 @@ final class PageRepository
     {
         return Db::transaction(function () use ($id, $expectedVersion, $actorId, $revisionId): array {
             $page = Db::one(
-                'SELECT lock_version, draft_revision_id, locale, legacy_code, full_path FROM tbl_studio_pages WHERE id = ? FOR UPDATE',
+                'SELECT lock_version, draft_revision_id, locale, legacy_code, full_path, status FROM tbl_studio_pages WHERE id = ? FOR UPDATE',
                 [$id]
             );
             if ($page === null) {
@@ -206,6 +220,9 @@ final class PageRepository
             }
             if ((int) $page['lock_version'] !== $expectedVersion) {
                 throw new Problem(409, 'This page was changed by someone else. Reload before publishing.');
+            }
+            if ((string) $page['status'] === 'archived') {
+                throw new Problem(409, 'Restore this page from archive before publishing.');
             }
             $revisionId = $revisionId ?? (string) ($page['draft_revision_id'] ?? '');
             if ($revisionId === '') {
@@ -254,109 +271,35 @@ final class PageRepository
         });
     }
 
-    /**
-     * Schedule the current draft (or a selected revision) for future publication.
-     * Editing the page afterwards cancels the pending schedule and returns it to
-     * draft, so a stale revision can never be published silently.
-     *
-     * @return array<string,mixed>
-     */
-    public function schedule(
-        string $id,
-        string $publishAt,
-        string $timezone,
-        int $expectedVersion,
-        string $actorId,
-        ?string $revisionId = null
-    ): array {
-        try {
-            $zone = new \DateTimeZone($timezone);
-            $utc = (new \DateTimeImmutable($publishAt, $zone))->setTimezone(new \DateTimeZone('UTC'));
-        } catch (\Throwable) {
-            throw Problem::invalid(['publishAt' => 'Use a valid ISO date and timezone.']);
-        }
-        if ($utc <= new \DateTimeImmutable('now', new \DateTimeZone('UTC'))) {
-            throw Problem::invalid(['publishAt' => 'Scheduled time must be in the future.']);
-        }
-
-        return Db::transaction(function () use ($id, $utc, $timezone, $expectedVersion, $actorId, $revisionId): array {
-            $page = Db::one(
-                'SELECT lock_version, draft_revision_id, locale FROM tbl_studio_pages WHERE id = ? FOR UPDATE',
-                [$id]
-            );
-            if ($page === null) {
-                throw new Problem(404, 'Page not found.');
-            }
-            if ((int) $page['lock_version'] !== $expectedVersion) {
-                throw new Problem(409, 'This page was changed by someone else. Reload before scheduling.');
-            }
-            $revisionId = $revisionId ?? (string) ($page['draft_revision_id'] ?? '');
-            $revision = $revisionId !== ''
-                ? Db::one('SELECT document FROM tbl_studio_revisions WHERE id = ? AND page_id = ?', [$revisionId, $id])
-                : null;
-            if ($revision === null) {
-                throw new Problem(422, 'There is no revision to schedule.');
-            }
-            $document = Json::decode((string) $revision['document']);
-            if (!is_array($document)) {
-                throw new Problem(422, 'The stored revision is not readable.');
-            }
-            $this->validator->assert($document);
-
-            Db::run(
-                "UPDATE tbl_studio_schedules SET status = 'cancelled', processed_at = CURRENT_TIMESTAMP
-                 WHERE page_id = ? AND status = 'pending'",
-                [$id]
-            );
-            $scheduleId = Uuid::v4();
-            Db::run(
-                "INSERT INTO tbl_studio_schedules
-                    (id, page_id, revision_id, publish_at, timezone, status, created_by)
-                 VALUES (?, ?, ?, ?, ?, 'pending', ?)",
-                [$scheduleId, $id, $revisionId, $utc->format('Y-m-d H:i:s'), $timezone, $actorId]
-            );
-            Db::run(
-                "UPDATE tbl_studio_pages SET status = 'scheduled', scheduled_at = ?, lock_version = lock_version + 1
-                 WHERE id = ? AND lock_version = ?",
-                [$utc->format('Y-m-d H:i:s'), $id, $expectedVersion]
-            );
-            $this->audit->record($actorId, 'page.scheduled', 'page', $id, $id, [
-                'scheduleId' => $scheduleId,
-                'revisionId' => $revisionId,
-                'publishAt' => $utc->format('c'),
-                'timezone' => $timezone,
-            ]);
-            return $this->get($id) + ['scheduleId' => $scheduleId];
-        });
-    }
-
     /** @return array<string,mixed> */
-    public function cancelSchedule(string $id, int $expectedVersion, string $actorId): array
+    /** Restore an archived Studio page as a draft without republishing old content. */
+    public function restoreFromArchive(string $id, int $expectedVersion, string $actorId): array
     {
         return Db::transaction(function () use ($id, $expectedVersion, $actorId): array {
-            $page = Db::one('SELECT lock_version FROM tbl_studio_pages WHERE id = ? FOR UPDATE', [$id]);
+            $page = Db::one(
+                'SELECT lock_version, status FROM tbl_studio_pages WHERE id = ? FOR UPDATE',
+                [$id]
+            );
             if ($page === null) {
                 throw new Problem(404, 'Page not found.');
             }
             if ((int) $page['lock_version'] !== $expectedVersion) {
-                throw new Problem(409, 'This page changed. Reload before cancelling the schedule.');
+                throw new Problem(409, 'Page changed in another session. Reload and retry.');
+            }
+            if ((string) $page['status'] !== 'archived') {
+                throw new Problem(409, 'Only archived pages can be restored this way.');
             }
             Db::run(
-                "UPDATE tbl_studio_schedules SET status = 'cancelled', processed_at = CURRENT_TIMESTAMP
-                 WHERE page_id = ? AND status = 'pending'",
-                [$id]
-            );
-            Db::run(
-                "UPDATE tbl_studio_pages SET status = 'draft', scheduled_at = NULL, lock_version = lock_version + 1
+                "UPDATE tbl_studio_pages SET status = 'draft', archived_at = NULL,
+                 scheduled_at = NULL, lock_version = lock_version + 1
                  WHERE id = ? AND lock_version = ?",
                 [$id, $expectedVersion]
             );
-            $this->audit->record($actorId, 'page.schedule.cancelled', 'page', $id, $id);
+            $this->audit->record($actorId, 'page.archive_restored', 'page', $id, $id);
             return $this->get($id);
         });
     }
 
-    /** @return array<string,mixed> */
     public function unpublish(string $id, int $expectedVersion, string $actorId): array
     {
         return Db::transaction(function () use ($id, $expectedVersion, $actorId): array {
@@ -545,7 +488,7 @@ final class PageRepository
         });
     }
 
-    public function updateRoute(string $id, ?string $slug, ?string $legacyCode, int $expectedVersion, string $actorId): array
+    public function updateRoute(string $id, ?string $slug, int $expectedVersion, string $actorId): array
     {
         $slug = $slug !== null ? trim($slug) : '';
         $slug = $slug === '' ? null : $slug;
@@ -555,13 +498,7 @@ final class PageRepository
         if ($slug !== null && strlen($slug) > 120) {
             throw Problem::invalid(['slug' => 'Slug must be at most 120 characters.']);
         }
-        $legacyCode = $legacyCode !== null ? trim($legacyCode) : '';
-        $legacyCode = $legacyCode === '' ? null : $legacyCode;
-        if ($legacyCode !== null && preg_match('/\A[A-Za-z0-9_-]{1,64}\z/D', $legacyCode) !== 1) {
-            throw Problem::invalid(['legacyCode' => 'Binding must be 1-64 letters, digits, dashes or underscores.']);
-        }
-
-        return Db::transaction(function () use ($id, $slug, $legacyCode, $expectedVersion, $actorId): array {
+        return Db::transaction(function () use ($id, $slug, $expectedVersion, $actorId): array {
             $page = Db::one('SELECT lock_version, locale FROM tbl_studio_pages WHERE id = ? FOR UPDATE', [$id]);
             if ($page === null) {
                 throw new Problem(404, 'Page not found.');
@@ -578,23 +515,13 @@ final class PageRepository
                     throw Problem::invalid(['slug' => 'Another page already uses this slug in this locale.']);
                 }
             }
-            if ($legacyCode !== null) {
-                $taken = Db::one(
-                    'SELECT id FROM tbl_studio_pages WHERE legacy_code = ? AND locale = ? AND id <> ?',
-                    [$legacyCode, (string) $page['locale'], $id]
-                );
-                if ($taken !== null) {
-                    throw Problem::invalid(['legacyCode' => 'Another page already binds this CMS code in this locale.']);
-                }
-            }
             Db::run(
-                'UPDATE tbl_studio_pages SET slug = ?, legacy_code = ?, lock_version = lock_version + 1
+                'UPDATE tbl_studio_pages SET slug = ?, lock_version = lock_version + 1
                  WHERE id = ? AND lock_version = ?',
-                [$slug, $legacyCode, $id, $expectedVersion]
+                [$slug, $id, $expectedVersion]
             );
             $this->audit->record($actorId, 'page.route', 'page', $id, $id, [
                 'slug' => $slug,
-                'legacyCode' => $legacyCode,
             ]);
             return $this->get($id);
         });

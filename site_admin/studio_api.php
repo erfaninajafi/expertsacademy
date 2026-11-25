@@ -9,10 +9,8 @@ use ExpertsAcademy\Studio\Auth\Auth;
 use ExpertsAcademy\Studio\Contract\Samples;
 use ExpertsAcademy\Studio\Contract\Validator;
 use ExpertsAcademy\Studio\Auth\Roles;
-use ExpertsAcademy\Studio\Env;
 use ExpertsAcademy\Studio\Http\Http;
 use ExpertsAcademy\Studio\Http\RateLimiter;
-use ExpertsAcademy\Studio\Publish\PublishScheduler;
 use ExpertsAcademy\Studio\Quality\QualityChecker;
 use ExpertsAcademy\Studio\Repo\PreviewTokenRepository;
 use ExpertsAcademy\Studio\Repo\RedirectRepository;
@@ -44,7 +42,6 @@ try {
     $templates = new TemplateRepository();
     $roles = new RoleRepository();
     $redirects = new RedirectRepository();
-    $scheduler = new PublishScheduler();
     $quality = new QualityChecker();
     $validator = new Validator();
     $locale = in_array($_GET['locale'] ?? null, ['fa', 'en'], true) ? (string) $_GET['locale'] : 'en';
@@ -55,6 +52,10 @@ try {
                 'actor' => $actor,
                 'csrf' => Auth::token(),
             ],
+            'page_lookup' => ['id' => $pages->idForLegacyCode(
+                is_string($_GET['legacyCode'] ?? null) ? (string) $_GET['legacyCode'] : '',
+                is_string($_GET['locale'] ?? null) ? (string) $_GET['locale'] : ''
+            )],
             'pages' => isset($_GET['id'])
                 ? ['page' => $pages->get(Uuid::require($_GET['id']))]
                 : $pages->listing((int) ($_GET['limit'] ?? 30), (int) ($_GET['offset'] ?? 0)),
@@ -88,9 +89,6 @@ try {
             'redirects' => Auth::can($actor, 'redirects.manage')
                 ? ['items' => $redirects->all()]
                 : throw new Problem(403, 'Your role cannot manage redirects.'),
-            'schedules' => Auth::can($actor, 'audit.read')
-                ? ['items' => $scheduler->recent()]
-                : throw new Problem(403, 'Your role cannot view the publishing queue.'),
             'quality' => (function () use ($pages, $quality): array {
                 $page = $pages->get(Uuid::require($_GET['id'] ?? null));
                 $checks = $quality->check($page, $page['document'] ?? []);
@@ -161,15 +159,11 @@ try {
 
     if ($resource === 'pages' && $method === 'POST') {
         Auth::requirePermission($actor, 'pages.create');
-        Http::only($body, ['title', 'locale', 'legacyCode', 'template', 'templateVersion', 'fullPath']);
+        Http::only($body, ['title', 'locale', 'template', 'templateVersion', 'fullPath']);
         $title = is_string($body['title'] ?? null) ? trim($body['title']) : '';
         $pageLocale = $body['locale'] ?? null;
         if ($title === '' || mb_strlen($title) > 200 || !in_array($pageLocale, ['fa', 'en'], true)) {
             throw new Problem(400, 'A title and a locale (fa or en) are required.');
-        }
-        $binding = $body['legacyCode'] ?? null;
-        if ($binding !== null && (!is_string($binding) || trim($binding) === '')) {
-            $binding = null;
         }
         $fullPath = $body['fullPath'] ?? null;
         if ($fullPath !== null && !is_string($fullPath)) {
@@ -199,7 +193,7 @@ try {
         Http::json(['ok' => true, 'page' => $pages->create(
             $document,
             $actor['id'],
-            $binding !== null ? trim($binding) : null,
+            null,
             $templateId !== '' ? $templateId : null,
             $fullPath
         )], 201);
@@ -259,48 +253,6 @@ try {
         )]);
     }
 
-    if ($resource === 'schedule' && $method === 'POST') {
-        Auth::requirePermission($actor, 'pages.schedule');
-        RateLimiter::guard('pages.schedule', (string) $actor['id'], 20, 60);
-        Http::only($body, ['expectedVersion', 'publishAt', 'timezone', 'revisionId']);
-        $pageId = Uuid::require($_GET['id'] ?? null);
-        $page = $pages->get($pageId);
-        $checks = $quality->check($page, (array) ($page['document'] ?? []));
-        if (!$checks['ok']) {
-            Http::json(['ok' => false, 'error' => 'Quality checks blocked scheduling.', 'checks' => $checks], 422);
-        }
-        $publishAt = is_string($body['publishAt'] ?? null) ? trim($body['publishAt']) : '';
-        $timezone = is_string($body['timezone'] ?? null) ? trim($body['timezone']) : Env::string('publishing.timezone', 'UTC');
-        if ($publishAt === '') {
-            throw Problem::invalid(['publishAt' => 'Choose a date and time.']);
-        }
-        Http::json(['ok' => true, 'checks' => $checks, 'page' => $pages->schedule(
-            $pageId,
-            $publishAt,
-            $timezone,
-            Http::version($body),
-            $actor['id'],
-            is_string($body['revisionId'] ?? null) ? Uuid::require($body['revisionId']) : null
-        )]);
-    }
-
-    if ($resource === 'schedule_cancel' && $method === 'POST') {
-        Auth::requirePermission($actor, 'pages.schedule');
-        Http::only($body, ['expectedVersion']);
-        Http::json(['ok' => true, 'page' => $pages->cancelSchedule(
-            Uuid::require($_GET['id'] ?? null),
-            Http::version($body),
-            $actor['id']
-        )]);
-    }
-
-    if ($resource === 'schedule_retry' && $method === 'POST') {
-        Auth::requirePermission($actor, 'pages.schedule');
-        Http::only($body, ['scheduleId']);
-        $scheduler->retry(Uuid::require($body['scheduleId'] ?? null), (string) $actor['id']);
-        Http::json(['ok' => true]);
-    }
-
     if ($resource === 'unpublish' && $method === 'POST') {
         Auth::requirePermission($actor, 'pages.unpublish');
         Http::only($body, ['expectedVersion']);
@@ -318,6 +270,17 @@ try {
             Uuid::require($_GET['id'] ?? null),
             Http::version($body),
             $actor['id']
+        )]);
+    }
+
+    // EA_UIUX_STAGE19_SAFE_ARCHIVE_V1 - reversible page removal.
+    if ($resource === 'archive_restore' && $method === 'POST') {
+        Auth::requirePermission($actor, 'pages.archive');
+        Http::only($body, ['expectedVersion']);
+        Http::json(['ok' => true, 'page' => $pages->restoreFromArchive(
+            Uuid::require($_GET['id'] ?? null),
+            Http::version($body),
+            (string) $actor['id']
         )]);
     }
 
@@ -353,11 +316,10 @@ try {
 
     if ($resource === 'route' && $method === 'PUT') {
         Auth::requirePermission($actor, 'pages.route');
-        Http::only($body, ['slug', 'legacyCode', 'expectedVersion']);
+        Http::only($body, ['slug', 'expectedVersion']);
         Http::json(['ok' => true, 'page' => $pages->updateRoute(
             Uuid::require($_GET['id'] ?? null),
             is_string($body['slug'] ?? null) ? $body['slug'] : null,
-            is_string($body['legacyCode'] ?? null) ? $body['legacyCode'] : null,
             Http::version($body),
             $actor['id']
         )]);

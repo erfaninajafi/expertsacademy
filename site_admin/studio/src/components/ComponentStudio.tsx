@@ -238,7 +238,16 @@ export function ComponentStudio({ api, config, notify }: Props) {
                   <p className="text-xs text-slate-500">نسخهٔ v{component.version} · {categoryLabel(component.category)}</p>
                   <p className="mt-1 max-w-2xl text-xs leading-5 text-slate-600">{component.description}</p>
                 </div>
-                <a href={`studio_gallery.php?type=${encodeURIComponent(component.type)}`} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-indigo-400">باز کردن در گالری</a>
+                <a
+                  href={`studio_gallery.php?type=${encodeURIComponent(component.type)}`}
+                  onClick={(event) => {
+                    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+                    const source = new URL(window.location.href);
+                    source.searchParams.set('view', 'components');
+                    window.history.replaceState(window.history.state, '', source.toString());
+                  }}
+                  className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-indigo-400"
+                >باز کردن در گالری</a>
               </div>
               <div className="mt-3 flex flex-wrap items-center gap-1">
                 {component.variants.map((item) => (

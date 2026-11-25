@@ -4,8 +4,11 @@ import { findComponent, useEditor } from '../store';
 import { Field } from './Fields';
 import { MediaPicker } from './MediaPicker';
 import { deviceLabel } from '../i18n';
+import type { ApiClient } from '../api';
+import { PublishedThemePanel } from './PublishedThemePanel';
 
 interface Props {
+  api: ApiClient;
   document: PageDocument;
   definitions: Map<string, ComponentDefinition>;
   section: PageSection | null;
@@ -18,18 +21,35 @@ interface Props {
 type Tab = 'page' | 'section' | 'block';
 
 const inputClass =
-  'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200';
-const labelClass = 'mb-1 block text-xs font-medium text-slate-600';
-const cardClass = 'rounded-xl border border-slate-200 bg-white p-3';
+  'w-full min-h-8 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs leading-5 text-slate-900 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100';
+const labelClass = 'mb-1 block text-[11px] font-medium leading-5 text-slate-600';
+const cardClass = 'rounded-xl border border-slate-200 bg-white p-2.5 shadow-sm';
 
 const DEVICES: Device[] = ['desktop', 'tablet', 'mobile'];
 
-function Row({ title, children }: { title: string; children: React.ReactNode }) {
+function Row({ title, children, defaultOpen = true }: {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+}) {
+  const [expanded, setExpanded] = useState(defaultOpen);
   return (
-    <div className={cardClass}>
-      <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">{title}</h3>
-      <div className="grid gap-3">{children}</div>
-    </div>
+    <section className={cardClass} data-ea-inspector-collapsible="stage11" data-ea-inspector-style="compact-v2">
+      <h3 className="m-0">
+        <button type="button" aria-expanded={expanded} onClick={() => setExpanded((value) => !value)}
+          className="flex w-full items-center justify-between gap-2 rounded-lg px-1.5 py-1 text-right text-[11px] font-semibold leading-5 text-slate-700 transition-colors hover:bg-slate-50 hover:text-indigo-700 focus-visible:outline-2 focus-visible:outline-indigo-500">
+          <span className="min-w-0 flex-1">{title}</span>
+          <span aria-hidden="true" className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-xs font-medium text-slate-500">
+            {expanded ? '−' : '+'}
+          </span>
+        </button>
+      </h3>
+      {expanded && (
+        <div className="mt-2.5 rounded-lg border border-slate-100 bg-slate-50/70 p-2.5 sm:p-3">
+          <div className="grid gap-3.5">{children}</div>
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -53,7 +73,7 @@ function PagePanel({ document, canEdit, media }: { document: PageDocument; canEd
 
   return (
     <div className="grid gap-3">
-      <Row title="صفحه">
+      <Row title="اطلاعات صفحه">
         <div>
           <label className={labelClass} htmlFor="page-title">عنوان</label>
           <input id="page-title" className={inputClass} maxLength={200} value={document.title} disabled={!canEdit}
@@ -63,6 +83,9 @@ function PagePanel({ document, canEdit, media }: { document: PageDocument; canEd
           <span>زبان <strong className="block text-slate-900">{document.locale}</strong></span>
           <span>جهت <strong className="block text-slate-900">{document.direction}</strong></span>
         </div>
+      </Row>
+
+      <Row title="سئو و نمایش در جست‌وجو" defaultOpen={false}>
         <div>
           <label className={labelClass} htmlFor="seo-title">عنوان سئو</label>
           <input id="seo-title" className={inputClass} maxLength={120} value={document.seo.title} disabled={!canEdit}
@@ -119,7 +142,7 @@ function PagePanel({ document, canEdit, media }: { document: PageDocument; canEd
         </div>
       </Row>
 
-      <Row title="توکن‌های طراحی">
+      <Row title="رنگ‌ها و سبک کلی صفحه" defaultOpen={false}>
         <div className="grid grid-cols-2 gap-2">
           <div>
             <label className={labelClass} htmlFor="token-mode">حالت</label>
@@ -160,7 +183,7 @@ function PagePanel({ document, canEdit, media }: { document: PageDocument; canEd
           <label className="text-xs font-medium text-slate-600">اندازهٔ پایه (پیکسل)<input type="number" min={13} max={22} className={inputClass} value={tokens.typography.base} disabled={!canEdit}
               onChange={(event) => patchTokens({ typography: { ...tokens.typography, base: Number(event.target.value) } })} />
           </label>
-          <label className="text-xs font-medium text-slate-600">sections spacing (px)
+          <label className="text-xs font-medium text-slate-600">فاصله بین بخش‌ها (پیکسل)
             <input type="number" min={32} max={160} className={inputClass} value={tokens.spacing.section} disabled={!canEdit}
               onChange={(event) => patchTokens({ spacing: { ...tokens.spacing, section: Number(event.target.value) } })} />
           </label>
@@ -173,7 +196,7 @@ function PagePanel({ document, canEdit, media }: { document: PageDocument; canEd
             onChange={(event) => patchTokens({ motion: { ...tokens.motion, enabled: event.target.checked } })} />فعال‌کردن انیمیشن ورود</label>
       </Row>
 
-      <Row title="تنظیمات صفحه">
+      <Row title="چیدمان و پس‌زمینه صفحه" defaultOpen={false}>
         <label className="text-xs font-medium text-slate-600">پس‌زمینه<select className={inputClass} value={document.settings.background} disabled={!canEdit}
             onChange={(event) => setSettings('background', event.target.value as PageDocument['settings']['background'])}>
             <option value="canvas">بوم</option>
@@ -195,7 +218,7 @@ function SectionPanel({ section, canEdit, onDeleteSection }: { section: PageSect
   const setDevices = useEditor((state) => state.setDevices);
   return (
     <div className="grid gap-3">
-      <Row title="sections">
+      <Row title="تنظیمات بخش">
         <label className="text-xs font-medium text-slate-600">برچسب<input className={inputClass} maxLength={80} value={section.label} disabled={!canEdit}
             onChange={(event) => updateSection(section.id, 'label', event.target.value)} />
         </label>
@@ -274,7 +297,7 @@ function BlockPanel({ document, definition, canEdit, media, onUpload }: { docume
         <p className="text-[11px] leading-5 text-slate-500">{definition.description}</p>
       </Row>
 
-      <Row title="محتوا">
+      <Row title="محتوای کامپوننت">
         {Object.entries(definition.schema).map(([key, schema]) => (
           <Field key={key} schema={schema} path={key} value={component.props[key]} media={media} onUpload={onUpload}
             onChange={(value) => updateProps(component.id, { ...component.props, [key]: value })} />
@@ -282,7 +305,7 @@ function BlockPanel({ document, definition, canEdit, media, onUpload }: { docume
         {Object.keys(definition.schema).length === 0 && <p className="text-xs text-slate-500">این بلوک فیلد محتوایی ندارد.</p>}
       </Row>
 
-      <Row title="طراحی">
+      <Row title="طراحی و فاصله‌گذاری" defaultOpen={false}>
         <div className="grid grid-cols-3 gap-2">
           <label className="text-xs font-medium text-slate-600">تراز<select className={inputClass} value={component.design.align} disabled={!canEdit}
               onChange={(event) => setDesign(component.id, 'align', event.target.value as typeof component.design.align)}>
@@ -308,7 +331,7 @@ function BlockPanel({ document, definition, canEdit, media, onUpload }: { docume
         </div>
       </Row>
 
-      <Row title="واکنش‌گرا">
+      <Row title="نمایش در موبایل و تبلت" defaultOpen={false}>
         <div className="flex gap-1" role="group" aria-label="نقطهٔ شکست">
           {DEVICES.map((device) => (
             <button key={device} type="button" aria-pressed={breakpoint === device} onClick={() => setBreakpoint(device)}
@@ -332,7 +355,7 @@ function BlockPanel({ document, definition, canEdit, media, onUpload }: { docume
         </label>
       </Row>
 
-      <Row title="حرکت">
+      <Row title="انیمیشن و حرکت" defaultOpen={false}>
         <div className="grid grid-cols-2 gap-2">
           <label className="text-xs font-medium text-slate-600">پیش‌تنظیم<select className={inputClass} value={component.animation.preset} disabled={!canEdit}
               onChange={(event) => setAnimation(component.id, 'preset', event.target.value as typeof component.animation.preset)}>
@@ -357,7 +380,7 @@ function BlockPanel({ document, definition, canEdit, media, onUpload }: { docume
         </div>
       </Row>
 
-      <Row title="دسترس‌پذیری">
+      <Row title="دسترس‌پذیری و نمایش" defaultOpen={false}>
         <div className="grid grid-cols-2 gap-2">
           <label className="text-xs font-medium text-slate-600">نشانه<select className={inputClass} value={component.a11y.landmark} disabled={!canEdit}
               onChange={(event) => setA11y(component.id, 'landmark', event.target.value as typeof component.a11y.landmark)}>
@@ -399,7 +422,7 @@ function BlockPanel({ document, definition, canEdit, media, onUpload }: { docume
   );
 }
 
-export function Inspector({ document, definitions, section, canEdit, media, onUpload, onDeleteSection }: Props) {
+export function Inspector({ api, document, definitions, section, canEdit, media, onUpload, onDeleteSection }: Props) {
   const selected = useEditor((state) => state.selected);
   const component = findComponent(document, selected);
   const definition = component ? definitions.get(component.type) ?? null : null;
@@ -427,7 +450,7 @@ export function Inspector({ document, definitions, section, canEdit, media, onUp
           <button key={item.id} type="button" role="tab" aria-selected={tab === item.id}
             disabled={item.id === 'block' && !component}
             onClick={() => setTab(item.id)}
-            className={`flex-1 rounded-md px-2 py-1.5 text-xs font-semibold disabled:opacity-40 ${
+            className={`flex-1 rounded-md px-2 py-1.5 text-[11px] font-medium disabled:opacity-40 ${
               tab === item.id ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
             }`}>
             {item.label}
@@ -435,6 +458,7 @@ export function Inspector({ document, definitions, section, canEdit, media, onUp
         ))}
       </div>
       <div className="overflow-y-auto pb-6">
+        {tab === 'page' && <PublishedThemePanel api={api} document={document} canEdit={canEdit} />}
         {tab === 'page' && <PagePanel document={document} canEdit={canEdit} media={media} />}
         {tab === 'section' && visibleSection && (
           <SectionPanel section={visibleSection} canEdit={canEdit} onDeleteSection={onDeleteSection} />

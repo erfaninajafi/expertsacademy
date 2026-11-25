@@ -38,7 +38,6 @@ final class Roles
         'pages.restore',
         'pages.route',
         'pages.publish',
-        'pages.schedule',
         'pages.unpublish',
         'pages.archive',
         'design.edit',
@@ -60,7 +59,7 @@ final class Roles
             self::ADMINISTRATOR => self::PERMISSIONS,
             self::DEVELOPER => [
                 'pages.create', 'pages.edit', 'pages.restore', 'pages.route',
-                'pages.publish', 'pages.schedule', 'pages.unpublish', 'pages.archive',
+                'pages.publish', 'pages.unpublish', 'pages.archive',
                 'design.edit', 'components.manage', 'templates.manage',
                 'media.upload', 'media.manage', 'preview.draft', 'seo.manage',
                 'redirects.manage', 'audit.read',
@@ -75,7 +74,7 @@ final class Roles
             ],
             self::REVIEWER => ['preview.draft', 'audit.read'],
             self::PUBLISHER => [
-                'pages.publish', 'pages.schedule', 'pages.unpublish', 'pages.archive',
+                'pages.publish', 'pages.unpublish', 'pages.archive',
                 'pages.restore', 'preview.draft', 'audit.read',
             ],
         ];
@@ -135,7 +134,7 @@ final class Roles
             'media.upload', 'media.manage', 'seo.manage', 'redirects.manage',
             'users.manage',
         ];
-        $publish = ['pages.publish', 'pages.schedule', 'pages.unpublish', 'pages.archive'];
+        $publish = ['pages.publish', 'pages.unpublish', 'pages.archive'];
         if (array_intersect($edit, $permissions) !== []) {
             $capabilities[] = 'edit';
         }

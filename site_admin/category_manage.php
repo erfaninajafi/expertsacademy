@@ -2,6 +2,16 @@
 
 // include
 include './includer.php';
+// EA_UIUX_STAGE19_SAFE_ARCHIVE_V1: the old CMS page-design deletion route
+// performs unconditional SQL DELETE across languages, with no dependency check.
+// Block this hazardous route for page designs only (t=4); other categories stay unchanged.
+if ((string) ($_GET['t'] ?? ($t ?? '')) === '4'
+    && (string) ($_GET['do'] ?? ($do ?? '')) === 'delete') {
+    $_SESSION['error'] = 'حذف مستقیم صفحات طراحی در CMS قدیمی برای حفظ محتوا غیرفعال است. از بایگانی Page Studio استفاده کنید.';
+    header('Location: category_manage.php?t=4');
+    exit;
+}
+
 $show_per_page = '30';
 
 //type id 
@@ -35,6 +45,16 @@ if (isset($t) && $t == '4') {
 
 include './header.inc.php';
 ?>
+<?php if ((int) ($t ?? 0) === 4): ?>
+<style>
+.admin-list-page .btn {
+    border-radius: 999px !important;
+}
+.admin-list-page .btn-xs {
+    padding: 5px 12px !important;
+}
+</style>
+<?php endif; ?>
 <div class="col-md-12 mb-12 admin-list-page">
     <div class="card">
         <h5 class="card-header"><?= $pagetitle ?></h5>
@@ -107,14 +127,64 @@ include './header.inc.php';
                                                 <input type="hidden" name="code[]" value="<?= $read['tbl_categories_code'] ?>">
                                                 <input type="text" class="form-control" name="o<?= $read['tbl_categories_code'] ?>" value="<?= $read['tbl_categories_order'] ?>" style="width: 40px;float: right;margin-left: 4px;height: 25px;padding: 2px;text-align: center;">
                                                 <strong class="cms-page-row__title"><?= htmlspecialchars((string) $read['tbl_categories_title'], ENT_QUOTES, 'UTF-8') ?></strong>
+                                                 <?php if ((int) $t === 4): ?>
+                                                     <?php
+                                                     $studioParams = http_build_query([
+                                                         'legacy_code' => (string) $read['tbl_categories_code'],
+                                                         'title_fa' => (string) (($read['tbl_categories_lng'] ?? '') === 'fa' ? $read['tbl_categories_title'] : ''),
+                                                         'title_en' => is_array($readEn) ? (string) ($readEn['tbl_categories_title'] ?? '') : '',
+                                                         'has_fa' => (($read['tbl_categories_lng'] ?? '') === 'fa') ? '1' : '0',
+                                                         'has_en' => is_array($readEn) ? '1' : '0',
+                                                     ], '', '&', PHP_QUERY_RFC3986);
+                                                     ?>
+                                                     <a class="btn btn-xs btn-primary"
+                                                        href="page_studio.php?<?= htmlspecialchars($studioParams, ENT_QUOTES, 'UTF-8') ?>">ویرایش در Page Studio</a>
+                                                 <?php endif; ?>
                                                 <?php if ($read['tbl_categories_index'] == '1') : ?><span class="admin-list-badge admin-list-badge--reviewed">صفحه اصلی</span><?php endif; ?>
                                                 <?php if ($t == '4') : ?>
-                                                    <a class="btn btn-xs btn-primary" href="page_builder.php?code=<?= rawurlencode((string) $read['tbl_categories_code']) ?>">باز کردن صفحه‌ساز</a>
+
                                                 <?php endif; ?>
-                                                <a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=edit" class="btn btn-xs btn-warning" style="font-size:8px;"><?= $lang[23] ?></a>
-                                                <a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=delete" class="btn btn-xs btn-danger" style="font-size:8px;"><?= $lang[24] ?></a>
-                                                <a href="<?= ($read['tbl_categories_index'] == '1' ? '../fa/' : '../fa/' . $read['tbl_categories_url'] . '/') ?>" target="_blank" class="btn btn-xs btn-success" style="font-size:8px;">لینک فارسی</a>
-                                                <a href="<?= ($read['tbl_categories_index'] == '1' ? '../en/' : '../en/' . ($readEn['tbl_categories_url'] ?? '') . '/') ?>" target="_blank" class="btn btn-xs btn-success" style="font-size:8px;">لینک انگلیسی</a>
+                                                <a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=edit" class="btn btn-xs btn-warning" style="font-size:8px;"><?= ((int) $t === 4 ? 'ویرایش با CMS قدیمی' : $lang[23]) ?></a>
+                                                <?php if ((string) $t !== "4"): ?><a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=delete" class="btn btn-xs btn-danger" style="font-size:8px;"><?= $lang[24] ?></a><?php endif; ?>
+                                                <?php
+$makePublicLink = static function ($entry, string $locale): ?string {
+    if (!is_array($entry)) return null;
+    if ((string) ($entry['tbl_categories_index'] ?? '') === '1') {
+        return '../index.php?lng=' . $locale;
+    }
+    $slug = trim((string) ($entry['tbl_categories_url'] ?? ''));
+    if ($slug === '') return null;
+
+    return '../index.php?' . http_build_query(
+        ['section' => $slug, 'lng' => $locale],
+        '',
+        '&',
+        PHP_QUERY_RFC3986
+    );
+};
+
+$faEntry = $read;
+if (($read['tbl_categories_lng'] ?? 'fa') !== 'fa') {
+    $faEntry = null;
+}
+
+$faHref = $makePublicLink($faEntry, 'fa');
+$enHref = $makePublicLink($readEn, 'en');
+?>
+<?php if ($faHref !== null): ?>
+<a href="<?= htmlspecialchars($faHref, ENT_QUOTES, 'UTF-8') ?>"
+   target="_blank" rel="noopener"
+   class="btn btn-xs btn-success">لینک فارسی</a>
+<?php else: ?>
+<span class="btn btn-xs btn-default disabled">نسخه فارسی موجود نیست</span>
+<?php endif; ?>
+<?php if ($enHref !== null): ?>
+<a href="<?= htmlspecialchars($enHref, ENT_QUOTES, 'UTF-8') ?>"
+   target="_blank" rel="noopener"
+   class="btn btn-xs btn-success">لینک انگلیسی</a>
+<?php else: ?>
+<span class="btn btn-xs btn-default disabled">نسخه انگلیسی موجود نیست</span>
+<?php endif; ?>
                                                 <?php
 
 
@@ -146,7 +216,7 @@ include './header.inc.php';
                                                         <input type="text" class="form-control" name="o<?= $read['tbl_categories_code'] ?>" value="<?= $read['tbl_categories_order'] ?>" style="width: 40px;float: right;margin-left: 4px;height: 25px;padding: 2px;text-align: center;">
                                                         <span class="admin-menu-indent admin-menu-indent--one" aria-hidden="true"></span><?= htmlspecialchars((string) $read['tbl_categories_title'], ENT_QUOTES, 'UTF-8') . ($read['tbl_categories_status'] == 1 ? '[مخفی]' : '') ?>
                                                         <a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=edit" class="btn btn-xs btn-warning" style="font-size:8px;"><?= $lang[23] ?></a>
-                                                        <a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=delete" class="btn btn-xs btn-danger" style="font-size:8px;"><?= $lang[24] ?></a>
+                                                        <?php if ((string) $t !== "4"): ?><a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=delete" class="btn btn-xs btn-danger" style="font-size:8px;"><?= $lang[24] ?></a><?php endif; ?>
                                                         <a href="../category/<?= $read['tbl_categories_url'] . '/' ?>" target="_blank" class="btn btn-xs btn-success" style="font-size:8px;">لینک</a>
                                                         <?php
                                                         $id = $read['tbl_categories_code'];
@@ -162,7 +232,7 @@ include './header.inc.php';
                                                                 <input type="text" class="form-control" name="o<?= $read['tbl_categories_code'] ?>" value="<?= $read['tbl_categories_order'] ?>" style="width: 40px;float: right;margin-left: 4px;height: 25px;padding: 2px;text-align: center;">
                                                                 <span class="admin-menu-indent admin-menu-indent--two" aria-hidden="true"></span><?= htmlspecialchars((string) $read['tbl_categories_title'], ENT_QUOTES, 'UTF-8') . ($read['tbl_categories_status'] == 1 ? '[مخفی]' : '') ?>
                                                                 <a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=edit" class="btn btn-xs btn-warning" style="font-size:8px;"><?= $lang[23] ?></a>
-                                                                <a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=delete" class="btn btn-xs btn-danger" style="font-size:8px;"><?= $lang[24] ?></a>
+                                                                <?php if ((string) $t !== "4"): ?><a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=delete" class="btn btn-xs btn-danger" style="font-size:8px;"><?= $lang[24] ?></a><?php endif; ?>
                                                                 <a href="../category/<?= $read['tbl_categories_url'] . '/' ?>" target="_blank" class="btn btn-xs btn-success" style="font-size:8px;">لینک</a>
                                                                 <?php
 
@@ -181,7 +251,7 @@ include './header.inc.php';
                                                                         <input type="text" class="form-control" name="o<?= $read['tbl_categories_code'] ?>" value="<?= $read['tbl_categories_order'] ?>" style="width: 40px;float: right;margin-left: 4px;height: 25px;padding: 2px;text-align: center;">
                                                                         <span class="admin-menu-indent admin-menu-indent--three" aria-hidden="true"></span><?= htmlspecialchars((string) $read['tbl_categories_title'], ENT_QUOTES, 'UTF-8') . ($read['tbl_categories_status'] == 1 ? '[مخفی]' : '') ?>
                                                                         <a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=edit" class="btn btn-xs btn-warning" style="font-size:8px;"><?= $lang[23] ?></a>
-                                                                        <a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=delete" class="btn btn-xs btn-danger" style="font-size:8px;"><?= $lang[24] ?></a>
+                                                                        <?php if ((string) $t !== "4"): ?><a href="?t=<?= $t . '&id=' . $read['tbl_categories_code'] ?>&do=delete" class="btn btn-xs btn-danger" style="font-size:8px;"><?= $lang[24] ?></a><?php endif; ?>
                                                                         <a href="../category/<?= $read['tbl_categories_url'] . '/' ?>" target="_blank" class="btn btn-xs btn-success" style="font-size:8px;">لینک</a>
                                                 <?php
                                                                     }
@@ -206,6 +276,34 @@ include './header.inc.php';
                         <input type="hidden" name="type" value="<?= (int) $t ?>">
                         </form>
                         <?php } ?>
+                        <?php if ((int) $t === 4 && !isset($do)): ?>
+                            <?php
+                            $independentStudioPages = Query(
+                                "SELECT id, title, locale, status, full_path FROM tbl_studio_pages
+                                 WHERE legacy_code IS NULL ORDER BY updated_at DESC, id DESC"
+                            );
+                            ?>
+                            <div class="card mt-3 mb-3">
+                                <div class="card-body">
+                                    <h6>صفحات مستقل Page Studio</h6>
+                                    <p class="text-muted">این صفحات به CMS قدیمی متصل نیستند.</p>
+                                    <table class="table table-bordered table-striped">
+                                        <thead><tr><th>عنوان</th><th>زبان</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+                                        <tbody>
+                                        <?php while ($studioRow = mysqli_fetch_assoc($independentStudioPages)): ?>
+                                            <tr>
+                                                <td><?= htmlspecialchars((string) $studioRow['title'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?= htmlspecialchars((string) $studioRow['locale'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?= htmlspecialchars((string) $studioRow['status'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><a class="btn btn-xs btn-primary"
+                                                       href="page_studio.php?page_id=<?= rawurlencode((string) $studioRow['id']) ?>">ویرایش در Page Studio</a></td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                         <?php
                         // start pagination                
                         if ($page > $page_number) {
@@ -593,7 +691,7 @@ include './header.inc.php';
                         <div class="col-lg-6 cms-editor-wrap">
                             <form action="category_manage.php?t=<?= $t ?>&do=updateitem" method="POST" enctype="multipart/form-data" class="cms-editor-form">
                                 <input type="hidden" name="code" value="<?= $id ?>"><input type="hidden" name="cat_id" value="0">
-                                <?php if ($t == '4') : ?><div class="cms-page-form-note"><a class="btn btn-primary" href="page_builder.php?code=<?= rawurlencode((string) $id) ?>">باز کردن صفحه‌ساز</a><span>ساختار و محتوای نمونه‌های مستقل را در صفحه‌ساز ویرایش کنید.</span></div><?php endif; ?>
+
                                 <h6 class="cms-section-heading">عنوان و دسته‌بندی</h6>
                                 <?php
                                 if ($parent_section == '1') {

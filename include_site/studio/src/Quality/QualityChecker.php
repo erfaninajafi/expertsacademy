@@ -44,13 +44,10 @@ final class QualityChecker
         if ($title === '') {
             $errors[] = ['code' => 'title.missing', 'message' => 'Page title is required.', 'path' => 'title'];
         }
-        if (
-            trim((string) ($page['legacyCode'] ?? $page['legacy_code'] ?? '')) === ''
-            && trim((string) ($page['fullPath'] ?? $page['full_path'] ?? '')) === ''
-        ) {
-            $warnings[] = [
+        if (trim((string) ($page['fullPath'] ?? $page['full_path'] ?? '')) === '') {
+            $errors[] = [
                 'code' => 'route.missing',
-                'message' => 'No public route is assigned. Set a Full Path or legacy CMS code.',
+                'message' => 'No public path is assigned.',
                 'path' => 'route',
             ];
         }
@@ -152,14 +149,14 @@ final class QualityChecker
     {
         $previous = 1;
         $index = 0;
-        foreach ($document['sections'] ?? [] as $section) {
-            foreach ($section['components'] ?? [] as $component) {
+        foreach ($document['sections'] ?? [] as $sectionIndex => $section) {
+            foreach ($section['components'] ?? [] as $componentIndex => $component) {
                 $level = (int) ($component['a11y']['headingLevel'] ?? 2);
                 if ($index > 0 && $level > $previous + 1) {
                     $warnings[] = [
                         'code' => 'heading.hierarchy',
                         'message' => "Heading jumps from h{$previous} to h{$level}; use a sequential outline.",
-                        'path' => 'component.' . $index,
+                        'path' => "sections[{$sectionIndex}].components[{$componentIndex}].a11y.headingLevel",
                     ];
                 }
                 $previous = $level;
@@ -172,18 +169,21 @@ final class QualityChecker
     private function links(array $document, array &$warnings): void
     {
         $routes = $this->routes();
-        $walk = function (mixed $value) use (&$walk, $routes, &$warnings): void {
+        $walk = function (mixed $value, string $path) use (&$walk, $routes, &$warnings): void {
             if (!is_array($value)) {
                 return;
             }
             foreach ($value as $key => $child) {
+                $nextPath = is_int($key)
+                    ? $path . '[' . $key . ']'
+                    : ($path === '' ? (string) $key : $path . '.' . $key);
                 if (is_string($child) && $key === 'href') {
-                    $this->link($child, 'link', $warnings, $routes);
+                    $this->link($child, $nextPath, $warnings, $routes);
                 }
-                $walk($child);
+                $walk($child, $nextPath);
             }
         };
-        $walk($document);
+        $walk($document, '');
     }
 
     /** @param list<array<string,string>> $warnings @param array<string,bool>|null $routes */
@@ -224,12 +224,14 @@ final class QualityChecker
     {
         $routes = [];
         try {
-            foreach (Db::all("SELECT slug, legacy_code FROM tbl_studio_pages WHERE status = 'published'") as $row) {
+            foreach (Db::all("SELECT slug, full_path FROM tbl_studio_pages WHERE status = 'published'") as $row) {
                 if ($row['slug'] !== null && $row['slug'] !== '') {
                     $routes[(string) $row['slug']] = true;
                 }
-                if ($row['legacy_code'] !== null && $row['legacy_code'] !== '') {
-                    $routes[(string) $row['legacy_code']] = true;
+                if ($row['full_path'] !== null && $row['full_path'] !== '') {
+                    $path = trim((string) $row['full_path'], '/');
+                    $path = preg_replace('#^(fa|en)/#', '', $path) ?? $path;
+                    $routes[$path] = true;
                 }
             }
             if (in_array('tbl_studio_redirects', $this->tables(), true)) {

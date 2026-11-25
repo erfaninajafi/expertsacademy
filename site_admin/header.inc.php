@@ -168,9 +168,11 @@ function exacdAdminMenuItemActive($item, $currentFile, $currentType)
                             <img src="asset/logo.png">
                         </span>
                     </a>
-                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-                        <i class="bx bx-chevron-left bx-sm align-middle"></i>
-                    </a>
+                    <button type="button" class="layout-menu-toggle admin-sidebar-close d-xl-none"
+                        aria-label="بستن منوی مدیریت" title="بستن منوی مدیریت">
+                        <i class="bx bx-x" aria-hidden="true"></i>
+
+                    </button>
                 </div>
                 <div class="menu-inner-shadow"></div>
                 <ul class="menu-inner py-1 admin-menu">

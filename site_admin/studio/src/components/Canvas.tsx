@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   DndContext,
   KeyboardSensor,
@@ -23,7 +24,6 @@ interface Props {
   definitions: Map<string, ComponentDefinition>;
   canEdit: boolean;
   device: Device;
-  onDeviceChange: (device: Device) => void;
   media?: MediaItem[];
   onUpload?: (file: File, alt: string) => Promise<void>;
   busy?: boolean;
@@ -56,10 +56,12 @@ function SectionCard({
   onAddComponent: (sectionId: string) => void;
   onInspectSection: (section: PageSection) => void;
 }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: section.id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: section.id, disabled: !canEdit });
   const selected = useEditor((state) => state.selected);
   const select = useEditor((state) => state.select);
   const removeSection = useEditor((state) => state.removeSection);
+  const moveSection = useEditor((state) => state.moveSection);
+  const [collapsed, setCollapsed] = useState(false);
   const moveComponent = useEditor((state) => state.moveComponent);
   const duplicateComponent = useEditor((state) => state.duplicateComponent);
   const removeComponent = useEditor((state) => state.removeComponent);
@@ -79,7 +81,9 @@ function SectionCard({
         <button
           type="button"
           className="cursor-grab rounded p-1 text-slate-600 hover:bg-slate-100 hover:text-slate-700"
-          aria-label={`Reorder section ${index + 1}`}
+          aria-label={`کشیدن برای جابه‌جایی بخش ${index + 1}`}
+          title="برای جابه‌جایی، دستگیره را بکشید"
+          disabled={!canEdit}
           {...attributes}
           {...listeners}
         >
@@ -88,7 +92,9 @@ function SectionCard({
         <button
           type="button"
           onClick={() => onInspectSection(section)}
-          className="flex-1 truncate text-right text-sm font-semibold text-slate-800 hover:text-indigo-700"
+          {...listeners}
+          className="flex-1 truncate text-right text-sm font-semibold text-slate-800 hover:text-indigo-700 cursor-grab active:cursor-grabbing select-none touch-none"
+         title="برای جابه‌جایی بخش، عنوان را بکشید؛ برای تنظیمات، کلیک کنید"
         >
           {sectionLabel(section.label) || `بخش ${index + 1}`}
         </button>
@@ -98,20 +104,50 @@ function SectionCard({
         {!section.visibility.devices.includes(device) && (
           <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-900">پنهان در {deviceLabel(device)}</span>
         )}
+        <div className="flex items-center gap-0.5" role="group" aria-label={`ترتیب بخش ${index + 1}`}>
+          <button
+            type="button"
+            aria-label={`انتقال بخش ${index + 1} به بالا`}
+            title="انتقال بخش به بالا"
+            disabled={!canEdit || index === 0}
+            onClick={() => moveSection(section.id, -1)}
+            className="rounded-md border border-slate-200 px-2 py-1 text-xs text-slate-600 hover:border-indigo-300 hover:text-indigo-700 disabled:cursor-not-allowed disabled:opacity-35"
+          >↑</button>
+          <button
+            type="button"
+            aria-label={`انتقال بخش ${index + 1} به پایین`}
+            title="انتقال بخش به پایین"
+            disabled={!canEdit || index === total - 1}
+            onClick={() => moveSection(section.id, 1)}
+            className="rounded-md border border-slate-200 px-2 py-1 text-xs text-slate-600 hover:border-indigo-300 hover:text-indigo-700 disabled:cursor-not-allowed disabled:opacity-35"
+          >↓</button>
+        </div>
+        <button
+          type="button"
+          aria-expanded={!collapsed}
+          aria-label={collapsed ? `بازکردن بلوک‌های بخش ${index + 1}` : `جمع‌کردن بلوک‌های بخش ${index + 1}`}
+          onClick={() => setCollapsed((value) => !value)}
+          className="rounded-md border border-slate-200 px-2 py-1 text-[11px] text-slate-600 hover:border-indigo-300 hover:text-indigo-700"
+        >{collapsed ? 'بازکردن' : 'جمع‌کردن'}</button>
         <button
           type="button"
           disabled={!canEdit}
-          onClick={() => onAddComponent(section.id)}
+          onClick={() => { setCollapsed(false); onAddComponent(section.id); }}
           className="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 hover:border-indigo-400 hover:text-indigo-700 disabled:opacity-40"
         >افزودن بلوک</button>
         <button
           type="button"
           disabled={!canEdit || total <= 1}
-          onClick={() => removeSection(section.id)}
+          onClick={() => {
+            if (window.confirm(`بخش «${sectionLabel(section.label) || `بخش ${index + 1}`}» و ${section.components.length} بلوک آن حذف شود؟`)) {
+              removeSection(section.id);
+            }
+          }}
           className="rounded-md border border-transparent px-2 py-1 text-xs font-medium text-red-700 hover:border-red-200 disabled:opacity-40"
         >حذف</button>
       </header>
 
+      <div data-stage13-section-body className={collapsed ? 'hidden' : ''}>
       {section.components.length === 0 && (
         <p className="px-4 py-6 text-center text-sm text-slate-500">بخش خالی است. یک کامپوننت از کتابخانه اضافه کنید.</p>
       )}
@@ -196,6 +232,7 @@ function SectionCard({
           );
         })}
       </ul>
+      </div>
     </article>
   );
 }
@@ -205,7 +242,6 @@ export function Canvas({
   definitions,
   canEdit,
   device,
-  onDeviceChange,
   media,
   onUpload,
   busy,
@@ -221,7 +257,7 @@ export function Canvas({
 
   const handleDragEnd = (event: DragEndEvent): void => {
     const { active, over } = event;
-    if (!over || active.id === over.id) return;
+    if (!canEdit || !over || active.id === over.id) return;
     const from = document.sections.findIndex((section) => section.id === active.id);
     const to = document.sections.findIndex((section) => section.id === over.id);
     if (from >= 0 && to >= 0) reorderSections(from, to);
@@ -229,22 +265,6 @@ export function Canvas({
 
   return (
     <div className="grid gap-2">
-      <div className="flex flex-wrap items-center justify-end gap-1" role="group" aria-label="اندازهٔ بوم">
-        {(['desktop', 'tablet', 'mobile'] as Device[]).map((item) => (
-          <button
-            key={item}
-            type="button"
-            aria-pressed={device === item}
-            aria-label={`${item} canvas width`}
-            onClick={() => onDeviceChange(item)}
-            className={`rounded-md px-2 py-1 text-xs font-semibold capitalize ${
-              device === item ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 hover:bg-slate-100'
-            }`}
-          >
-            {deviceLabel(item)}
-          </button>
-        ))}
-      </div>
     <section
       aria-label="بخش‌های صفحه"
       data-device={device}
