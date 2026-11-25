@@ -69,7 +69,7 @@ iframe{display:block;width:100%;height:420px;border:0;background:#fff}
 <body>
 <header>
     <h1>Component gallery <span>· <?= count($catalogue) ?> types · <?= $total ?> variants · actor <?= htmlspecialchars($actor['name'], ENT_QUOTES, 'UTF-8') ?></span></h1>
-    <a href="page_studio.php">Page Studio</a>
+    <a href="page_studio.php?view=components">بازگشت به استودیوی کامپوننت</a>
     <a href="?locale=<?= $locale === 'en' ? 'fa' : 'en' ?><?= $only !== '' ? '&type=' . rawurlencode($only) : '' ?>"><?= $locale === 'en' ? 'RTL preview' : 'LTR preview' ?></a>
 </header>
 <nav aria-label="Filter by component">
@@ -103,5 +103,25 @@ iframe{display:block;width:100%;height:420px;border:0;background:#fff}
     </section>
 <?php endforeach; ?>
 </main>
+<script>
+// Keep only one gallery entry in browser history. A single Back exits it.
+document.addEventListener('click', (event) => {
+    if (event.defaultPrevented || event.button !== 0 ||
+        event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+
+    const link = event.target instanceof Element
+        ? event.target.closest('a[href]')
+        : null;
+    if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+
+    const next = new URL(link.href, window.location.href);
+    const here = window.location;
+    // Only gallery-internal navigation (component filters and locale).
+    if (next.origin !== here.origin || next.pathname !== here.pathname) return;
+
+    event.preventDefault();
+    window.location.replace(next.href);
+});
+</script>
 </body>
 </html>

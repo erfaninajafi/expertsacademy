@@ -81,6 +81,7 @@ interface EditorState {
   setTitle: (title: string) => void;
   setSeo: <K extends keyof PageDocument['seo']>(key: K, value: PageDocument['seo'][K]) => void;
   setTheme: (tokens: ThemeTokens) => void;
+  applyTheme: (theme: PageDocument['theme']) => void;
   setSettings: <K extends keyof PageDocument['settings']>(key: K, value: PageDocument['settings'][K]) => void;
   addSection: () => void;
   removeSection: (id: string) => void;
@@ -209,6 +210,7 @@ export const useEditor = create<EditorState>((set) => {
       mutate((doc) => ({ ...doc, title, seo: { ...doc.seo, title: doc.seo.title === doc.title ? title : doc.seo.title } }), 'title'),
     setSeo: (key, value) => mutate((doc) => ({ ...doc, seo: { ...doc.seo, [key]: value } }), `seo:${key}`),
     setTheme: (tokens) => mutate((doc) => ({ ...doc, theme: { ...doc.theme, tokens } }), 'theme'),
+    applyTheme: (theme) => mutate((doc) => ({ ...doc, theme: structuredClone(theme) })),
     setSettings: (key, value) => mutate((doc) => ({ ...doc, settings: { ...doc.settings, [key]: value } }), `settings:${key}`),
 
     addSection: () =>

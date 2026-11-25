@@ -72,7 +72,10 @@ $config = [
                 <p class="text-muted mb-0">پیش‌نویس‌های ساختاریافته، نسخه‌های تاریخی و یک رندر مشترک PHP.</p>
             </div>
             <div class="d-flex flex-wrap align-items-start gap-3">
-                <a href="page_studio_help.php" class="btn btn-sm btn-outline-primary">راهنمای Page Studio</a>
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <a href="page_studio_help.php" class="btn btn-sm btn-outline-primary">راهنمای Page Studio</a>
+                    <div id="ea-studio-role-action"></div>
+                </div>
                 <div class="text-end small">
                     <div><?= htmlspecialchars($actor['name'], ENT_QUOTES, 'UTF-8') ?></div>
                     <div class="text-muted"><?= htmlspecialchars(($actor['role'] === 'administrator' ? 'مدیر' : (($actor['role'] ?? '') === 'editor' ? 'ویرایشگر' : ($actor['role'] ?? ''))) . ' · ' . implode(' · ', array_map(fn($cap) => ['read' => 'مشاهده', 'edit' => 'ویرایش', 'publish' => 'انتشار'][$cap] ?? $cap, $actor['capabilities'])), ENT_QUOTES, 'UTF-8') ?></div>

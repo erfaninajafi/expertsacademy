@@ -1,23 +1,23 @@
 import type { ComponentDefinition } from './types';
 
 const componentLabels: Record<string, string> = {
-  hero: 'هیرو', 'rich-text': 'متن غنی', 'feature-grid': 'شبکه ویژگی‌ها', stats: 'آمار',
-  'media-text': 'رسانه و متن', quote: 'نقل‌قول', accordion: 'آکاردئون', cta: 'فراخوان اقدام',
-  gallery: 'گالری', logos: 'ردیف لوگو', 'course-list': 'فهرست دوره‌ها', 'hero-cinematic': 'هیرو سینمایی',
-  'bento-grid': 'شبکه بنتو', pricing: 'قیمت‌گذاری', timeline: 'خط زمانی', navbar: 'نوار ناوبری',
-  breadcrumbs: 'مسیر راهنما', footer: 'فوتر', tabs: 'تب‌ها', team: 'تیم', services: 'خدمات',
-  'case-studies': 'مطالعات موردی', pathways: 'مسیرهای یادگیری', 'contact-form': 'فرم تماس',
-  faq: 'سؤالات متداول', video: 'ویژگی ویدیو', author: 'نویسنده', certificates: 'گواهی‌ها',
-  reviews: 'نظرات', 'spec-table': 'جدول مشخصات', announcement: 'اعلان', newsletter: 'خبرنامه',
-  checklist: 'چک‌لیست', 'related-content': 'محتوای مرتبط', location: 'مکان', curriculum: 'برنامهٔ درسی',
-  schedule: 'زمان‌بندی', 'application-form': 'فرم درخواست', 'download-gate': 'دانلود',
-  values: 'ارزش‌ها', process: 'فرایند', jobs: 'موقعیت‌های شغلی', awards: 'جوایز',
-  resources: 'منابع', glossary: 'واژه‌نامه', 'comparison-matrix': 'ماتریس مقایسه',
-  campaign: 'بنر کمپین', landing: 'بلوک فرود', 'feature-showcase': 'نمایش ویژگی',
-  instructor: 'پروفایل مدرس', 'booking-form': 'فرم رزرو', 'team-request-form': 'فرم درخواست تیم',
-  'mega-menu': 'مگامنو', press: 'گفتار رسانه‌ها', partners: 'همکاران', 'content-index': 'فهرست محتوا',
-  'section-header': 'سرصفحهٔ بخش', 'social-links': 'شبکه‌های اجتماعی', 'cookie-consent': 'اعلان کوکی',
-  divider: 'جداکننده',
+  hero: 'معرفی اصلی صفحه', 'rich-text': 'متن و محتوای توضیحی', 'feature-grid': 'کارت‌های معرفی ویژگی‌ها', stats: 'آمار و شاخص‌های کلیدی',
+  'media-text': 'تصویر همراه با متن', quote: 'نقل‌قول برجسته', accordion: 'محتوای باز و بسته‌شونده', cta: 'دعوت به اقدام',
+  gallery: 'گالری تصاویر', logos: 'لوگوی مشتریان و همکاران', 'course-list': 'فهرست دوره‌های آموزشی', 'hero-cinematic': 'معرفی تصویری ویژه',
+  'bento-grid': 'چیدمان کارت‌های متنوع', pricing: 'طرح‌ها و قیمت‌ها', timeline: 'رویدادها و خط زمانی', navbar: 'منوی اصلی سایت',
+  breadcrumbs: 'مسیر دسترسی صفحه', footer: 'پاورقی سایت', tabs: 'محتوای زبانه‌ای', team: 'معرفی اعضای تیم', services: 'معرفی خدمات',
+  'case-studies': 'نمونه پروژه‌های اجراشده', pathways: 'مسیرهای یادگیری', 'contact-form': 'فرم تماس با ما',
+  faq: 'پرسش‌های متداول', video: 'نمایش ویدیو', author: 'معرفی نویسنده', certificates: 'گواهینامه‌ها و اعتبارها',
+  reviews: 'نظرات و امتیاز کاربران', 'spec-table': 'جدول مشخصات', announcement: 'نوار اطلاع‌رسانی', newsletter: 'عضویت در خبرنامه',
+  checklist: 'فهرست تیک‌دار', 'related-content': 'پیشنهاد مطالب مرتبط', location: 'آدرس و اطلاعات مراجعه', curriculum: 'سرفصل‌های دوره',
+  schedule: 'برنامه جلسات', 'application-form': 'فرم ثبت درخواست', 'download-gate': 'دریافت فایل با ایمیل',
+  values: 'ارزش‌ها و اصول مجموعه', process: 'مراحل انجام کار', jobs: 'فرصت‌های شغلی', awards: 'جوایز و افتخارات',
+  resources: 'کتابخانه منابع', glossary: 'فرهنگ اصطلاحات', 'comparison-matrix': 'جدول مقایسه گزینه‌ها',
+  campaign: 'بنر کمپین تبلیغاتی', landing: 'بخش آغازین صفحه فرود', 'feature-showcase': 'معرفی تفصیلی قابلیت‌ها',
+  instructor: 'معرفی مدرس', 'booking-form': 'فرم رزرو جلسه', 'team-request-form': 'درخواست آموزش سازمانی',
+  'mega-menu': 'منوی چندستونه سایت', press: 'بازتاب در رسانه‌ها', partners: 'معرفی شرکای همکاری', 'content-index': 'نمایه موضوعی مطالب',
+  'section-header': 'عنوان و معرفی بخش', 'social-links': 'پیوندهای شبکه‌های اجتماعی', 'cookie-consent': 'اعلان استفاده از کوکی',
+  divider: 'جداکننده و فاصله‌گذار',
 };
 
 const componentDescriptions: Record<string, string> = {
@@ -82,9 +82,11 @@ const componentDescriptions: Record<string, string> = {
 };
 
 const categoryLabels: Record<string, string> = {
-  all: 'همه', content: 'محتوا', media: 'رسانه', 'social-proof': 'اعتماد اجتماعی',
-  conversion: 'تبدیل', hero: 'هیرو', bento: 'بنتو', comparison: 'مقایسه', timeline: 'خط زمانی',
-  navigation: 'ناوبری', forms: 'فرم‌ها', layout: 'چیدمان',
+  all: 'همهٔ دسته‌ها', content: 'متن و محتوا', media: 'تصویر و ویدیو',
+  'social-proof': 'نظرات و اعتبار', conversion: 'ثبت‌نام و اقدام',
+  hero: 'معرفی صفحه', bento: 'چیدمان کارت‌ها', comparison: 'مقایسه',
+  timeline: 'مراحل و زمان‌بندی', navigation: 'منو و مسیریابی',
+  forms: 'فرم‌ها', layout: 'چیدمان صفحه',
 };
 
 const variantLabels: Record<string, string> = {
@@ -120,6 +122,97 @@ const deviceLabels: Record<string, string> = { desktop: 'دسکتاپ', tablet: 
 export const statusLabel = (value: string): string => statusLabels[value] ?? value;
 export const deviceLabel = (value: string): string => deviceLabels[value] ?? value;
 export const categoryLabel = (value: string): string => categoryLabels[value] ?? value;
+
+// stage09: searchable Persian aliases for component discovery.
+// Display labels and internal component IDs are intentionally unchanged.
+const componentSearchAliases: Record<string, string> = {
+  hero: 'بنر اصلی سربرگ کاور معرفی خوش آمدگویی',
+  'hero-cinematic': 'کاور بزرگ تصویر زمینه بنر تمام صفحه',
+  'rich-text': 'مقاله پاراگراف توضیحات متن بلند محتوای متنی',
+  'feature-grid': 'مزایا قابلیت ها ویژگی ها کارت امکانات',
+  stats: 'عدد شمارنده ارقام شاخص کلیدی',
+  'media-text': 'عکس تصویر کنار متن دو ستونه',
+  quote: 'سخن نقل قول شهادت مشتری',
+  accordion: 'سوال جواب بازشونده کشویی',
+  cta: 'دکمه اقدام ثبت نام شروع درخواست',
+  gallery: 'تصاویر آلبوم عکس گالری',
+  logos: 'لوگو برند مشتری سازمان همکار',
+  'course-list': 'کلاس درس دوره آموزش فهرست',
+  'bento-grid': 'چیدمان موزاییک کارت های نامتقارن',
+  pricing: 'تعرفه هزینه پلن بسته قیمت',
+  timeline: 'مراحل تاریخ رویداد روند',
+  navbar: 'منو هدر ناوبری سربرگ سایت',
+  breadcrumbs: 'مسیر دسترسی راهنما لینک بازگشت',
+  footer: 'فوتر پاصفحه پایین صفحه اطلاعات تماس',
+  tabs: 'زبانه تب تغییر محتوا',
+  team: 'اعضا پرسنل همکاران تیم',
+  services: 'خدمات سرویس',
+  'case-studies': 'نمونه کار پروژه موفقیت تجربه مشتری',
+  pathways: 'نقشه راه یادگیری رشد مهارت',
+  'contact-form': 'تماس ارتباط پیام ارسال',
+  faq: 'پرسش و پاسخ سوال متداول',
+  video: 'ویدئو فیلم کلیپ پخش',
+  author: 'مولف پدیدآورنده نویسنده',
+  certificates: 'مدرک گواهی نامه اعتبار مجوز',
+  reviews: 'دیدگاه بازخورد امتیاز رضایت',
+  'spec-table': 'مشخصات جزئیات جدول',
+  announcement: 'اطلاعیه پیام اعلان بنر اطلاع رسانی',
+  newsletter: 'عضویت ایمیل خبرنامه',
+  checklist: 'چک لیست موارد ویژگی های تیک دار',
+  'related-content': 'پیشنهاد مطالب مرتبط بیشتر بخوانید',
+  location: 'آدرس نقشه دفتر شعبه نشانی',
+  curriculum: 'سرفصل برنامه آموزشی جلسات درس',
+  schedule: 'تقویم زمان کلاس برنامه جلسات',
+  'application-form': 'ثبت نام تقاضا فرم درخواست',
+  'download-gate': 'دانلود فایل دریافت ایمیل',
+  values: 'فرهنگ سازمان اصول ارزش',
+  process: 'مراحل فرایند گردش کار قدم ها',
+  jobs: 'استخدام همکاری شغل فرصت',
+  awards: 'افتخار تقدیر جایزه',
+  resources: 'کتابخانه دانلود مقاله ابزار منبع',
+  glossary: 'واژه نامه اصطلاح تعریف لغت',
+  'comparison-matrix': 'مقایسه جدول ویژگی تفاوت گزینه',
+  campaign: 'تبلیغ کمپین بنر رویداد',
+  landing: 'لندینگ فرود آغاز کمپین',
+  'feature-showcase': 'امکانات مزایا توضیح تفصیلی',
+  instructor: 'استاد مدرس معلم پروفایل',
+  'booking-form': 'رزرو نوبت جلسه مشاوره',
+  'team-request-form': 'درخواست آموزش سازمانی تیم گروه',
+  'mega-menu': 'منوی بزرگ چند ستونه ناوبری',
+  press: 'خبر رسانه روابط عمومی نشریه',
+  partners: 'شریک همکار همکاری تجاری',
+  'content-index': 'فهرست مطالب نمایه دسته بندی مقاله',
+  'section-header': 'تیتر عنوان شروع بخش سرصفحه',
+  'social-links': 'اینستاگرام تلگرام لینکدین شبکه اجتماعی',
+  'cookie-consent': 'کوکی حریم خصوصی موافقت',
+  divider: 'فاصله خط جداکننده فضای خالی',
+};
+
+function normalizeComponentQuery(value: string): string {
+  return value.toLocaleLowerCase()
+    .replace(/[يى]/g, 'ی')
+    .replace(/ك/g, 'ک')
+    .replace(/[\u064B-\u065F\u0670\u200c\u200d]/g, ' ')
+    .replace(/[^a-z0-9\u0600-\u06ff]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Match words across title, summary, category, variant names and useful aliases. */
+export function componentMatchesSearch(component: ComponentDefinition, query: string): boolean {
+  const words = normalizeComponentQuery(query).split(' ').filter(Boolean);
+  if (words.length === 0) return true;
+  const haystack = normalizeComponentQuery([
+    component.label,
+    component.description,
+    component.type,
+    categoryLabel(component.category),
+    ...component.variants.map((variant) => variant.label),
+    componentSearchAliases[component.type] ?? '',
+  ].join(' '));
+  return words.every((word) => haystack.includes(word));
+}
+
 export const variantLabel = (value: string, fallback = value): string => variantLabels[value] ?? fallback;
 export const fieldLabel = (leaf: string): string => {
   const key = leaf.replace(/([a-z0-9])([A-Z])/g, '$1 $2').replace(/_/g, ' ').toLowerCase();
@@ -172,7 +265,7 @@ const roleLabels: Record<string, string> = { admin: 'مدیر', administrator: '
 const permissionLabels: Record<string, string> = {
   read: 'مشاهده', edit: 'ویرایش', publish: 'انتشار', manage_users: 'مدیریت کاربران', manage: 'مدیریت',
   'pages.create': 'ساخت صفحه', 'pages.edit': 'ویرایش صفحه', 'pages.restore': 'بازگردانی صفحه',
-  'pages.route': 'مسیر صفحه', 'pages.publish': 'انتشار صفحه', 'pages.schedule': 'زمان‌بندی انتشار',
+  'pages.route': 'مسیر صفحه', 'pages.publish': 'انتشار صفحه',
   'pages.unpublish': 'لغو انتشار صفحه', 'pages.archive': 'آرشیو صفحه', 'design.edit': 'ویرایش طراحی',
   'components.manage': 'مدیریت کامپوننت‌ها', 'templates.manage': 'مدیریت قالب‌ها',
   'media.upload': 'بارگذاری رسانه', 'media.manage': 'مدیریت رسانه', 'preview.draft': 'پیش‌نمایش پیش‌نویس',
@@ -188,13 +281,11 @@ export const sectionLabel = (value: string): string => sectionLabels[value] ?? v
 
 
 const issueMessages: Record<string, string> = {
-  'No CMS code or slug is bound; the published revision has no public route yet.': 'هیچ کد CMS یا نامکی متصل نیست؛ نسخهٔ منتشرشده هنوز مسیر عمومی ندارد.',
   'Internal link does not match a published route: /contact': 'پیوند داخلی با مسیر منتشرشده‌ای مطابقت ندارد: /contact',
 };
 export const issueMessage = (value: string): string => {
   if (issueMessages[value]) return issueMessages[value];
   const internal = /^Internal link does not match a published route: (.+)$/.exec(value);
   if (internal) return `پیوند داخلی با مسیر منتشرشده‌ای مطابقت ندارد: ${internal[1]}`;
-  const schemeless = /^No CMS code or slug is bound/.test(value);
-  return schemeless ? 'هیچ کد CMS یا نامکی متصل نیست؛ این نسخه مسیر عمومی ندارد.' : value;
+  return value;
 };

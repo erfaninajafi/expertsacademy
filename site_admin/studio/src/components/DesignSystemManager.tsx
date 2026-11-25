@@ -8,7 +8,7 @@ type Notify = (tone: Tone, message: string) => void;
 
 const FONTS = ['editorial', 'academy', 'manrope', 'system'] as const;
 const SHADOWS = ['soft', 'crisp', 'none'] as const;
-const STATUS_LABEL: Record<string, string> = { draft: 'پیش‌نویس', published: 'منتشرشده' };
+const STATUS_LABEL: Record<string, string> = { draft: 'پیش‌نویس تنظیمات', published: 'تنظیمات منتشرشده' };
 
 function luminance(hex: string): number {
   const value = hex.replace('#', '');
@@ -32,13 +32,13 @@ interface Props {
   notify: Notify;
 }
 
-const COLOR_LABELS: Record<string, string> = { brand: 'برند', onBrand: 'روی برند', surface: 'سطح', canvas: 'بوم', text: 'متن', muted: 'محو', border: 'حاشیه', accent: 'تأکید', success: 'موفقیت', danger: 'خطر', info: 'اطلاع', warning: 'هشدار' };
-const GRADIENT_LABELS: Record<string, string> = { dawn: 'سپیده', midnight: 'نیمه‌شب', sand: 'شنی', forest: 'جنگل' };
-const MOTION_LABELS: Record<string, string> = { muted: 'آرام', rise: 'بالا آمدن', slide: 'لغزش', scale: 'بزرگ‌نمایی' };
+const COLOR_LABELS: Record<string, string> = { brand: 'رنگ اصلی برند', onBrand: 'رنگ متن روی زمینهٔ برند', surface: 'پس‌زمینهٔ کارت‌ها', canvas: 'پس‌زمینهٔ اصلی صفحه', text: 'رنگ متن اصلی', muted: 'رنگ متن کم‌اهمیت', border: 'رنگ خط دور و جداکننده', accent: 'رنگ مکمل و تأکیدی', success: 'رنگ پیام موفقیت', danger: 'رنگ پیام خطا', info: 'رنگ پیام اطلاع‌رسانی', warning: 'رنگ پیام هشدار' };
+const GRADIENT_LABELS: Record<string, string> = { dawn: 'ترکیب رنگی شماره ۱ (سپیده)', midnight: 'ترکیب رنگی شماره ۲ (تیره)', sand: 'ترکیب رنگی شماره ۳ (شنی)', forest: 'ترکیب رنگی شماره ۴ (سبز)' };
+const MOTION_LABELS: Record<string, string> = { muted: 'محو شدن', fade: 'محو شدن', rise: 'حرکت به بالا', slide: 'حرکت از کنار', scale: 'تغییر اندازه' };
 const OPTION_LABELS: Record<string, string> = {
-  solid: 'توپر', outline: 'خطی', small: 'کوچک', medium: 'متوسط', large: 'بزرگ', xl: 'خیلی بزرگ', pill: 'قرصی',
-  none: 'هیچ', soft: 'نرم', crisp: 'شارپ', grid: 'شبکه', grain: 'دانه', dawn: 'سپیده', midnight: 'نیمه‌شب', sand: 'شنی', forest: 'جنگل',
-  reveal: 'ظهور', stagger: 'پله‌ای', emphasis: 'تأکیدی', editorial: 'ادیتوریال', academy: 'آکادمی', manrope: 'مانروپ', system: 'سیستمی',
+  solid: 'دکمهٔ رنگی (توپر)', outline: 'دکمهٔ دورخط‌دار', small: 'گردی کم', medium: 'گردی متوسط', large: 'گردی زیاد', xl: 'گردی خیلی زیاد', pill: 'کاملاً گرد (کپسولی)',
+  none: 'بدون', soft: 'سایهٔ نرم', crisp: 'سایهٔ مشخص', grid: 'خطوط شبکه‌ای', grain: 'بافت دانه‌دانه', dawn: 'سپیده (رنگ‌های گرم)', midnight: 'نیمه‌شب (تیره)', sand: 'شنی (روشن)', forest: 'جنگلی (سبز)',
+  reveal: 'ظاهرشدن تدریجی', stagger: 'ظاهرشدن پشت‌سرهم', emphasis: 'حرکت تأکیدی', editorial: 'فونت تحریری (Fraunces)', academy: 'قالب فونت آکادمی', manrope: 'Manrope', system: 'فونت پیش‌فرض دستگاه',
 };
 
 export function DesignSystemManager({ api, config, notify }: Props) {
@@ -134,7 +134,7 @@ export function DesignSystemManager({ api, config, notify }: Props) {
       setDraft(response.draft);
       setTokens(structuredClone(response.draft.tokens));
       setDirty(false);
-      notify('ok', `Draft saved as version ${response.draft.version}. The live theme is unchanged.`);
+      notify('ok', `تنظیمات به‌عنوان پیش‌نویس نسخهٔ ${response.draft.version} ذخیره شد؛ تنظیمات فعال هنوز تغییر نکرده است.`);
       void load(locale);
     } catch (error) {
       if (error instanceof ApiError) setErrors(error.errors);
@@ -152,7 +152,7 @@ export function DesignSystemManager({ api, config, notify }: Props) {
       const response = await api.send<{ publication: { themeId: string } }>('design_publish', 'POST', {
         expectedVersion: draft.version,
       }, draft.id);
-      notify('ok', `Published theme ${response.publication.themeId.slice(0, 8)}. New pages use it immediately; existing pages keep their stored tokens.`);
+      notify('ok', 'تنظیمات ظاهری این زبان منتشر شد. ظاهر صفحات موجود خودکار تغییر نمی‌کند و اتصال صفحات جدید به پوستهٔ فعال هنوز کامل نشده است.');
       await load(locale);
     } catch (error) {
       if (error instanceof ApiError) setErrors(error.errors);
@@ -169,10 +169,10 @@ export function DesignSystemManager({ api, config, notify }: Props) {
       return {
         mode,
         pairs: [
-          { label: 'متن / بوم', ratio: contrastRatio(colors.text, colors.canvas) },
-          { label: 'متن / سطح', ratio: contrastRatio(colors.text, colors.surface) },
-          { label: 'روی برند / برند', ratio: contrastRatio(colors.onBrand, colors.brand) },
-          { label: 'محو / سطح', ratio: contrastRatio(colors.muted, colors.surface) },
+          { label: 'متن اصلی روی پس‌زمینهٔ صفحه', ratio: contrastRatio(colors.text, colors.canvas) },
+          { label: 'متن اصلی روی کارت‌ها', ratio: contrastRatio(colors.text, colors.surface) },
+          { label: 'متن روی زمینهٔ رنگ برند', ratio: contrastRatio(colors.onBrand, colors.brand) },
+          { label: 'متن کم‌اهمیت روی کارت‌ها', ratio: contrastRatio(colors.muted, colors.surface) },
         ],
       };
     });
@@ -187,7 +187,7 @@ export function DesignSystemManager({ api, config, notify }: Props) {
   }
 
   const row = (label: string, control: React.ReactNode, hint?: string) => (
-    <label className="grid grid-cols-[minmax(7rem,1fr)_minmax(0,1.3fr)] items-center gap-2 py-1 text-xs">
+    <label className="grid grid-cols-[minmax(10rem,1fr)_minmax(0,1.1fr)] items-center gap-2 py-1 text-xs">
       <span className="font-medium text-slate-700">{label}</span>
       <span className="flex items-center gap-2">{control}</span>
       {hint && <span className="col-span-2 text-[11px] leading-4 text-slate-500">{hint}</span>}
@@ -258,26 +258,27 @@ export function DesignSystemManager({ api, config, notify }: Props) {
   );
 
   return (
-    <div className="grid gap-3 xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
+    <div className="grid gap-3 xl:grid-cols-[minmax(0,34rem)_minmax(0,1fr)]">
       <div className="space-y-3">
         <div className="rounded-xl border border-slate-200 bg-white p-3">
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="ml-auto text-base font-semibold">سیستم طراحی</h2>
-            <select value={locale} onChange={(event) => setLocale(event.target.value as Locale)} aria-label="زبان پوسته" className="rounded-md border border-slate-300 px-2 py-1 text-xs">
-              {payload.locales.map((item) => <option key={item} value={item}>{item.toUpperCase()}</option>)}
+            <h2 className="ml-auto text-base font-semibold">تنظیم ظاهر صفحات Page Studio</h2>
+            <span className="text-xs font-medium text-slate-600">زبان صفحات:</span>
+            <select value={locale} onChange={(event) => setLocale(event.target.value as Locale)} aria-label="زبان تنظیمات ظاهری صفحات" className="rounded-md border border-slate-300 px-2 py-1 text-xs">
+              {payload.locales.map((item) => <option key={item} value={item}>{item === 'fa' ? 'فارسی' : 'انگلیسی'}</option>)}
             </select>
-            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-700">v{draft.version}</span>
+            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-700">نسخه {draft.version}</span>
             <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-700">{STATUS_LABEL[draft.status] ?? draft.status}</span>
-            {dirty && <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-800">ذخیره‌نشده</span>}
+            {dirty && <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-800">تغییرات ذخیره‌نشده</span>}
           </div>
           <div className="mt-2 flex flex-wrap gap-1.5">
             <button type="button" disabled={!canEdit || busy !== null} onClick={() => void handleSave()} className="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-40">
-              {busy === 'save' ? 'در حال ذخیره…' : 'ذخیرهٔ پیش‌نویس'}
+              {busy === 'save' ? 'در حال ذخیره…' : 'ذخیره تنظیمات (بدون انتشار)'}
             </button>
             <button type="button" disabled={!canPublish || busy !== null} onClick={() => void handlePublish()} className="rounded-lg bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-40">
-              {busy === 'publish' ? 'در حال انتشار…' : 'انتشار پوسته'}
+              {busy === 'publish' ? 'در حال انتشار…' : 'انتشار تنظیمات این زبان'}
             </button>
-            <button type="button" disabled={!dirty} onClick={() => { setTokens(structuredClone(draft.tokens)); setDirty(false); setErrors({}); }} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 disabled:opacity-40">دور انداختن تغییرات</button>
+            <button type="button" disabled={!dirty} onClick={() => { setTokens(structuredClone(draft.tokens)); setDirty(false); setErrors({}); }} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 disabled:opacity-40">لغو تغییرات ذخیره‌نشده</button>
           </div>
           {Object.keys(errors).length > 0 && (
             <ul className="mt-2 space-y-1 rounded-lg bg-red-50 p-2 text-[11px] text-red-800" role="alert">
@@ -285,16 +286,16 @@ export function DesignSystemManager({ api, config, notify }: Props) {
             </ul>
           )}
           <p className="mt-2 text-[11px] leading-4 text-slate-500">
-            تغییرات در همین پیش‌نویس می‌مانند. انتشار، یک نسخهٔ تغییرناپذیر از توکن‌ها و پوستهٔ فعال جدید برای {locale.toUpperCase()} می‌سازد؛ صفحه‌ها تا انتشار مجدد، توکن‌های ذخیره‌شده در نسخهٔ خود را نگه می‌دارند.
+            این تنظیمات رنگ‌ها، فونت‌ها، عرض محتوا و ظاهر اجزای صفحات ساخته‌شده با Page Studio را مشخص می‌کنند؛ نه دکمه‌های پنل مدیریت و نه صفحات CMS قدیمی را. «ذخیره» فقط پیش‌نویس را نگه می‌دارد و «انتشار» پوستهٔ فعال همین زبان را ثبت می‌کند. در نسخه فعلی، ظاهر صفحات موجود و حتی صفحات تازه‌ساخته‌شده خودکار با پوسته منتشرشده عوض نمی‌شود.
           </p>
         </div>
 
-        {panel('رنگ‌های برند و معنایی', (
+        {panel('رنگ نوشته‌ها، کارت‌ها و پس‌زمینهٔ صفحه', (
           <>
             {(['light', 'dark'] as const).map((mode) => (
               <div key={mode} className="py-2">
-                <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500">{mode === 'light' ? 'پالت روشن' : 'پالت تیره'}</p>
-                <div className="grid gap-x-3 sm:grid-cols-2">
+                <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500">{mode === 'light' ? 'رنگ‌های حالت روشن' : 'رنگ‌های حالت تیره'}</p>
+                <div className="grid gap-x-3">
                   {['brand', 'onBrand', 'surface', 'canvas', 'text', 'muted', 'border', 'accent', 'success', 'danger', 'info', 'warning'].map((key) => (
                     row(COLOR_LABELS[key] ?? key, colorField(['colors', mode, key]))
                   ))}
@@ -302,9 +303,9 @@ export function DesignSystemManager({ api, config, notify }: Props) {
               </div>
             ))}
           </>
-        ), 'هر پالت در زمان اجرا یک متغیر CSS است؛ کنتراست پیش از انتشار در پایین بررسی می‌شود.')}
+        ), 'رنگ‌ها برای بخش‌های مختلف صفحه مثل زمینهٔ اصلی، کارت‌ها، متن‌ها و پیام‌ها تعریف می‌شوند. حالت روشن و تیره را جداگانه تنظیم کن.') }
 
-        {panel('بررسی کنتراست', (
+        {panel('بررسی خوانایی رنگ نوشته‌ها', (
           <div className="grid gap-4 py-2 sm:grid-cols-2">
             {colorPairs.map(({ mode, pairs }) => (
               <div key={mode}>
@@ -322,118 +323,121 @@ export function DesignSystemManager({ api, config, notify }: Props) {
               </div>
             ))}
           </div>
-        ), 'استاندارد WCAG AA برای متن اصلی نسبت ۴٫۵:۱ می‌خواهد. نسبت‌ها هنگام ویرایش به‌روز می‌شوند.')}
+        ), 'عدد سبز یعنی خوانایی بهتر و عدد قرمز یعنی خوانایی ناکافی. برای متن معمولی، نسبت رنگ متن به زمینه باید حداقل ۴٫۵ به ۱ باشد.') }
 
-        {panel('تایپوگرافی', (
+        {panel('فونت‌ها و اندازهٔ نوشته‌های صفحه', (
           <>
-            {row('فونت لاتین', selectField(['typography', 'latin'], FONTS))}
-            {row('فونت راست‌به‌چپ', selectField(['typography', 'rtl'], FONTS))}
-            {row('اندازهٔ پایه', numberField(['typography', 'base'], 12, 32))}
-            {row('اندازهٔ عنوان', numberField(['typography', 'heading'], 24, 96))}
-            {row('اندازهٔ نمایش', numberField(['typography', 'display'], 32, 160))}
-            {row('مقیاس تایپ', numberField(['typography', 'scale'], 1, 2, 0.01))}
-            {row('ارتفاع خط', numberField(['typography', 'lineHeight'], 1.2, 2.2, 0.01))}
-            {row('وزن‌ها (۴۰۰–۹۰۰)', (
-              <span className="flex gap-1">
+            {row('فونت نوشته‌های انگلیسی', selectField(['typography', 'latin'], FONTS))}
+            {row('فونت نوشته‌های فارسی (RTL)', selectField(['typography', 'rtl'], FONTS))}
+            {row('اندازه متن معمولی (پیکسل)', numberField(['typography', 'base'], 12, 32))}
+            {row('اندازه عنوان بخش‌ها (پیکسل)', numberField(['typography', 'heading'], 24, 96))}
+            {row('اندازه تیتر خیلی بزرگ (پیکسل)', numberField(['typography', 'display'], 32, 160))}
+            {row('ضریب تغییر اندازه نوشته‌ها', numberField(['typography', 'scale'], 1, 2, 0.01), 'این عدد یک ضریب است، نه پیکسل؛ میزان اثر آن به کامپوننت استفاده‌کننده بستگی دارد.') }
+            {row('فاصله عمودی بین خطوط نوشته', numberField(['typography', 'lineHeight'], 1.2, 2.2, 0.01), 'مثلاً ۱٫۷ یعنی فاصله خطوط برابر ۱٫۷ برابر اندازه فونت است.') }
+            {row('ضخامت نوشته‌ها (۴۰۰ تا ۹۰۰)', (
+              <span className="flex flex-wrap gap-1">
                 {(['regular', 'medium', 'semibold', 'bold'] as const).map((weight) => (
-                  <input key={weight} aria-label={`${weight} weight`} type="number" min={100} max={900} step={100}
-                    value={String(tokens.typography.weights?.[weight] ?? '')}
-                    onChange={(event) => patch(['typography', 'weights', weight], Number(event.target.value))}
-                    className="w-14 rounded-md border border-slate-300 px-1 py-1 text-[11px]" />
+                  <span key={weight} className="inline-flex flex-col gap-0.5">
+                    <span className="text-[10px] text-slate-500">{({ regular: 'عادی', medium: 'متوسط', semibold: 'نیمه‌ضخیم', bold: 'ضخیم' } as const)[weight]}</span>
+                    <input aria-label={`ضخامت ${weight}`} type="number" min={100} max={900} step={100}
+                      value={String(tokens.typography.weights?.[weight] ?? '')}
+                      onChange={(event) => patch(['typography', 'weights', weight], Number(event.target.value))}
+                      className="w-14 rounded-md border border-slate-300 px-1 py-1 text-[11px]" />
+                  </span>
                 ))}
               </span>
             ))}
-            {row('فاصلهٔ حروف نمایش (em)', numberField(['typography', 'tracking', 'display'], -0.1, 0.1, 0.005))}
-            {row('فاصلهٔ حروف متن (em)', numberField(['typography', 'tracking', 'body'], -0.1, 0.1, 0.005))}
-            {row('حداقل/حداکثر متن سیال', (
+            {row('فاصله حروف تیترهای بزرگ (em)', numberField(['typography', 'tracking', 'display'], -0.1, 0.1, 0.005), 'مقدار منفی حروف را به هم نزدیک‌تر و مقدار مثبت از هم دورتر می‌کند.') }
+            {row('فاصله بین حروف متن (em)', numberField(['typography', 'tracking', 'body'], -0.1, 0.1, 0.005))}
+            {row('کمترین و بیشترین اندازه متن واکنش‌گرا (پیکسل)', (
               <span className="flex gap-1">
-                {numberField(['typography', 'fluid', 'min'], 12, 32)}
-                {numberField(['typography', 'fluid', 'max'], 12, 32)}
+                <span className="inline-flex flex-col gap-0.5"><span className="text-[10px] text-slate-500">حداقل</span>{numberField(['typography', 'fluid', 'min'], 12, 32)}</span>
+                <span className="inline-flex flex-col gap-0.5"><span className="text-[10px] text-slate-500">حداکثر</span>{numberField(['typography', 'fluid', 'max'], 12, 32)}</span>
               </span>
             ))}
           </>
-        ))}
+        ), 'اندازه‌ها برحسب پیکسل‌اند، مگر اینکه در کنار فیلد واحد دیگری نوشته شده باشد. این تنظیمات ویژهٔ نوشته‌های داخل صفحات Studio است.') }
 
-        {panel('فاصله، شبکه و محتوا', (
+        {panel('عرض محتوا و فاصله‌های صفحه', (
           <>
-            {row('ریتم بخش‌ها', numberField(['spacing', 'section'], 0, 240))}
-            {row('فاصلهٔ داخلی کارت', numberField(['spacing', 'card'], 0, 96))}
-            {row('فاصلهٔ شبکه', numberField(['spacing', 'gap'], 0, 64))}
-            {row('نوارهٔ شبکه', numberField(['layout', 'grid', 'gutter'], 0, 64))}
-            {row('محتوا', numberField(['layout', 'container'], 960, 1600))}
-            {row('محتوای پهن', numberField(['layout', 'wide'], 1100, 1920))}
-            {row('محتوای باریک', numberField(['layout', 'narrow'], 640, 1100))}
-            {row('عرض خواندن', numberField(['layout', 'reading'], 480, 900))}
-            {row('نقاط شکست (موبایل/تبلت/دسکتاپ)', (
+            {row('فاصله عمودی بین بخش‌های صفحه (پیکسل)', numberField(['spacing', 'section'], 0, 240))}
+            {row('فاصله متن تا لبه داخلی کارت (پیکسل)', numberField(['spacing', 'card'], 0, 96))}
+            {row('فاصله بین کارت‌ها و اجزا (پیکسل)', numberField(['spacing', 'gap'], 0, 64))}
+            {row('فاصله بین ستون‌ها (پیکسل)', numberField(['layout', 'grid', 'gutter'], 0, 64))}
+            {row('حداکثر عرض بخش‌های معمولی (پیکسل)', numberField(['layout', 'container'], 960, 1600))}
+            {row('حداکثر عرض بخش‌های پهن (پیکسل)', numberField(['layout', 'wide'], 1100, 1920))}
+            {row('حداکثر عرض بخش‌های باریک (پیکسل)', numberField(['layout', 'narrow'], 640, 1100))}
+            {row('عرض پیشنهادی متن طولانی (پیکسل)', numberField(['layout', 'reading'], 480, 900))}
+            {row('مرز تغییر چیدمان در اندازه‌های مختلف (پیکسل)', (
               <span className="flex gap-1">
-                {numberField(['layout', 'breakpoints', 'mobile'], 320, 768)}
-                {numberField(['layout', 'breakpoints', 'tablet'], 600, 1200)}
-                {numberField(['layout', 'breakpoints', 'desktop'], 960, 1920)}
+                <span className="inline-flex flex-col gap-0.5"><span className="text-[10px] text-slate-500">موبایل</span>{numberField(['layout', 'breakpoints', 'mobile'], 320, 768)}</span>
+                <span className="inline-flex flex-col gap-0.5"><span className="text-[10px] text-slate-500">تبلت</span>{numberField(['layout', 'breakpoints', 'tablet'], 600, 1200)}</span>
+                <span className="inline-flex flex-col gap-0.5"><span className="text-[10px] text-slate-500">دسکتاپ</span>{numberField(['layout', 'breakpoints', 'desktop'], 960, 1920)}</span>
               </span>
             ))}
-            {row('مقیاس فاصله', (
-              <input type="text" aria-label="مقیاس فاصله" value={(tokens.spacing.scale ?? []).join(', ')}
+            {row('فاصله‌های آماده برای چیدمان (پیکسل)', (
+              <input type="text" aria-label="فاصله‌های آماده (عددهای جداشده با ویرگول)" value={(tokens.spacing.scale ?? []).join(', ')}
                 onChange={(event) => patch(['spacing', 'scale'], event.target.value.split(',').map((item) => Number(item.trim())).filter((item) => Number.isFinite(item)))}
                 className="w-full rounded-md border border-slate-300 px-2 py-1 font-mono text-[11px]" />
             ))}
           </>
-        ), 'مقیاس فاصله، متغیرهای --cms-space-* را که در چیدمان کامپوننت‌ها استفاده می‌شوند تغذیه می‌کند.')}
+        ), 'عرض‌ها و فاصله‌ها فقط برای چیدمان اجزای Studio هستند و روی چینش پنل مدیریت اثر ندارند. «فاصله‌های آماده» مجموعه عددهایی است که کامپوننت‌ها می‌توانند استفاده کنند.') }
 
-        {panel('گردی گوشه‌ها، سایه‌ها و دکمه‌ها', (
+        {panel('ظاهر دکمه‌ها، کارت‌ها و سایه‌ها', (
           <>
-            {row('گردی کوچک', numberField(['radius', 'small'], 0, 24))}
-            {row('گردی متوسط', numberField(['radius', 'medium'], 0, 40))}
-            {row('گردی بزرگ', numberField(['radius', 'large'], 0, 64))}
-            {row('گردی خیلی بزرگ', numberField(['radius', 'xl'], 0, 96))}
-            {row('ارتفاع دکمه', numberField(['button', 'height'], 32, 64))}
-            {row('فاصلهٔ افقی دکمه', numberField(['button', 'paddingX'], 8, 64))}
-            {row('سبک دکمه', selectField(['button', 'style'], ['solid', 'outline'] as const))}
-            {row('گردی دکمه', selectField(['button', 'radius'], ['small', 'medium', 'large', 'xl', 'pill'] as const))}
-            {row('پیش‌تنظیم سایه', selectField(['shadow'], SHADOWS))}
-            {row('سایهٔ کوچک', textField(['shadows', 'sm']))}
-            {row('سایهٔ متوسط', textField(['shadows', 'md']))}
-            {row('سایهٔ بزرگ', textField(['shadows', 'lg']))}
+            {row('گردی کم برای اجزای کوچک (پیکسل)', numberField(['radius', 'small'], 0, 24))}
+            {row('گردی معمولی گوشه‌ها (پیکسل)', numberField(['radius', 'medium'], 0, 40))}
+            {row('گردی زیاد گوشه‌ها (پیکسل)', numberField(['radius', 'large'], 0, 64))}
+            {row('گردی خیلی زیاد گوشه‌ها (پیکسل)', numberField(['radius', 'xl'], 0, 96))}
+            {row('ارتفاع دکمه‌های داخل صفحه (پیکسل)', numberField(['button', 'height'], 32, 64))}
+            {row('فاصله متن دکمه تا لبهٔ چپ و راست (پیکسل)', numberField(['button', 'paddingX'], 8, 64))}
+            {row('شکل ظاهری دکمه (توپر یا دورخط‌دار)', selectField(['button', 'style'], ['solid', 'outline'] as const))}
+            {row('میزان گردی گوشه‌های دکمه', selectField(['button', 'radius'], ['small', 'medium', 'large', 'xl', 'pill'] as const))}
+            {row('سبک سایهٔ کارت‌ها و بخش‌ها', selectField(['shadow'], SHADOWS))}
+            {row('جزئیات سایهٔ کم (CSS)', textField(['shadows', 'sm']))}
+            {row('جزئیات سایهٔ متوسط (CSS)', textField(['shadows', 'md']))}
+            {row('جزئیات سایهٔ زیاد (CSS)', textField(['shadows', 'lg']))}
           </>
-        ))}
+        ), 'این مقادیر برای کامپوننت‌های ساخته‌شده با Studio هستند؛ دکمه‌های صفحهٔ مدیریت را تغییر نمی‌دهند. فیلدهای CSS برای کاربران فنی‌اند.') }
 
-        {panel('پس‌زمینه‌ها، گرادیان‌ها و حرکت', (
+        {panel('پس‌زمینه و انیمیشن اجزای صفحه', (
           <>
-            {row('الگو', selectField(['background', 'pattern'], ['none', 'grid', 'grain'] as const))}
-            {row('گرادیان', selectField(['background', 'gradient'], ['none', 'dawn', 'midnight', 'sand', 'forest'] as const))}
-            {row('درصد پوشش', numberField(['background', 'overlay'], 0, 100))}
+            {row('طرح تزئینی پس‌زمینه', selectField(['background', 'pattern'], ['none', 'grid', 'grain'] as const))}
+            {row('رنگ ترکیبی پس‌زمینه (گرادیان)', selectField(['background', 'gradient'], ['none', 'dawn', 'midnight', 'sand', 'forest'] as const))}
+            {row('شدت پوشش رنگی پس‌زمینه (درصد)', numberField(['background', 'overlay'], 0, 100))}
             {(['dawn', 'midnight', 'sand', 'forest'] as const).map((key) => (
               <div key={key} className="py-1">
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">{GRADIENT_LABELS[key] ?? key}</p>
-                <div className="flex items-center gap-1">
-                  {colorField(['gradients', key, 'from'])}
-                  {colorField(['gradients', key, 'to'])}
-                  {numberField(['gradients', key, 'angle'], 0, 360)}
+                <div className="flex flex-wrap items-end gap-2">
+                    <span className="flex flex-col gap-0.5 text-[10px] text-slate-500">رنگ شروع{colorField(['gradients', key, 'from'])}</span>
+                    <span className="flex flex-col gap-0.5 text-[10px] text-slate-500">رنگ پایان{colorField(['gradients', key, 'to'])}</span>
+                    <span className="flex flex-col gap-0.5 text-[10px] text-slate-500">زاویه (درجه){numberField(['gradients', key, 'angle'], 0, 360)}</span>
                 </div>
               </div>
             ))}
-            {row('پیش‌تنظیم حرکت', selectField(['motion', 'preset'], ['none', 'reveal', 'stagger', 'emphasis'] as const))}
-            {row('حرکت فعال', (
+            {row('نوع نمایش متحرک اجزا', selectField(['motion', 'preset'], ['none', 'reveal', 'stagger', 'emphasis'] as const))}
+            {row('فعال بودن انیمیشن در صفحه', (
               <input type="checkbox" checked={tokens.motion.enabled} onChange={(event) => patch(['motion', 'enabled'], event.target.checked)} />
             ))}
-            {row('مدت (میلی‌ثانیه)', numberField(['motion', 'duration'], 0, 1200))}
-            {row('فاصله (پیکسل)', numberField(['motion', 'spacing'], 0, 160))}
+            {row('زمان اجرای هر انیمیشن (میلی‌ثانیه)', numberField(['motion', 'duration'], 0, 1200))}
+            {row('مقدار جابه‌جایی انیمیشن (پیکسل)', numberField(['motion', 'spacing'], 0, 160))}
             {(['muted', 'rise', 'slide', 'scale'] as const).map((preset) => (
               <div key={preset} className="flex items-center gap-2 py-1 text-[11px]">
-                <span className="w-14 font-medium text-slate-600">{MOTION_LABELS[preset] ?? preset}</span>
-                <span className="text-slate-500">مدت</span>
+                <span className="w-24 font-medium text-slate-600">{MOTION_LABELS[preset] ?? preset}</span>
+                <span className="text-slate-500">زمان (ms)</span>
                 {numberField(['motion', 'presets', preset, 'duration'], 0, 1600)}
-                <span className="text-slate-500">فاصله</span>
+                <span className="text-slate-500">جابه‌جایی (px)</span>
                 {numberField(['motion', 'presets', preset, 'spacing'], 0, 160)}
               </div>
             ))}
-            {row('مقیاس فونت راست‌به‌چپ', numberField(['rtl', 'fontScale'], 0.8, 1.4, 0.01))}
-            {row('فاصلهٔ حروف راست‌به‌چپ (em)', numberField(['rtl', 'letterSpacing'], -0.08, 0.08, 0.005))}
+            {row('ضریب اندازه فونت فارسی', numberField(['rtl', 'fontScale'], 0.8, 1.4, 0.01))}
+            {row('فاصله حروف متن فارسی (em)', numberField(['rtl', 'letterSpacing'], -0.08, 0.08, 0.005))}
           </>
-        ))}
+        ), 'در این بخش رنگ‌ها و حرکت‌های پیش‌فرض کامپوننت‌ها را تنظیم می‌کنی. اگر انیمیشن غیرفعال باشد، تنظیمات حرکت اعمال نمی‌شوند.') }
 
-        {panel('تاریخچهٔ انتشار', (
+        {panel('سابقهٔ نسخه‌های منتشرشده', (
           payload.history.length === 0
-            ? <p className="py-2 text-[11px] text-slate-500">هنوز پوستهٔ منتشرشده‌ای برای این زبان وجود ندارد.</p>
+            ? <p className="py-2 text-[11px] text-slate-500">برای این زبان هنوز هیچ مجموعه تنظیماتی منتشر نشده است.</p>
             : <ul className="divide-y divide-slate-100">
                 {payload.history.map((entry) => (
                   <li key={entry.id} className="flex flex-wrap items-center justify-between gap-1 py-1.5 text-[11px]">
@@ -442,13 +446,13 @@ export function DesignSystemManager({ api, config, notify }: Props) {
                   </li>
                 ))}
               </ul>
-        ), 'هر انتشار تغییرناپذیر است و با نسخهٔ دارای چک‌سام در اینجا نمایش داده می‌شود.')}
+        ), 'در اینجا می‌بینی چه زمانی و توسط چه کسی تنظیمات ظاهری این زبان منتشر شده است. انتشار قبلی از سابقه پاک نمی‌شود.') }
       </div>
 
       <div className="min-w-0">
         <div className="sticky top-2 rounded-xl border border-slate-200 bg-white p-3">
           <div className="mb-2 flex flex-wrap items-center gap-2">
-            <h3 className="ml-auto text-sm font-semibold">پیش‌نمایش زندهٔ توکن‌ها</h3>
+            <h3 className="ml-auto text-sm font-semibold">پیش‌نمایش ظاهر یک صفحهٔ نمونه</h3>
             <div className="flex gap-1" role="group" aria-label="اندازهٔ پیش‌نمایش">
               {(['mobile', 'tablet', 'desktop'] as const).map((item) => (
                 <button key={item} type="button" aria-pressed={viewport === item} onClick={() => setViewport(item)}
@@ -461,14 +465,14 @@ export function DesignSystemManager({ api, config, notify }: Props) {
           {previewError && <p role="alert" className="mb-2 rounded bg-red-50 p-2 text-[11px] text-red-800">{previewError}</p>}
           <div className="mx-auto overflow-hidden rounded-lg border border-slate-200 bg-slate-50" style={{ width: viewport === 'mobile' ? '390px' : viewport === 'tablet' ? '834px' : '100%', maxWidth: '100%' }}>
             <iframe
-              title="پیش‌نمایش توکن طراحی"
+              title="پیش‌نمایش تنظیمات ظاهر صفحهٔ نمونه"
               srcDoc={preview}
               sandbox="allow-same-origin"
               className="h-[70vh] w-full border-0"
               style={{ minHeight: '420px' }}
             />
           </div>
-          <p className="mt-2 text-[11px] leading-4 text-slate-500">با همان رندر PHP صفحات منتشرشده و با سند نمونه و این توکن‌ها نمایش داده می‌شود. تغییرات پیش‌نویس هرگز به سایت عمومی نمی‌رسد.</p>
+          <p className="mt-2 text-[11px] leading-4 text-slate-500">این پیش‌نمایش فقط ظاهر یک صفحهٔ آزمایشی را نشان می‌دهد. تا وقتی تنظیمات منتشر نشوند، تغییری در پوستهٔ فعال ایجاد نمی‌شود؛ صفحات موجود هم به‌صورت خودکار تغییر نمی‌کنند.</p>
         </div>
       </div>
     </div>

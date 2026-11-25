@@ -8,3 +8,354 @@
   outline: 2px solid #4f46e5;
   outline-offset: 2px;
 }
+
+/* EA-STUDIO-UI-STANDARD-V1 */
+/* Shared editor chrome only. Public rendered pages and the legacy CMS are excluded. */
+#ea-studio-root {
+  --ea-ui-control-radius: 0.75rem;
+  --ea-ui-panel-radius: 1rem;
+  --ea-ui-transition: 160ms;
+}
+
+/* Same corner shape for buttons and form controls in the editor. */
+#ea-studio-root :is(button, a, input, select, textarea).rounded-md,
+#ea-studio-root :is(button, a, input, select, textarea).rounded-lg {
+  border-radius: var(--ea-ui-control-radius);
+}
+
+/* Same corner shape for panel cards; badges and pill selectors are untouched. */
+#ea-studio-root :is(.rounded-xl, .rounded-2xl).border {
+  border-radius: var(--ea-ui-panel-radius);
+}
+
+#ea-studio-root :is(button, a)[class*="rounded-"] {
+  transition: background-color var(--ea-ui-transition) ease,
+              border-color var(--ea-ui-transition) ease,
+              box-shadow var(--ea-ui-transition) ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #ea-studio-root :is(button, a)[class*="rounded-"] {
+    transition: none;
+  }
+}
+
+/* EA-STUDIO-UI-CONTROLS-V2 */
+/* UI chrome only: not the public-site renderer and not the legacy admin. */
+#ea-studio-root {
+  --ea-ui-primary-hover: #4338ca;
+  --ea-ui-publish-hover: #065f46;
+  --ea-ui-neutral-hover: #f8fafc;
+  --ea-ui-neutral-border-hover: #a5b4fc;
+  --ea-ui-focus-border: #6366f1;
+  --ea-ui-focus-ring: rgb(99 102 241 / 14%);
+}
+
+/* Predictable touch targets in main action bars; do not enlarge pill filters. */
+#ea-studio-root [data-toolbar-item] :is(button, select, a),
+#ea-studio-root [aria-label="بخش‌های Page Studio"] > button {
+  min-height: 36px;
+}
+
+/* Unified states for the existing semantic button colors (save / publish). */
+#ea-studio-root :is(button, a)[class~="bg-indigo-600"]:not(:disabled):hover {
+  background-color: var(--ea-ui-primary-hover);
+}
+#ea-studio-root :is(button, a)[class~="bg-emerald-700"]:not(:disabled):hover {
+  background-color: var(--ea-ui-publish-hover);
+}
+
+/* Neutral actions retain their white background and receive one hover state. */
+#ea-studio-root :is(button, a)[class~="border-slate-200"]:not(:disabled):hover,
+#ea-studio-root :is(button, a)[class~="border-slate-300"]:not(:disabled):hover {
+  background-color: var(--ea-ui-neutral-hover);
+  border-color: var(--ea-ui-neutral-border-hover);
+}
+
+/* Coherent keyboard/input affordance; never restyle checkboxes, color pickers
+   or the content inside the PHP-rendered preview iframes. */
+#ea-studio-root :is(
+  input[type="text"], input[type="search"], input[type="url"],
+  input[type="email"], input[type="number"], select, textarea
+) {
+  min-height: 34px;
+  transition: border-color var(--ea-ui-transition) ease,
+              box-shadow var(--ea-ui-transition) ease;
+}
+#ea-studio-root :is(
+  input[type="text"], input[type="search"], input[type="url"],
+  input[type="email"], input[type="number"], select, textarea
+):focus-visible {
+  border-color: var(--ea-ui-focus-border);
+  box-shadow: 0 0 0 3px var(--ea-ui-focus-ring);
+}
+#ea-studio-root button:disabled {
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #ea-studio-root :is(
+    input[type="text"], input[type="search"], input[type="url"],
+    input[type="email"], input[type="number"], select, textarea
+  ) {
+    transition: none;
+  }
+}
+
+/* EA-STUDIO-UI-MODALS-V3 */
+/* Radix portals render under <body>, outside #ea-studio-root. The dedicated
+   hooks below deliberately avoid global modal, Bootstrap and legacy styles. */
+.ea-studio-modal-overlay {
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.ea-studio-modal {
+  --ea-ui-control-radius: 0.75rem;
+  --ea-ui-modal-focus: #6366f1;
+  --ea-ui-modal-focus-ring: rgb(99 102 241 / 14%);
+  --ea-ui-modal-transition: 160ms;
+  box-sizing: border-box;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  background: #fff;
+  color: #0f172a;
+  color-scheme: light;
+  direction: rtl;
+  text-align: right;
+  box-shadow: 0 25px 65px -30px rgb(15 23 42 / 38%),
+              0 12px 24px -16px rgb(15 23 42 / 18%);
+}
+
+/* A subtle header/footer structure, consistent for Create, Publish, Roles,
+   History, Templates and Media dialogs using the shared Modal component. */
+.ea-studio-modal > div:first-child {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.ea-studio-modal .ea-studio-modal-footer {
+  padding-top: 0.85rem;
+  border-top: 1px solid #f1f5f9;
+}
+.ea-studio-modal .ea-studio-modal-footer > :is(button, a) {
+  min-height: 36px;
+}
+
+.ea-studio-modal :is(button, a, input, select, textarea)[class*="rounded-"] {
+  border-radius: var(--ea-ui-control-radius);
+}
+.ea-studio-modal :is(button, a)[class*="rounded-"] {
+  transition: background-color var(--ea-ui-modal-transition) ease,
+              border-color var(--ea-ui-modal-transition) ease,
+              box-shadow var(--ea-ui-modal-transition) ease;
+}
+.ea-studio-modal :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]):not([type="hidden"]),
+  select, textarea
+) {
+  min-height: 34px;
+  transition: border-color var(--ea-ui-modal-transition) ease,
+              box-shadow var(--ea-ui-modal-transition) ease;
+}
+.ea-studio-modal :is(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--ea-ui-modal-focus);
+  outline-offset: 2px;
+}
+.ea-studio-modal :is(input, select, textarea):focus-visible {
+  border-color: var(--ea-ui-modal-focus);
+  box-shadow: 0 0 0 3px var(--ea-ui-modal-focus-ring);
+}
+.ea-studio-modal :is(button, a)[class~="bg-indigo-600"]:not(:disabled):hover {
+  background-color: #4338ca;
+}
+.ea-studio-modal :is(button, a)[class~="bg-emerald-700"]:not(:disabled):hover {
+  background-color: #065f46;
+}
+.ea-studio-modal :is(button, a)[class~="border-slate-200"]:not(:disabled):hover,
+.ea-studio-modal :is(button, a)[class~="border-slate-300"]:not(:disabled):hover {
+  background-color: #f8fafc;
+  border-color: #a5b4fc;
+}
+.ea-studio-modal button:disabled {
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ea-studio-modal :is(button, a, input, select, textarea) {
+    transition: none;
+  }
+}
+
+/* EA-STUDIO-TOOLBAR-RESPONSIVE-V1 */
+/* Use the Studio toolbar's available width, not just the browser viewport.
+   This handles the existing admin sidebar without touching other pages. */
+#ea-studio-root [data-ea-toolbar="v2"] {
+  container: ea-page-toolbar / inline-size;
+}
+
+#ea-studio-root [data-ea-toolbar="v2"] #page-select {
+  min-width: 0;
+  max-width: 100%;
+}
+
+#ea-studio-root [data-ea-toolbar="v2"] section[data-toolbar-item] {
+  min-width: 0;
+}
+
+#ea-studio-root [data-ea-toolbar="v2"] section[data-toolbar-item] > div:last-child {
+  min-width: 0;
+}
+
+/* When the actual editor area is narrow, avoid a cramped third column. */
+@container ea-page-toolbar (max-width: 1020px) {
+  #ea-studio-root [data-ea-toolbar="v2"] > div:nth-child(2) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #ea-studio-root [data-ea-toolbar="v2"] section[aria-label="بررسی و انتشار"] {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile / narrow admin window: a clean single-column toolbar. */
+@container ea-page-toolbar (max-width: 650px) {
+  #ea-studio-root [data-ea-toolbar="v2"] > div[data-toolbar-item] {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #ea-studio-root [data-ea-toolbar="v2"] > div[data-toolbar-item] > div {
+    min-width: 0;
+    width: 100%;
+  }
+  #ea-studio-root [data-ea-toolbar="v2"] #page-select {
+    width: 100%;
+  }
+  #ea-studio-root [data-ea-toolbar="v2"] > div:nth-child(2) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #ea-studio-root [data-ea-toolbar="v2"] section[aria-label="بررسی و انتشار"] {
+    grid-column: auto;
+  }
+  #ea-studio-root [data-ea-toolbar="v2"] section[data-toolbar-item] button {
+    min-height: 40px;
+    line-height: 1.45;
+    white-space: normal;
+  }
+  #ea-studio-root [data-ea-toolbar="v2"] section[aria-label="بررسی و انتشار"] button {
+    flex: 1 1 7.5rem;
+  }
+}
+
+/* Very narrow screen: two readable management buttons per row. */
+@container ea-page-toolbar (max-width: 390px) {
+  #ea-studio-root [data-ea-toolbar="v2"] section[aria-label="مدیریت صفحه"] button {
+    flex: 1 1 calc(50% - 0.25rem);
+  }
+  #ea-studio-root [data-ea-toolbar="v2"] section[aria-label="بررسی و انتشار"] button {
+    flex: 1 1 calc(50% - 0.25rem);
+  }
+  #ea-studio-root [data-ea-toolbar="v2"] section[aria-label="بررسی و انتشار"] button:first-child {
+    flex-basis: 100%;
+  }
+}
+
+/* EA-STUDIO-COMPACT-TOOLBAR-V1 */
+/* Compact only the three action groups within Page Studio's editor toolbar.
+   Other Studio cards, the page browser modal, and legacy admin are untouched. */
+#ea-studio-root [data-ea-toolbar="v2"] {
+  padding: 0.75rem !important;
+}
+
+#ea-studio-root [data-ea-toolbar="v2"] > div:nth-child(2) {
+  margin-top: 0.6rem !important;
+  gap: 0.55rem !important;
+}
+
+#ea-studio-root [data-ea-toolbar="v2"] section[data-toolbar-item] {
+  padding: 0.65rem 0.7rem !important;
+  border-radius: 0.75rem !important;
+}
+
+#ea-studio-root [data-ea-toolbar="v2"] section[data-toolbar-item] > div:first-child {
+  margin-bottom: 0.35rem !important;
+  gap: 0.25rem 0.55rem !important;
+  align-items: baseline;
+}
+
+/* Override the legacy Bootstrap h3 typography that makes these group titles
+   appear unnecessarily large in the admin shell. */
+#ea-studio-root [data-ea-toolbar="v2"] section[data-toolbar-item] h3 {
+  font-size: 0.875rem !important;
+  line-height: 1.35 !important;
+  font-weight: 700 !important;
+  letter-spacing: normal;
+  margin: 0 !important;
+}
+
+#ea-studio-root [data-ea-toolbar="v2"] section[data-toolbar-item] > div:first-child > span {
+  font-size: 0.625rem !important;
+  line-height: 1.35 !important;
+}
+
+#ea-studio-root [data-ea-toolbar="v2"] section[data-toolbar-item] > div:last-child {
+  gap: 0.35rem !important;
+}
+
+#ea-studio-root [data-ea-toolbar="v2"] section[data-toolbar-item] button {
+  min-height: 32px !important;
+  padding: 0.32rem 0.6rem !important;
+  font-size: 0.75rem !important;
+  line-height: 1.25 !important;
+}
+
+/* Keep touch targets comfortable when the available editor area is narrow. */
+@container ea-page-toolbar (max-width: 650px) {
+  #ea-studio-root [data-ea-toolbar="v2"] section[data-toolbar-item] button {
+    min-height: 38px !important;
+  }
+}
+
+/* EA_INSPECTOR_HEADINGS_12PX_V3 */
+/* Override broad typography rules from the legacy admin shell, only inside Inspector accordions. */
+#ea-studio-root [data-ea-inspector-collapsible="stage11"] > h3 {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+#ea-studio-root [data-ea-inspector-collapsible="stage11"] > h3 > button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  min-height: 28px !important;
+  padding: 5px 7px !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  font-weight: 600 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  text-align: right !important;
+}
+#ea-studio-root [data-ea-inspector-collapsible="stage11"] > h3 > button > span:first-child {
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  font-weight: 600 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  overflow-wrap: break-word !important;
+}
+#ea-studio-root [data-ea-inspector-collapsible="stage11"] > h3 > button > span:last-child {
+  width: 19px !important;
+  height: 19px !important;
+  flex: 0 0 19px !important;
+  font-size: 11px !important;
+  line-height: 17px !important;
+  font-weight: 500 !important;
+}

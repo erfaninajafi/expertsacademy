@@ -1,7 +1,8 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { MediaItem } from '../types';
-import { issueMessage, permissionLabel, roleLabel, statusLabel } from '../i18n';
+import { permissionLabel, roleLabel, statusLabel } from '../i18n';
+import { PublishIssueDetails } from './PublishIssueDetails';
 
 interface ModalProps {
   open: boolean;
@@ -17,8 +18,8 @@ export function Modal({ open, onOpenChange, title, description, children, footer
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[2100] bg-slate-900/50" />
-        <Dialog.Content className={`fixed left-1/2 top-1/2 z-[2100] max-h-[90vh] -translate-x-1/2 -translate-y-1/2 overflow-auto rounded-2xl bg-white p-5 shadow-2xl focus:outline-none ${wide ? 'w-[min(94vw,60rem)]' : 'w-[min(92vw,32rem)]'}`}>
+        <Dialog.Overlay className="ea-studio-modal-overlay fixed inset-0 z-[2100] bg-slate-900/50" />
+        <Dialog.Content className={`ea-studio-modal fixed left-1/2 top-1/2 z-[2100] max-h-[90vh] -translate-x-1/2 -translate-y-1/2 overflow-auto rounded-2xl bg-white p-5 shadow-2xl focus:outline-none ${wide ? 'w-[min(94vw,60rem)]' : 'w-[min(92vw,32rem)]'}`}>
           <div className="mb-3 flex items-start justify-between gap-4">
             <div>
               <Dialog.Title className="text-base font-semibold text-slate-900">{title}</Dialog.Title>
@@ -30,7 +31,7 @@ export function Modal({ open, onOpenChange, title, description, children, footer
             </Dialog.Close>
           </div>
           {children}
-          {footer && <div className="mt-5 flex justify-end gap-2">{footer}</div>}
+          {footer && <div className="ea-studio-modal-footer mt-5 flex flex-wrap justify-end gap-2">{footer}</div>}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
@@ -41,23 +42,36 @@ interface CreateProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   busy: boolean;
-  onCreate: (input: { title: string; locale: 'fa' | 'en'; legacyCode: string; fullPath: string }) => Promise<void>;
+  initial?: { title: string; locale: 'fa' | 'en'; legacyCode: string; fullPath: string } | null;
+  legacyEditorUrl?: string;
+  onCreate: (input: { title: string; locale: 'fa' | 'en'; fullPath: string }) => Promise<void>;
 }
 
-export function CreatePageDialog({ open, onOpenChange, busy, onCreate }: CreateProps) {
+export function CreatePageDialog({ open, onOpenChange, busy, onCreate, initial, legacyEditorUrl }: CreateProps) {
   const [title, setTitle] = useState('');
   const [locale, setLocale] = useState<'fa' | 'en'>('en');
-  const [legacyCode, setLegacyCode] = useState('');
   const [fullPath, setFullPath] = useState('');
+
+  useEffect(() => {
+    if (!open) return;
+    setTitle(initial?.title ?? '');
+    setLocale(initial?.locale ?? 'en');
+    setFullPath(initial?.fullPath ?? '');
+  }, [open, initial?.title, initial?.locale, initial?.legacyCode, initial?.fullPath]);
 
   return (
     <Modal open={open} onOpenChange={onOpenChange} title="صفحهٔ جدید"
-      description="صفحه به‌صورت پیش‌نویس ساخته می‌شود. برای صفحات جدید، آدرس عمومی را وارد کنید؛ نیازی به کد CMS نیست. نمایش عمومی پس از تکمیل سیستم مسیریابی فعال می‌شود."
+      description="صفحه به‌صورت پیش‌نویس ساخته می‌شود. برای صفحات جدید، آدرس عمومی را وارد کنید. صفحه تا زمان انتشار عمومی، پیش‌نویس باقی می‌ماند."
       footer={
         <>
           <button type="button" className="rounded-lg px-3 py-2 text-sm text-slate-600" onClick={() => onOpenChange(false)}>انصراف</button>
-          <button type="button" disabled={busy || title.trim() === ''}
-            onClick={() => void onCreate({ title: title.trim(), locale, legacyCode: legacyCode.trim(), fullPath: fullPath.trim() })}
+           {legacyEditorUrl && (
+             <a href={legacyEditorUrl} className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700">
+               ویرایش با CMS قدیمی
+             </a>
+           )}
+           <button type="button" disabled={busy || title.trim() === ''}
+            onClick={() => void onCreate({ title: title.trim(), locale, fullPath: fullPath.trim() })}
             className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
             {busy ? 'در حال ساخت…' : 'ساخت پیش‌نویس'}
           </button>
@@ -87,46 +101,7 @@ export function CreatePageDialog({ open, onOpenChange, busy, onCreate }: CreateP
             نمونه: /{locale}/courses/engineering-math — برای ذخیرهٔ پیش‌نویس بدون مسیر می‌توانید خالی بگذارید.
           </span>
         </label>
-        <label className="text-xs font-medium text-slate-600">کد صفحهٔ موجود CMS (اختیاری)<input className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" maxLength={64}
-            placeholder="مثلاً about" value={legacyCode}
-            onChange={(event) => setLegacyCode(event.target.value)} />
-          <span className="mt-1 block text-[11px] text-slate-500">اتصال به کد دسته باعث می‌شود نسخهٔ منتشرشده جای محتوای قدیمی آن نشانی را بگیرد.</span>
-        </label>
       </div>
-    </Modal>
-  );
-}
-
-interface PublishProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  busy: boolean;
-  title: string;
-  code: string | null;
-  onPublish: () => Promise<void>;
-}
-
-export function PublishDialog({ open, onOpenChange, busy, title, code, onPublish }: PublishProps) {
-  return (
-    <Modal open={open} onOpenChange={onOpenChange} title="انتشار این نسخه؟"
-      description="با انتشار، پیش‌نویس فعلی به نسخهٔ عمومی تحت PHP تبدیل می‌شود و نسخهٔ قبلی در تاریخچه می‌ماند."
-      footer={
-        <>
-          <button type="button" className="rounded-lg px-3 py-2 text-sm text-slate-600" onClick={() => onOpenChange(false)}>انصراف</button>
-          <button type="button" disabled={busy} onClick={() => void onPublish()}
-            className="rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
-            {busy ? 'در حال انتشار…' : 'انتشار نسخه'}
-          </button>
-        </>
-      }>
-      <dl className="grid gap-2 text-sm">
-        <div className="flex justify-between gap-4"><dt className="text-slate-500">صفحه</dt><dd className="font-medium text-slate-900">{title}</dd></div>
-        <div className="flex justify-between gap-4"><dt className="text-slate-500">نشانی عمومی</dt>
-          <dd className="font-medium text-slate-900">{code ? `صفحهٔ موجود «${code}»` : 'هنوز به نشانی عمومی متصل نیست'}</dd></div>
-      </dl>
-      {!code && (
-        <p className="mt-3 rounded-lg bg-amber-50 p-3 text-xs text-amber-800">این صفحه به کد CMS متصل نیست؛ بنابراین انتشار آن را به‌صورت پیش‌نویس نسخه‌دار نگه می‌دارد. برای جایگزینی یک نشانی موجود، کد را متصل کنید.</p>
-      )}
     </Modal>
   );
 }
@@ -222,161 +197,171 @@ interface PublishingProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   busy: boolean;
+  dirty: boolean;
   title: string;
   status: string;
-  code: string | null;
   slug: string | null;
   fullPath: string | null;
   locale: 'fa' | 'en';
-  scheduledAt: string | null;
   checks: import('../types').QualityChecks | null;
+  document: import('../types').PageDocument | null;
   canPublish: boolean;
-  canSchedule: boolean;
+  canArchive: boolean;
   canRoute: boolean;
   previewUrl: string | null;
   onPublish: () => Promise<void>;
-  onSchedule: (publishAt: string, timezone: string) => Promise<void>;
-  onCancelSchedule: () => Promise<void>;
   onUnpublish: () => Promise<void>;
   onArchive: () => Promise<void>;
-  onRoute: (slug: string, code: string) => Promise<void>;
+  onRoute: (slug: string) => Promise<void>;
   onPublicPath: (path: string | null) => Promise<void>;
   onPreviewLink: () => Promise<void>;
 }
 
 export function PublishingDialog(props: PublishingProps) {
-  const { open, onOpenChange, busy, title, status, code, slug, scheduledAt, checks } = props;
-  const [publishAt, setPublishAt] = useState(() => {
-    const date = new Date(Date.now() + 60 * 60 * 1000);
-    date.setSeconds(0, 0);
-    return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-  });
-  const [timezone, setTimezone] = useState(() => Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC');
-  const [slugValue, setSlugValue] = useState(slug ?? '');
-  const [codeValue, setCodeValue] = useState(code ?? '');
+  const { open, busy, dirty, title, status, checks } = props;
+  const [confirming, setConfirming] = useState(false);
+  const [slugValue, setSlugValue] = useState(props.slug ?? '');
   const [fullPathValue, setFullPathValue] = useState(props.fullPath ?? '');
+  const ready = props.canPublish && !busy && !dirty && checks?.ok === true && Boolean(props.fullPath?.trim());
 
   useEffect(() => {
-    if (open) setFullPathValue(props.fullPath ?? '');
-  }, [open, props.fullPath]);
+    if (open) {
+      setConfirming(false);
+      setSlugValue(props.slug ?? '');
+      setFullPathValue(props.fullPath ?? '');
+    }
+  }, [open, props.slug, props.fullPath]);
+  useEffect(() => {
+    if (dirty || checks?.ok !== true) setConfirming(false);
+  }, [dirty, checks?.ok]);
 
   return (
-    <Modal open={open} onOpenChange={onOpenChange} title="انتشار" wide
-      description="هر انتشار ابتدا بررسی‌های پیش‌ازانتشار را اجرا می‌کند و به‌صورت اتمیک ثبت می‌شود.">
-      <div className="grid gap-4 md:grid-cols-2">
-        <section className="rounded-xl border border-slate-200 p-3">
-          <h3 className="text-sm font-semibold text-slate-800">وضعیت</h3>
-          <p className="mt-1 text-sm text-slate-700">
-            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold uppercase">{statusLabel(status)}</span>
-            {scheduledAt && <span className="mr-2 text-xs text-slate-600">Scheduled for {scheduledAt} UTC</span>}
-          </p>
-          <dl className="mt-3 grid gap-1 text-xs text-slate-600">
-            <div className="flex justify-between gap-3"><dt>کد CMS قدیمی</dt><dd className="font-medium text-slate-900">{code || '—'}</dd></div>
-            <div className="flex justify-between gap-3"><dt>نامک</dt><dd className="font-medium text-slate-900">{slug || '—'}</dd></div>
-            <div className="flex justify-between gap-3"><dt>آدرس Studio</dt><dd dir="ltr" className="break-all font-medium text-slate-900">{props.fullPath || '—'}</dd></div>
-          </dl>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <button type="button" disabled={busy || !props.canPublish || checks?.ok === false} onClick={() => void props.onPublish()}
-              className="rounded-lg bg-emerald-700 px-3 py-2 text-xs font-semibold text-white disabled:opacity-40">
-              {busy ? 'در حال انجام…' : 'انتشار فوری'}
-            </button>
-            {(status === 'published' || status === 'scheduled') && (
-              <button type="button" disabled={busy || !props.canPublish} onClick={() => void props.onUnpublish()}
-                className="rounded-lg border border-amber-300 px-3 py-2 text-xs font-semibold text-amber-800 disabled:opacity-40">لغو انتشار</button>
+    <Modal open={open} onOpenChange={props.onOpenChange} title="بررسی و انتشار صفحه" wide
+      description="وضعیت صفحه، نشانی عمومی و ایرادهای قابل اصلاح را بررسی کنید؛ سپس انتشار را تأیید کنید.">
+      <div data-ea-publish-cleanup="ea-publish-cleanup-v1" className="grid gap-3 text-right">
+        <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+          <section className="grid content-start gap-3 rounded-2xl border border-slate-200 bg-white p-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-sm font-bold text-slate-900">اطلاعات صفحه</h3>
+              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-700">{statusLabel(status)}</span>
+            </div>
+            <div className="rounded-xl bg-slate-50 p-3">
+              <p className="text-[11px] text-slate-500">نام صفحه</p>
+              <p className="mt-1 break-words text-sm font-semibold text-slate-900">{title}</p>
+            </div>
+            <div className="rounded-xl bg-slate-50 p-3">
+              <p className="text-[11px] text-slate-500">آدرس عمومی</p>
+              <p dir="ltr" className="mt-1 break-all text-left text-xs font-semibold text-slate-800">
+                {props.fullPath || 'هنوز مشخص نشده است'}
+              </p>
+            </div>
+            {dirty && <p role="status" className="rounded-lg border border-amber-200 bg-amber-50 p-2.5 text-xs leading-6 text-amber-900">
+              تغییرات هنوز ذخیره نشده‌اند. ابتدا صفحه را ذخیره کنید تا بررسی کیفیت روی همان نسخه انجام شود.
+            </p>}
+            {!props.fullPath && <p role="status" className="rounded-lg border border-amber-200 bg-amber-50 p-2.5 text-xs leading-6 text-amber-900">
+              برای انتشار، آدرس عمومی صفحه را در قسمت «تنظیمات مسیر» ثبت کنید.
+            </p>}
+            <div className="flex flex-wrap gap-2 border-t border-slate-100 pt-3">
+              {(status === 'published' || status === 'scheduled') && (
+                <button type="button" disabled={busy || !props.canPublish} onClick={() => void props.onUnpublish()}
+                  className="rounded-lg border border-amber-200 px-3 py-2 text-xs font-semibold text-amber-800 hover:bg-amber-50 disabled:opacity-40">لغو انتشار</button>
+              )}
+              {/* EA_STAGE19_ARCHIVE_IN_PUBLISH_V5: controlled archive action within publish review */}
+              {status !== 'archived' && (
+                <button
+                  type="button"
+                  disabled={busy || dirty || !props.canArchive}
+                  title={!props.canArchive ? 'دسترسی بایگانی صفحه برای نقش شما فعال نیست.' : dirty ? 'ابتدا تغییرات ذخیره‌نشده را ذخیره کنید.' : 'انتقال به بایگانی پس از تأیید عنوان دقیق صفحه'}
+                  onClick={() => void props.onArchive()}
+                  className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-900 hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-50"
+                >بایگانی صفحه</button>
+              )}
+              <button type="button" disabled={busy} onClick={() => void props.onPreviewLink()}
+                className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-40">کپی لینک پیش‌نمایش</button>
+            </div>
+            {props.previewUrl && <p dir="ltr" data-testid="preview-url" className="break-all rounded-lg bg-slate-50 p-2 text-left text-[11px] text-slate-600">{props.previewUrl}</p>}
+          </section>
+          <section className="grid content-start gap-3 rounded-2xl border border-slate-200 bg-white p-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-sm font-bold text-slate-900">بررسی کیفیت پیش از انتشار</h3>
+              {checks && <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${checks.ok ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
+                {checks.ok ? 'آماده انتشار' : 'نیازمند اصلاح'}
+              </span>}
+            </div>
+            {checks === null ? (
+              <p role="status" className="rounded-lg bg-slate-50 p-3 text-xs leading-6 text-slate-600">در حال دریافت نتیجه بررسی کیفیت…</p>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className={`rounded-xl border p-3 ${checks.errorCount > 0 ? 'border-rose-200 bg-rose-50' : 'border-emerald-100 bg-emerald-50'}`}>
+                    <p className={`text-xl font-bold ${checks.errorCount > 0 ? 'text-rose-800' : 'text-emerald-800'}`}>{checks.errorCount.toLocaleString('fa-IR')}</p>
+                    <p className="text-[11px] text-slate-700">خطای بازدارنده</p>
+                  </div>
+                  <div className={`rounded-xl border p-3 ${checks.warningCount > 0 ? 'border-amber-200 bg-amber-50' : 'border-emerald-100 bg-emerald-50'}`}>
+                    <p className={`text-xl font-bold ${checks.warningCount > 0 ? 'text-amber-800' : 'text-emerald-800'}`}>{checks.warningCount.toLocaleString('fa-IR')}</p>
+                    <p className="text-[11px] text-slate-700">هشدار</p>
+                  </div>
+                </div>
+                <div className="max-h-[54vh] space-y-3 overflow-y-auto pl-1">
+                  <PublishIssueDetails kind="error" issues={checks.errors} document={props.document} />
+                  <PublishIssueDetails kind="warning" issues={checks.warnings} document={props.document} />
+                  {checks.errors.length === 0 && checks.warnings.length === 0 && (
+                    <p className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs leading-6 text-emerald-900">هیچ خطا یا هشداری برای این نسخه یافت نشد.</p>
+                  )}
+                </div>
+              </>
             )}
-            <button type="button" disabled={busy || !props.canPublish} onClick={() => void props.onArchive()}
-              className="rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 disabled:opacity-40">آرشیو</button>
-            <button type="button" disabled={busy} onClick={() => void props.onPreviewLink()}
-              className="rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 disabled:opacity-40">کپی لینک پیش‌نمایش</button>
-          </div>
-          {props.previewUrl && (
-            <p className="mt-2 break-all rounded bg-slate-50 p-2 text-[11px] text-slate-700" data-testid="preview-url">{props.previewUrl}</p>
-          )}
-        </section>
-
-        <section className="rounded-xl border border-slate-200 p-3">
-          <h3 className="text-sm font-semibold text-slate-800">بررسی‌های پیش‌ازانتشار</h3>
-          {checks === null ? <p className="mt-2 text-xs text-slate-500">در حال بارگذاری بررسی‌ها…</p> : (
-            <div className="mt-2 grid gap-2 text-xs">
-              <p className={checks.ok ? 'font-semibold text-emerald-700' : 'font-semibold text-red-700'}>
-                {checks.ok ? 'خطای بازدارنده‌ای نیست.' : `${checks.errorCount} خطای بازدارنده.`}
-                {checks.warningCount > 0 ? ` ${checks.warningCount} هشدار.` : ''}
-              </p>
-              <ul className="max-h-36 space-y-1 overflow-auto">
-                {checks.errors.map((issue) => (
-                  <li key={`e-${issue.code}-${issue.path}`} className="rounded bg-red-50 p-1.5 text-red-800">⛔ {issueMessage(issue.message)}</li>
-                ))}
-                {checks.warnings.map((issue) => (
-                  <li key={`w-${issue.code}-${issue.path}`} className="rounded bg-amber-50 p-1.5 text-amber-800">⚠ {issueMessage(issue.message)}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </section>
-
-        {props.canSchedule && (
-          <section className="rounded-xl border border-slate-200 p-3">
-            <h3 className="text-sm font-semibold text-slate-800">زمان‌بندی انتشار</h3>
-            <div className="mt-2 grid gap-2">
-              <label className="text-xs font-medium text-slate-600">تاریخ و ساعت محلی<input type="datetime-local" value={publishAt} onChange={(event) => setPublishAt(event.target.value)}
-                  className="mt-1 w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm" />
-              </label>
-              <label className="text-xs font-medium text-slate-600">منطقهٔ زمانی<input value={timezone} onChange={(event) => setTimezone(event.target.value)}
-                  className="mt-1 w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm" />
-              </label>
-              <div className="flex flex-wrap gap-2">
-                <button type="button" disabled={busy || checks?.ok === false || publishAt === ''}
-                  onClick={() => void props.onSchedule(new Date(publishAt).toISOString(), timezone)}
-                  className="rounded-lg bg-indigo-600 px-3 py-2 text-xs font-semibold text-white disabled:opacity-40">زمان‌بندی</button>
-                {status === 'scheduled' && (
-                  <button type="button" disabled={busy} onClick={() => void props.onCancelSchedule()}
-                    className="rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 disabled:opacity-40">لغو زمان‌بندی</button>
-                )}
-              </div>
-            </div>
           </section>
-        )}
-
+        </div>
         {props.canRoute && (
-          <section className="rounded-xl border border-slate-200 p-3">
-            <h3 className="text-sm font-semibold text-slate-800">مسیر</h3>
-            <div className="mt-2 grid gap-2">
-              <label className="text-xs font-medium text-slate-600">
-                آدرس عمومی جدید
-                <input
-                  dir="ltr"
-                  value={fullPathValue}
-                  onChange={(event) => setFullPathValue(event.target.value)}
-                  maxLength={255}
-                  placeholder={`/${props.locale}/courses/example`}
-                  className="mt-1 w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
-                />
+          <details className="rounded-xl border border-slate-200 bg-slate-50/70 p-3">
+            <summary className="cursor-pointer text-xs font-semibold text-slate-800">تنظیمات مسیر صفحه</summary>
+            <div className="mt-3 grid gap-3 md:grid-cols-2">
+              <label className="text-xs font-medium text-slate-700">آدرس عمومی صفحه
+                <input dir="ltr" value={fullPathValue} onChange={(event) => setFullPathValue(event.target.value)}
+                  maxLength={255} placeholder={`/${props.locale}/courses/example`}
+                  className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm" />
+                <span className="mt-1 block text-[11px] font-normal leading-5 text-slate-500">ابتدا ذخیره کنید؛ برای صفحه منتشرشده، تغییر نشانی تا لغو انتشار ممکن نیست.</span>
+                <button type="button" disabled={busy || status === 'published' || status === 'scheduled'}
+                  onClick={() => void props.onPublicPath(fullPathValue.trim() || null)}
+                  className="mt-2 rounded-lg border border-indigo-300 bg-white px-3 py-2 text-xs font-semibold text-indigo-700 disabled:opacity-40">ذخیره آدرس عمومی</button>
               </label>
-              <button
-                type="button"
-                disabled={busy || status === 'published' || status === 'scheduled'}
-                onClick={() => void props.onPublicPath(fullPathValue.trim() || null)}
-                className="w-fit rounded-lg border border-indigo-300 px-3 py-2 text-xs font-semibold text-indigo-700 disabled:opacity-40"
-              >
-                ذخیره آدرس عمومی
-              </button>
-              <p className="text-[11px] text-slate-500">
-                این آدرس فعلاً ذخیره می‌شود؛ نمایش عمومی آن پس از فعال‌سازی Router امکان‌پذیر خواهد بود.
-                مسیر صفحات منتشرشده یا زمان‌بندی‌شده فعلاً قابل تغییر نیست.
-              </p>
-              <label className="text-xs font-medium text-slate-600">نامک<input value={slugValue} onChange={(event) => setSlugValue(event.target.value)} maxLength={120}
-                  placeholder="course-launch" className="mt-1 w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm" />
+              <label className="text-xs font-medium text-slate-700">نامک صفحه (اختیاری)
+                <input dir="ltr" value={slugValue} onChange={(event) => setSlugValue(event.target.value)}
+                  maxLength={120} placeholder="course-launch"
+                  className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm" />
+                <span className="mt-1 block text-[11px] font-normal leading-5 text-slate-500">از حروف انگلیسی کوچک، عدد و خط تیره استفاده کنید.</span>
+                <button type="button" disabled={busy} onClick={() => void props.onRoute(slugValue.trim())}
+                  className="mt-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 disabled:opacity-40">ذخیره نامک</button>
               </label>
-              <label className="text-xs font-medium text-slate-600">کد موجود CMS<input value={codeValue} onChange={(event) => setCodeValue(event.target.value)} maxLength={64}
-                  placeholder="about" className="mt-1 w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm" />
-              </label>
-              <button type="button" disabled={busy} onClick={() => void props.onRoute(slugValue.trim(), codeValue.trim())}
-                className="w-fit rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 disabled:opacity-40">ذخیرهٔ مسیر</button>
             </div>
-          </section>
+          </details>
         )}
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
+          <p className="max-w-[34rem] text-xs leading-6 text-slate-600">
+            {checks === null ? 'نتیجه بررسی کیفیت هنوز آماده نیست.' :
+              checks.errorCount > 0 ? 'خطاهای قرمز را قبل از انتشار برطرف کنید.' :
+              dirty ? 'ابتدا تغییرات صفحه را ذخیره کنید.' :
+              !props.fullPath ? 'ابتدا آدرس عمومی صفحه را ثبت کنید.' :
+              checks.warningCount > 0 ? 'هشدارهای زرد مانع انتشار نیستند؛ پیش از ادامه آن‌ها را بخوانید.' :
+              'نسخه ذخیره‌شده برای انتشار آماده است.'}
+          </p>
+          {!confirming ? (
+            <button type="button" disabled={!ready} onClick={() => setConfirming(true)}
+              className="rounded-lg bg-indigo-700 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-800 disabled:opacity-40">بررسی نهایی انتشار</button>
+          ) : (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs font-semibold text-slate-900">انتشار «{title}» در مسیر «{props.fullPath}»؟</span>
+              <button type="button" disabled={busy} onClick={() => setConfirming(false)}
+                className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700">بازگشت</button>
+              <button type="button" disabled={!ready} onClick={() => void props.onPublish()}
+                className="rounded-lg bg-emerald-700 px-4 py-2 text-xs font-semibold text-white disabled:opacity-40">
+                {busy ? 'در حال انتشار…' : 'تأیید و انتشار صفحه'}
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-      <p className="mt-3 text-[11px] text-slate-500">صفحه: {title}</p>
     </Modal>
   );
 }
